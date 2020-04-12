@@ -1,5 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const routes = require('./routes');
+const model = require('./models');
+const dotenv = require('dotenv');
 const cors = require('cors');
 const PORT = 3005;
 const app = express();
@@ -7,8 +10,11 @@ const app = express();
 app.use(bodyParser.json());
 
 app.use(cors());
+dotenv.config();
 
-// app.use('/', routes);
+model.sequelize.sync({ force: true });
+
+app.use('/', routes);
 
 
 app.listen(PORT, () => {
