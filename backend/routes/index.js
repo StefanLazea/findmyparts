@@ -4,7 +4,7 @@ const PartsService = require('../services/part');
 
 router.get("/parts", async (req, res) => {
     try {
-        await Reviews.findAll().then((allReviews) => { return res.status(200).send({ message: allReviews }) });
+        await Parts.findAll().then((allParts) => { return res.status(200).send({ message: allParts }) });
     }
     catch (err) {
         return res.status(409).send({ message: "No elements found in the database" });
@@ -19,7 +19,8 @@ router.post("/parts", async (req, res) => {
         stock: req.body.stock
     }
 
-    if (PartsService.findPartByCode(parts.code) == null) {
+    if (await PartsService.findPartByCode(parts.code) === null) {
+
         try {
             await Parts.create(parts);
         } catch (err) {

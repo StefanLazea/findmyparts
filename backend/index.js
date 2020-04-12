@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 app.use(cors());
 dotenv.config();
 
-model.sequelize.sync({ force: true });
+model.sequelize.sync();
 
 app.use('/', routes);
 
