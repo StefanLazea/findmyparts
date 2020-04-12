@@ -3,8 +3,7 @@ const bodyParser = require('body-parser');
 const routes = require('./routes');
 const model = require('./models');
 const dotenv = require('dotenv');
-const cors = require('cors');
-const PORT = 3005;
+const cors = require('cors');;
 const app = express();
 
 app.use(bodyParser.json());
@@ -12,6 +11,7 @@ app.use(bodyParser.json());
 app.use(cors());
 dotenv.config();
 
+const PORT = process.env.PORT;
 model.sequelize.sync();
 
 app.use('/', routes);
