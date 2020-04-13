@@ -4,10 +4,14 @@ import Axios from "axios";
 import "./Home.css";
 
 
+const getBasename = () => {
+    return process.env.REACT_APP_BACK_END_URL;
+};
+
 export default function Home() {
     const [parts, setParts] = useState([]);
     useEffect(() => {
-        Axios.get("http://localhost:3005/api/parts").then((res) => {
+        Axios.get(`${getBasename()}/api/parts`).then((res) => {
             console.log(res, res.data);
             setParts(res.data.message);
         });
