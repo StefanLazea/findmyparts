@@ -29,6 +29,7 @@ router.post("/parts", async (req, res) => {
         return res.status(200).send({ message: "Part has created successfully" })
     }
     return res.status(400).send({ message: "Part is already in" })
-})
+});
+
 
 module.exports = router;
