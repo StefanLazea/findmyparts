@@ -17,8 +17,8 @@ function App() {
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav pullRight>
-            <LinkContainer to="/signup">
-              <NavItem>Signup</NavItem>
+            <LinkContainer to="/add/part">
+              <NavItem>Adauga piesa</NavItem>
             </LinkContainer>
             <LinkContainer to="/login">
               <NavItem>Signup</NavItem>

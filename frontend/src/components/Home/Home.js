@@ -34,7 +34,6 @@ export default function Home() {
                                 <td>{part.code}</td>
                                 <td>{part.stock}</td>
                                 <td>{part.addedAt}</td>
-
                             </tr>
                         )}
                     </tbody>
