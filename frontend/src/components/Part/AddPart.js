@@ -1,14 +1,15 @@
 import React from "react";
-import { Button, Form, ButtonGroup, DropdownButton, MenuItem } from 'react-bootstrap';
+import { Row, Col, Button } from 'react-bootstrap';
 
 export default class AddPart extends React.Component {
     render() {
         return (
-            <div>
-                <Form>
+            <Row>
+                <Col xl={6} lg={12} md={12} className="mx-auto">
+
                     <Button>Apasa ma</Button>
-                </Form>
-            </div>
+                </Col>
+            </Row>
 
         )
     };

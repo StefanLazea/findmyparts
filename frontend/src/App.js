@@ -8,26 +8,20 @@ import './App.css';
 function App() {
   return (
     <div className="App container">
-      <Navbar fluid collapseOnSelect>
-        <Navbar.Header>
-          <Navbar.Brand>
-            <Link to="/">GasestePiesa.online</Link>
-          </Navbar.Brand>
-          <Navbar.Toggle />
-        </Navbar.Header>
-        <Navbar.Collapse>
-          <Nav pullRight>
-            <LinkContainer to="/add/part">
-              <NavItem>Adauga piesa</NavItem>
-            </LinkContainer>
-            <LinkContainer to="/login">
-              <NavItem>Signup</NavItem>
-            </LinkContainer>
+      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+        <Navbar.Brand>
+          <Link to="/">GasestePiesa.online</Link>
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav variant="pills" className="ml-auto">
+            <Nav.Link as={Link} to="/add/part">Adauga piesa</Nav.Link>
+            <Nav.Link as={Link} to="/signup">Signup</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
       <Routes />
-    </div>
+    </div >
   );
 }
 
