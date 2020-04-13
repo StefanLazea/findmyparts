@@ -84,7 +84,13 @@ export default class AddPart extends React.Component {
                                 name="cod"
                                 onChange={e => this.handleChange(e)} />
                         </Form.Group>
+                        <Form.Group controlId="formGridFile">
 
+                            <Form.File id="formcheck-api-regular">
+                                <Form.File.Label>Regular file input</Form.File.Label>
+                                <Form.File.Input />
+                            </Form.File>
+                        </Form.Group>
 
                         <Button
                             variant="primary"

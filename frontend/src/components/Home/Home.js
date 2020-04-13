@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table } from "react-bootstrap";
+import { Table, Button } from "react-bootstrap";
 import Axios from "axios";
 import "./Home.css";
 
@@ -12,6 +12,11 @@ export default function Home() {
             setParts(res.data.message);
         });
     }, []);
+
+    const deletePart = () => {
+        console.log("sterg")
+    }
+
     return (
         <div className="Home">
             <div className="lander">
@@ -34,11 +39,24 @@ export default function Home() {
                                 <td>{part.code}</td>
                                 <td>{part.stock}</td>
                                 <td>{part.addedAt}</td>
+                                <td>
+                                    <Button
+                                        id={"button" + part.id}
+                                        className="btn-primary">
+                                        <i className="fa fa-pencil"></i>
+                                    </Button>
+
+                                    <Button
+                                        className="btn-danger"
+                                        onClick={() => { deletePart(part.id) }}>
+                                        <i className="fa fa-trash"></i>
+                                    </Button>
+                                </td>
                             </tr>
                         )}
                     </tbody>
                 </Table>
             </div>
-        </div>
+        </div >
     );
 }
