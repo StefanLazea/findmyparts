@@ -2,6 +2,7 @@ import React from "react";
 import { Form, Col, Button, Row } from 'react-bootstrap';
 import Axios from "axios";
 import { toast } from 'react-toastify';
+import { Redirect } from "react-router-dom";
 import "./AddPart.css";
 
 const getBasename = () => {
@@ -23,7 +24,6 @@ export default class AddPart extends React.Component {
         this.setState({
             [e.target.name]: e.target.value
         });
-        console.log(this.state)
     }
 
     handleSubmit = (event) => {
@@ -33,22 +33,26 @@ export default class AddPart extends React.Component {
             stock: this.state.cantitate,
             code: this.state.cod
         }
+
         Axios.post(`${getBasename()}/api/parts`, JSON.stringify(form),
             {
                 headers: { "Content-Type": "application/json" }
             })
             .then((res) => {
                 toast(res.data.message);
+                this.setState({ redirectToHome: true })
             })
             .catch(error => {
                 toast(error.response.data.message);
                 console.log(error.response)
-
             });
 
     }
 
     render() {
+        if (this.state.redirectToHome) {
+            return <Redirect to="/" />
+        }
         return (
             <Row>
                 <Col xl={6} lg={12} md={12} className="mx-auto">
