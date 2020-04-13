@@ -1,9 +1,12 @@
 import React from 'react';
 import Routes from "./Routes";
-import { Navbar, Nav, NavItem } from "react-bootstrap";
+import { Navbar, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { LinkContainer } from "react-router-bootstrap";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
+
+toast.configure();
 
 function App() {
   return (
