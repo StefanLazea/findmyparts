@@ -10,7 +10,6 @@ export default function Routes() {
         <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/add/part" exact component={AddPart} />
-            <Route component={NotFound} />
         </Switch>
     );
 }

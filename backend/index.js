@@ -9,6 +9,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.use(cors());
+
 dotenv.config();
 
 const PORT = process.env.PORT;
