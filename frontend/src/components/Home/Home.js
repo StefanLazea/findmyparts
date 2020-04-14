@@ -10,6 +10,7 @@ const getBasename = () => {
 
 export default function Home() {
     const [parts, setParts] = useState([]);
+    const [isLogged, setLogged] = useState(false);
     useEffect(() => {
         Axios.get(`${getBasename()}/api/parts`).then((res) => {
             console.log(res, res.data);
@@ -43,19 +44,22 @@ export default function Home() {
                                 <td>{part.code}</td>
                                 <td>{part.stock}</td>
                                 <td>{part.addedAt}</td>
-                                <td>
-                                    <Button
-                                        id={"button" + part.id}
-                                        className="btn-primary">
-                                        <i className="fa fa-pencil"></i>
-                                    </Button>
+                                {isLogged === true ?
+                                    <td>
+                                        <Button
+                                            id={"button" + part.id}
+                                            className="btn-primary">
+                                            <i className="fa fa-pencil"></i>
+                                        </Button>
 
-                                    <Button
-                                        className="btn-danger"
-                                        onClick={() => { deletePart(part.id) }}>
-                                        <i className="fa fa-trash"></i>
-                                    </Button>
-                                </td>
+                                        <Button
+                                            className="btn-danger"
+                                            onClick={() => { deletePart(part.id) }}>
+                                            <i className="fa fa-trash"></i>
+                                        </Button>
+                                    </td>
+                                    : null
+                                }
                             </tr>
                         )}
                     </tbody>

@@ -3,6 +3,7 @@ const Parts = require('../models').Part;
 const PartsService = require('../services/part');
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
+const path = require("path");
 
 router.get("/parts", async (req, res) => {
     try {
@@ -13,14 +14,32 @@ router.get("/parts", async (req, res) => {
     }
 });
 
-router.post("/parts", upload.single('partImage'), async (req, res) => {
-    console.log(req.file);
+router.post("/parts", async (req, res) => {
+    let location = "";
+    if (req.files) {
+        let image = req.files.image;
+        let relativeLocation = "../private/images/" + req.body.code + ".png";
+        location = path.resolve(__dirname, relativeLocation);
+
+        image.mv(location, err => {
+            if (err) {
+                console.log(err);
+                throw err;
+            }
+        });
+    }
+
+    if (req.body.code === "") {
+        return res.status(500).send({ message: "Nu puteti trimite fara cod!" });
+    }
+
     let parts = {
         name: req.body.name,
         code: req.body.code,
-        photo: req.body.photo,
-        stock: req.body.stock
+        photo: location,
+        stock: req.body.stock,
     }
+
     if (await PartsService.findPartByCode(parts.code) === null) {
 
         try {

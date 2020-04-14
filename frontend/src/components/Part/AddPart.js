@@ -19,12 +19,19 @@ export default class AddPart extends React.Component {
             file: null,
             redirectToHome: false
         }
+
     }
 
     handleChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
         });
+    }
+
+    handleChangeFile = (e) => {
+        this.setState({
+            file: e.target.files[0],
+        })
     }
 
     handleSubmit = (event) => {
@@ -35,17 +42,28 @@ export default class AddPart extends React.Component {
             code: this.state.cod
         }
 
-        Axios.post(`${getBasename()}/api/parts`, JSON.stringify(form),
-            {
-                headers: { "Content-Type": "application/json" }
-            })
-            .then((res) => {
-                toast(res.data.message);
+        const config = {
+            headers: { 'content-type': 'multipart/form-data' }
+        }
+
+        let formData = new FormData();    //formdata object
+        formData.append('name', form.name);
+        formData.append('stock', form.stock);
+        formData.append('code', form.code);
+        formData.append('image', this.state.file);
+
+        Axios.post(`${getBasename()}/api/parts`, formData, config)
+            .then(response => {
+                toast(response.data.message);
                 this.setState({ redirectToHome: true })
             })
             .catch(error => {
-                toast(error.response.data.message);
-                console.log(error.response)
+                if (error.response !== undefined) {
+                    toast(error.response.data.message)
+                }
+                else {
+                    toast("A aparut o problema. Mai incercati o data!");
+                }
             });
 
     }
@@ -85,11 +103,11 @@ export default class AddPart extends React.Component {
                                 name="cod"
                                 onChange={e => this.handleChange(e)} />
                         </Form.Group>
-                        <Form.Group controlId="formGridFile">
 
+                        <Form.Group controlId="formGridFile">
                             <Form.File id="formcheck-api-regular">
                                 <Form.File.Label>Regular file input</Form.File.Label>
-                                <Form.File.Input />
+                                <Form.File.Input name="file" onChange={(e) => this.handleChangeFile(e)} />
                             </Form.File>
                         </Form.Group>
 

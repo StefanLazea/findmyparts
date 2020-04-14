@@ -19,7 +19,7 @@ function App() {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav variant="pills" className="ml-auto">
             <Nav.Link as={Link} to="/add/part">Adauga piesa</Nav.Link>
-            <Nav.Link as={Link} to="/signup">Signup</Nav.Link>
+            <Nav.Link as={Link} to="/login">Login</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
