@@ -1,8 +1,6 @@
 const router = require('express').Router();
 const Parts = require('../models').Part;
 const PartsService = require('../services/part');
-const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
 const path = require("path");
 
 router.get("/parts", async (req, res) => {
