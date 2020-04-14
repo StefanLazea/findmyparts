@@ -16,6 +16,7 @@ export default class AddPart extends React.Component {
             denumire: "",
             cantitate: 0,
             cod: "",
+            file: null,
             redirectToHome: false
         }
     }

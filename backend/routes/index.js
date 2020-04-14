@@ -1,6 +1,8 @@
 const router = require('express').Router();
 const Parts = require('../models').Part;
 const PartsService = require('../services/part');
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
 
 router.get("/parts", async (req, res) => {
     try {
@@ -11,14 +13,14 @@ router.get("/parts", async (req, res) => {
     }
 });
 
-router.post("/parts", async (req, res) => {
+router.post("/parts", upload.single('partImage'), async (req, res) => {
+    console.log(req.file);
     let parts = {
         name: req.body.name,
         code: req.body.code,
         photo: req.body.photo,
         stock: req.body.stock
     }
-
     if (await PartsService.findPartByCode(parts.code) === null) {
 
         try {
@@ -30,6 +32,5 @@ router.post("/parts", async (req, res) => {
     }
     return res.status(400).send({ message: "Part is already in" })
 });
-
 
 module.exports = router;
