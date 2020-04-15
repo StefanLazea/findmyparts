@@ -22,7 +22,7 @@ router.post("/parts", async (req, res) => {
         image.mv(location, err => {
             if (err) {
                 console.log(err);
-                throw err;
+                return res.status(500).send({ message: "A aparut o eroare la incarcarea imaginii!" })
             }
         });
     }
