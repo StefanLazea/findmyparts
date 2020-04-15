@@ -13,13 +13,11 @@ export default function Home() {
     const [isLogged, setLogged] = useState(false);
     useEffect(() => {
         Axios.get(`${getBasename()}/api/parts`).then((res) => {
-            console.log(res, res.data);
             setParts(res.data.message);
         });
     }, []);
 
     const deletePart = () => {
-        console.log("sterg")
     }
 
     return (
