@@ -5,31 +5,17 @@ import App from './App';
 import { store } from './app/store';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
-import { createTheme } from '@material-ui/core/styles';
-import { ThemeProvider } from '@material-ui/core/styles';
+import { BrowserRouter } from 'react-router-dom';
+import { NavigationBar } from './components/navigation-bar/NavigationBar'
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      light: '#31506B',
-      main: '#1C2541',
-      dark: '#0B132B',
-      contrastText: '#fff',
-    },
-    secondary: {
-      light: '#B4CDED',
-      main: '#344966',
-      dark: '#0D1821',
-      contrastText: '#fff',
-    },
-  },
-});
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ThemeProvider theme={theme}>
+      <BrowserRouter>
+        <NavigationBar />
         <App />
-      </ThemeProvider>
+      </BrowserRouter>
+
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

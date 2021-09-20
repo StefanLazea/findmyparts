@@ -10,10 +10,12 @@ import {
 
 function App() {
   return (
-    <Router>
-      <Route exact path="/" component={Home} />
-      <Route path="/parts" component={Parts} />
-    </Router>
+    <div className="app">
+      <Router>
+        <Route exact path="/" component={Home} />
+        <Route path="/parts" component={Parts} />
+      </Router>
+    </div>
   );
 }
 

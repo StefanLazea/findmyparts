@@ -1,13 +1,9 @@
 import React from 'react';
-import { Button } from '@material-ui/core';
-
+import { Button, Container } from 'react-bootstrap';
+import './Home.scss'
 export const Home = (props) => {
     return (
-        <div className="App">
-            <Button variant="contained"
-                color="secondary">Hello World</Button>
-
-        </div>
+        <Button variant="outline-primary">Primary</Button>
     );
 }
 
