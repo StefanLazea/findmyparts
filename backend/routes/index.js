@@ -5,7 +5,7 @@ const path = require("path");
 
 router.get("/parts", async (req, res) => {
     try {
-        await Parts.findAll().then((allParts) => { return res.status(200).send({ message: allParts }) });
+        await Parts.findAll().then((allParts) => { return res.status(200).send(allParts) });
     }
     catch (err) {
         return res.status(409).send({ message: "No elements found in the database" });
