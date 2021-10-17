@@ -1,0 +1,4 @@
+todo
+- private routes
+- auth fb/gmail/cont
+- db -> sequelize or mongoose
