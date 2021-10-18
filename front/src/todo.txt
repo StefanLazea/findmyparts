@@ -2,3 +2,6 @@ todo
 - private routes
 - auth fb/gmail/cont
 - db -> sequelize or mongoose
+
+
+https://www.npmjs.com/package/react-horizontal-timeline
