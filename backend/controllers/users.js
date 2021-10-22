@@ -13,10 +13,14 @@ const googleAuth = async (req, res) => {
     console.log({ client })
     console.log({ req });
     const { token } = req.body
+    //todo: validate token
     const ticket = await client.verifyIdToken({
         idToken: token,
         audience: process.env.CLIENT_ID
     });
+    if (!ticket) {
+        return res.send({ message: 'Failed to authenticate' })
+    }
     const { name, email, picture } = ticket.getPayload();
     console.log({ payload: ticket.getPayload() })
     // const user = await db.user.upsert({
@@ -27,7 +31,8 @@ const googleAuth = async (req, res) => {
     // console.log(user);
     // res.status(201)
     // res.json(user)
-    return res.send({ message: 'Success' })
+
+    return res.send({ message: 'Success', token: token });
 }
 
 module.exports = { createUser, getAllUsers, googleAuth }

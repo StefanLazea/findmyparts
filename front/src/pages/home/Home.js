@@ -1,12 +1,13 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
 import './Home.scss'
 import { GoogleLogin } from 'react-google-login';
+import { toast } from 'react-toastify';
 
 export const Home = (props) => {
 
     const handleLogin = async googleData => {
         console.log('googleData', googleData);
+        //todo: change
         const res = await fetch("http://localhost:3005/api/auth/google", {
             method: "POST",
             body: JSON.stringify({
@@ -15,8 +16,11 @@ export const Home = (props) => {
             headers: {
                 "Content-Type": "application/json"
             }
-        })
+        });
         const data = await res.json()
+        console.log(data)
+        //todo: validation on res
+        toast(data.message);
         // store returned user somehow
     }
     return (

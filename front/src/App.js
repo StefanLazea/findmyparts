@@ -10,9 +10,11 @@ import { AuthPage } from './pages/auth/AuthPage';
 import { Register } from './pages/auth/Register';
 import { Login } from './pages/auth/Login';
 import { Container } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 import { NavigationBar } from './components/navigation-bar/NavigationBar';
 import './App.scss';
-
+import 'react-toastify/dist/ReactToastify.css';
+toast.configure();
 function App() {
   const isAuth = true;
   return (
