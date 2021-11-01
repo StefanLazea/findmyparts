@@ -11,6 +11,7 @@ export const NavigationBar = (props) => {
                     <Nav>
                         <Nav.Link href="/">Acasa</Nav.Link>
                         <Nav.Link eventKey={2} href="/parts">Piese</Nav.Link>
+                        <Nav.Link eventKey={3} href="/login">Login</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>

@@ -15,8 +15,14 @@ import { NavigationBar } from './components/navigation-bar/NavigationBar';
 import './App.scss';
 import 'react-toastify/dist/ReactToastify.css';
 toast.configure();
+
+const checkTokenValidity = () => {
+  console.log(localStorage.getItem('token'));
+  return true;
+}
+
 function App() {
-  const isAuth = true;
+  const isAuth = checkTokenValidity();
   return (
     <div className="app">
       {isAuth && <NavigationBar />}

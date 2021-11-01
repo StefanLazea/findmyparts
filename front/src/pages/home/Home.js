@@ -1,43 +1,33 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import './Home.scss'
-import { GoogleLogin } from 'react-google-login';
-import { toast } from 'react-toastify';
-
+import { Image, Button } from 'react-bootstrap';
 export const Home = (props) => {
+    const inputRef = useRef();
+    const [imgSrc, setImgSrc] = useState("https://via.placeholder.com/300")
+    const [uploadFileName, setUploadFileName] = useState("")
+    const handleUpload = () => {
+        inputRef.current?.click()
+    }
+    const handleChange = (ev) => {
+        const fileUploaded = ev.target.files[0];
+        setUploadFileName(fileUploaded.name)
+        setImgSrc(URL.createObjectURL(fileUploaded))
+        console.log(fileUploaded)
 
-    const handleLogin = async googleData => {
-        console.log('googleData', googleData);
-        //todo: change
-        const res = await fetch("http://localhost:3005/api/auth/google", {
-            method: "POST",
-            body: JSON.stringify({
-                token: googleData.tokenId
-            }),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        });
-        const data = await res.json()
-        console.log(data)
-        //todo: validation on res
-        toast(data.message);
-        // store returned user somehow
     }
     return (
-        // <GoogleLogin
-        //     clientId="142016303094-jsoj7h3eeavgf9ne9ij9ugb6k48m9qa2.apps.googleusercontent.com"
-        //     buttonText="Login"
-        //     onSuccess={responseGoogle}
-        //     onFailure={responseGoogle}
-        //     cookiePolicy={'single_host_origin'}
-        // />
-        <GoogleLogin
-            clientId="142016303094-jsoj7h3eeavgf9ne9ij9ugb6k48m9qa2.apps.googleusercontent.com"
-            buttonText="Log in with Google"
-            onSuccess={handleLogin}
-            onFailure={handleLogin}
-            cookiePolicy={'single_host_origin'}
-        />
+        <div className="home-page">
+            <div className="image-view">
+                <Image src={imgSrc} width={300} height={300} rounded />
+
+                <div className='upload-input'>
+                    <input ref={inputRef} className="input" type="file" onChange={handleChange} />
+                    <Button onClick={handleUpload}>Upload</Button>
+                    <div className="file-label">{uploadFileName}</div>
+                </div>
+
+            </div>
+        </div>
     );
 }
 
