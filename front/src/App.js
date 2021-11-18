@@ -17,7 +17,7 @@ import 'react-toastify/dist/ReactToastify.css';
 toast.configure();
 
 const checkTokenValidity = () => {
-  console.log(localStorage.getItem('token'));
+  // console.log(localStorage.getItem('token'));
   return true;
 }
 
