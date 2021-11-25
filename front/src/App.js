@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   BrowserRouter as Router,
   Route,
+  useHistory,
+  Redirect
 } from "react-router-dom";
 
 import { Home } from './pages/home/Home';
@@ -16,17 +18,21 @@ import './App.scss';
 import 'react-toastify/dist/ReactToastify.css';
 toast.configure();
 
-const checkTokenValidity = () => {
-  // console.log(localStorage.getItem('token'));
-  return true;
-}
-
 function App() {
-  const isAuth = checkTokenValidity();
+  const [isAuth, setIsAuth] = useState(true);
+
+  const triggerLogOut = () => {
+    console.log('aici', localStorage.getItem('token'))
+    if (!localStorage.getItem('token')) {
+      setIsAuth(false)
+    }
+  }
+
   return (
     <div className="app">
-      {isAuth && <NavigationBar />}
-      <Container className='page-container'>
+      {!isAuth && <Redirect to='/login' />}
+      {isAuth && <NavigationBar triggerLogOut={triggerLogOut} />}
+      <Container className='page-container' >
         <Router>
           <Route exact path="/" component={Home} />
           <Route path="/parts" component={Parts} />

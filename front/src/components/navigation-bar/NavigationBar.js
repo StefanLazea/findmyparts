@@ -2,6 +2,8 @@ import React from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 
 export const NavigationBar = (props) => {
+
+
     return (
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
             <Container>
@@ -12,10 +14,11 @@ export const NavigationBar = (props) => {
                         <Nav.Link href="/">Acasa</Nav.Link>
                         <Nav.Link eventKey={2} href="/parts">Piese</Nav.Link>
                         <Nav.Link eventKey={3} href="/login">Login</Nav.Link>
+                        <Nav.Link eventKey={3} onClick={() => props.triggerLogOut()}>Log out</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
-            </Container>
-        </Navbar>
+            </Container >
+        </Navbar >
     );
 }
 
