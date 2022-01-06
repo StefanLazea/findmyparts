@@ -17,7 +17,7 @@ dotenv.config();
 const PORT = process.env.PORT;
 model.sequelize.sync();
 
-app.use('/', express.static('../frontend/build'));
+app.use('/', express.static('../front-end/build'));
 
 app.use('/api', routes);
 
