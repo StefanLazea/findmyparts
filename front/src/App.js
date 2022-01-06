@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import {
-  BrowserRouter as Router,
+  BrowserRouter,
   Route,
   useHistory,
+  Switch,
   Redirect
 } from "react-router-dom";
 
@@ -16,10 +17,14 @@ import { toast } from 'react-toastify';
 import { NavigationBar } from './components/navigation-bar/NavigationBar';
 import './App.scss';
 import 'react-toastify/dist/ReactToastify.css';
+import { Button, } from 'react-bootstrap';
 toast.configure();
-
+const getBasename = () => {
+  return `/`;
+};
 function App() {
   const [isAuth, setIsAuth] = useState(true);
+  const history = useHistory();
 
   const triggerLogOut = () => {
     console.log('aici', localStorage.getItem('token'))
@@ -31,19 +36,26 @@ function App() {
   return (
     <div className="app">
       {!isAuth && <Redirect to='/login' />}
-      {isAuth && <NavigationBar triggerLogOut={triggerLogOut} />}
-      <Container className='page-container' >
-        <Router>
-          <Route exact path="/" component={Home} />
-          <Route path="/parts" component={Parts} />
-          <Route path="/cars" component={Parts} />
-          <Route path="/papers" component={Parts} />
-          <Route path="/register" component={Register} />
-          <Route path="/auth" component={AuthPage} />
-          <Route path="/login" component={Login} />
-        </Router>
-      </Container>
-    </div>
+
+
+      <BrowserRouter basename='/'>
+        {isAuth && <NavigationBar triggerLogOut={triggerLogOut} />}
+
+        <Container className='page-container' >
+          {/* <React.Suspense> */}
+          <Switch>
+            <Route path="/home" exact component={Home} />
+            <Route path="/parts" component={Parts} />
+            <Route path="/register" component={Register} />
+            <Route path="/auth" component={AuthPage} />
+            <Route path="/login" component={Login} />
+
+            {/* </React.Suspense> */}
+          </Switch>
+        </Container>
+
+      </BrowserRouter>
+    </div >
   );
 }
 
