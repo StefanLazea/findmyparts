@@ -1,14 +1,10 @@
 import React from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
-import { MdHistoryEdu } from 'react-icons/md';
 import {
-    Link,
-    useHistory
+    Link
 } from 'react-router-dom';
 
 export const NavigationBar = (props) => {
-
-    const history = useHistory();
 
     return (
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
