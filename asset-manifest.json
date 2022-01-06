@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/findmyparts/static/css/main.29b00807.chunk.css",
+    "main.js": "/findmyparts/static/js/main.ed3a030e.chunk.js",
+    "main.js.map": "/findmyparts/static/js/main.ed3a030e.chunk.js.map",
+    "runtime-main.js": "/findmyparts/static/js/runtime-main.71119276.js",
+    "runtime-main.js.map": "/findmyparts/static/js/runtime-main.71119276.js.map",
+    "static/css/2.f4c56af9.chunk.css": "/findmyparts/static/css/2.f4c56af9.chunk.css",
+    "static/js/2.26027e8d.chunk.js": "/findmyparts/static/js/2.26027e8d.chunk.js",
+    "static/js/2.26027e8d.chunk.js.map": "/findmyparts/static/js/2.26027e8d.chunk.js.map",
+    "index.html": "/findmyparts/index.html",
+    "static/css/2.f4c56af9.chunk.css.map": "/findmyparts/static/css/2.f4c56af9.chunk.css.map",
+    "static/css/main.29b00807.chunk.css.map": "/findmyparts/static/css/main.29b00807.chunk.css.map",
+    "static/js/2.26027e8d.chunk.js.LICENSE.txt": "/findmyparts/static/js/2.26027e8d.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.71119276.js",
+    "static/css/2.f4c56af9.chunk.css",
+    "static/js/2.26027e8d.chunk.js",
+    "static/css/main.29b00807.chunk.css",
+    "static/js/main.ed3a030e.chunk.js"
+  ]
+}
