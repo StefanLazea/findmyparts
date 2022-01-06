@@ -1,20 +1,22 @@
 import React from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
+import {
+    Link
+} from 'react-router-dom';
 
 export const NavigationBar = (props) => {
-
 
     return (
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
             <Container>
-                <Navbar.Brand href="/">Cauta piesa</Navbar.Brand>
+                <Link to='/home'>Cauta piesa</Link>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav>
-                        <Nav.Link href="/">Acasa</Nav.Link>
-                        <Nav.Link eventKey={2} href="/parts">Piese</Nav.Link>
-                        <Nav.Link eventKey={3} href="/login">Login</Nav.Link>
-                        <Nav.Link eventKey={3} onClick={() => props.triggerLogOut()}>Log out</Nav.Link>
+                        <Link to="/home">Acasa</Link>
+                        <Link to='/parts'>Piese</Link>
+                        <Link to="/login">Login</Link>
+                        <Link onClick={() => props.triggerLogOut()}>Log out</Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container >

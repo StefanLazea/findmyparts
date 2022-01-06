@@ -8,7 +8,7 @@ export const Login = (props) => {
 
     const handleLogin = (response) => {
         console.log('googleData', response);
-        axios.post("http://localhost:3005/api/auth/google", {
+        axios.post(`${process.env.REACT_APP_BACKEND_URL}/auth/google`, {
 
             token: response.tokenId
         }, {
@@ -24,9 +24,10 @@ export const Login = (props) => {
         });
 
     }
+    console.log(process.env.REACT_APP_GOOGLE_ID)
     return (
         <GoogleLogin
-            clientId="142016303094-jsoj7h3eeavgf9ne9ij9ugb6k48m9qa2.apps.googleusercontent.com"
+            clientId={process.env.REACT_APP_GOOGLE_ID}
             buttonText="Log in with Google"
             onSuccess={(response) => handleLogin(response)}
             onFailure={(response) => handleLogin(response)}
