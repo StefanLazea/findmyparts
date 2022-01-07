@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import './Home.scss'
-import { Image, Button } from 'react-bootstrap';
+import Button from '@mui/material/Button';
 export const Home = (props) => {
     const inputRef = useRef();
     const [imgSrc, setImgSrc] = useState("https://via.placeholder.com/300")
@@ -18,8 +18,8 @@ export const Home = (props) => {
     return (
         <div className="home-page">
             <div className="image-view">
-                <Image src={imgSrc} width={300} height={300} rounded />
-
+                {/* <img src={imgSrc} width={300} height={300} rounded /> */}
+                <h1>hello</h1>
                 <div className='upload-input'>
                     <input ref={inputRef} className="input" type="file" onChange={handleChange} />
                     <Button onClick={handleUpload}>Upload</Button>
