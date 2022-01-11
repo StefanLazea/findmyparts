@@ -7,7 +7,7 @@ export const Login = (props) => {
     let history = useHistory();
 
     const handleLogin = (response) => {
-        console.log('googleData', response);
+        // console.log('googleData', response);
         axios.post(`${process.env.REACT_APP_BACKEND_URL}/auth/google`, {
 
             token: response.tokenId
@@ -15,7 +15,7 @@ export const Login = (props) => {
             "Content-Type": "application/json"
         }
         ).then((res) => {
-            console.log({ res })
+            // console.log({ res })
             if (res.data.message === 'Success') {
                 localStorage.setItem('token', res.data.token)
                 history.push('/')
@@ -24,7 +24,6 @@ export const Login = (props) => {
         });
 
     }
-    console.log(process.env.REACT_APP_GOOGLE_ID)
     return (
         <GoogleLogin
             clientId={process.env.REACT_APP_GOOGLE_ID}

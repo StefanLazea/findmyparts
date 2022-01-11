@@ -19,12 +19,12 @@ const savePart = async (req, res) => {
         let relativeLocation = "../private/images/" + req.body.code + ".png";
         location = path.resolve(__dirname, relativeLocation);
 
-        image.mv(location, err => {
-            if (err) {
-                console.log(err);
-                return res.status(500).send({ message: "A aparut o eroare la incarcarea imaginii!" })
-            }
-        });
+        // image.mv(location, err => {
+        //     if (err) {
+        //         // console.log(err);
+        //         return res.status(500).send({ message: "A aparut o eroare la incarcarea imaginii!" })
+        //     }
+        // });
     }
 
     if (req.body.code === "") {

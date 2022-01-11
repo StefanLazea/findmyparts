@@ -23,7 +23,7 @@ function App() {
   // const history = useHistory();
 
   const triggerLogOut = () => {
-    console.log('aici', localStorage.getItem('token'))
+    // console.log('aici', localStorage.getItem('token'))
     if (!localStorage.getItem('token')) {
       setIsAuth(false)
     }
