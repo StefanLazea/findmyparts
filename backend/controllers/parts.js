@@ -8,12 +8,16 @@ const getAllParts = async (req, res) => {
         await Parts.findAll().then((allParts) => { return res.status(200).send(allParts) });
     }
     catch (err) {
-        return res.status(409).send({ message: "No elements found in the database" });
+        return res.status(404).send({ message: "No elements found in the database" });
     }
 }
 
 const savePart = async (req, res) => {
+    console.log(req.body)
     let location = "";
+    if (!req.body) {
+        return res.status(500).message({ message: "You need to send body params." })
+    }
     if (req.files) {
         let image = req.files.image;
         let relativeLocation = "../private/images/" + req.body.code + ".png";
@@ -27,7 +31,7 @@ const savePart = async (req, res) => {
         // });
     }
 
-    if (req.body.code === "") {
+    if (!req.body.code) {
         return res.status(500).send({ message: "Nu puteti trimite fara cod!" });
     }
 
@@ -45,7 +49,7 @@ const savePart = async (req, res) => {
         } catch (err) {
             return res.status(500).send({ message: err });
         }
-        return res.status(200).send({ message: "Part has created successfully" })
+        return res.status(200).send({ message: "Part has been created successfully" })
     }
     return res.status(400).send({ message: "Part is already in" })
 };

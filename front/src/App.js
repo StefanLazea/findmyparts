@@ -34,22 +34,16 @@ function App() {
       {!isAuth && <Redirect to='/login' />}
 
       <BrowserRouter basename='/'>
-        {/* todo */}
-        {isAuth && <NavigationBar triggerLogOut={triggerLogOut} />}
-
-        {/* <Container className='page-container' > */}
-        {/* <React.Suspense> */}
         <Switch>
-          <Route path="/home" exact component={Home} />
-          <Route path="/parts" component={Parts} />
-          <Route path="/register" component={Register} />
-          <Route path="/auth" component={AuthPage} />
           <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
+          <div>
+            {isAuth && <NavigationBar triggerLogOut={triggerLogOut} />}
 
-          {/* </React.Suspense> */}
+            <Route path="/home" exact component={Home} />
+            <Route path="/parts" component={Parts} />
+          </div>
         </Switch>
-        {/* </Container> */}
-
       </BrowserRouter>
     </div >
   );

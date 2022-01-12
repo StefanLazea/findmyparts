@@ -2,7 +2,10 @@ import React from 'react';
 import { GoogleLogin } from 'react-google-login';
 import { toast } from 'react-toastify';
 import { useHistory } from "react-router-dom";
+import Container from '@mui/material/Container';
 import axios from "axios";
+
+import './Login.scss';
 export const Login = (props) => {
     let history = useHistory();
 
@@ -25,13 +28,17 @@ export const Login = (props) => {
 
     }
     return (
-        <GoogleLogin
-            clientId={process.env.REACT_APP_GOOGLE_ID}
-            buttonText="Log in with Google"
-            onSuccess={(response) => handleLogin(response)}
-            onFailure={(response) => handleLogin(response)}
-            cookiePolicy={'single_host_origin'}
-        />
+        <Container maxWidth="lg">
+            <div className="login-container">
+                <GoogleLogin
+                    clientId={process.env.REACT_APP_GOOGLE_ID}
+                    buttonText="Log in with Google"
+                    onSuccess={(response) => handleLogin(response)}
+                    onFailure={(response) => handleLogin(response)}
+                    cookiePolicy={'single_host_origin'}
+                />
+            </div>
+        </Container>
     );
 }
 
