@@ -1,5 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const routes = require('./routes');
 const model = require('./models');
 const dotenv = require('dotenv');
@@ -8,7 +7,7 @@ const cors = require('cors');
 const app = express();
 const path = require('path');
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
 app.use(uploader());
 app.use(cors());
 
@@ -22,7 +21,6 @@ app.use(express.static('../front/build'));
 app.use('/api', routes);
 
 app.get("*", (req, res) => {
-    console.log('aici', path.join(__dirname, "../front/public/", "index.html"))
     res.sendFile(path.join(__dirname, "../front/build", 'index.html'))
 });
 app.listen(PORT, () => {

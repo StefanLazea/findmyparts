@@ -1,47 +1,11 @@
 const router = require('express').Router();
-const partsRouter = require('./parts')
-const usersRouter = require('./auth')
-const vision = require('@google-cloud/vision');
-router.use('/parts', partsRouter)
-router.use('/auth', usersRouter)
-const fs = require('fs');
+const partsRouter = require('./parts');
+const usersRouter = require('./auth');
+const googleRouter = require('./google')
 
 
-router.get('/vision', async (req, res) => {
-    // Imports the Google Cloud client library
+router.use('/parts', partsRouter);
+router.use('/auth', usersRouter);
+router.use('/google', googleRouter);
 
-    // Creates a client
-    const client = new vision.ImageAnnotatorClient();
-    // Performs label detection on the image file
-    const [result] = await client.labelDetection("/home/stefan/Documents/projects/findmyparts/backend/routes/wakeupcat.jpg");
-    const labels = result.labelAnnotations;
-    console.log('Labels:');
-    labels.forEach(label => console.log(label.description));
-
-})
-const { TranslationServiceClient } = require('@google-cloud/translate');
-
-router.get('/translate', async (req, res) => {
-    // Instantiates a client
-    const translationClient = new TranslationServiceClient();
-
-    const projectId = 'gasestepiesa';
-    const location = 'global';
-    const text = 'Hello, world!';
-
-    const request = {
-        parent: `projects/${projectId}/locations/${location}`,
-        contents: [text],
-        mimeType: 'text/plain', // mime types: text/plain, text/html
-        sourceLanguageCode: 'en',
-        targetLanguageCode: 'es',
-    };
-
-    // Run request
-    const [response] = await translationClient.translateText(request);
-
-    for (const translation of response.translations) {
-        console.log(`Translation: ${translation.translatedText}`);
-    }
-})
 module.exports = router;
