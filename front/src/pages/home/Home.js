@@ -1,6 +1,13 @@
 import React, { useRef, useState } from 'react';
-import './Home.scss'
+import _ from "lodash";
+
 import Button from '@mui/material/Button';
+import CustomStepper from '../../components/stepper/Stepper'
+import ImageListItem from '@mui/material/ImageListItem';
+
+import './Home.scss'
+
+
 export const Home = (props) => {
     const inputRef = useRef();
     const [imgSrc, setImgSrc] = useState("https://via.placeholder.com/300")
@@ -15,18 +22,18 @@ export const Home = (props) => {
         console.log(fileUploaded)
 
     }
+    /** */
     return (
         <div className="home-page">
-            <div className="image-view">
-                {/* <img src={imgSrc} width={300} height={300} rounded /> */}
-                <h1>hello</h1>
-                <div className='upload-input'>
-                    <input ref={inputRef} className="input" type="file" onChange={handleChange} />
-                    <Button onClick={handleUpload}>Upload</Button>
-                    <div className="file-label">{uploadFileName}</div>
-                </div>
+            <img
+                src={imgSrc}
+                alt={"to update"}
+                className='img'
+                loading="lazy"
+            />
 
-            </div>
+            <CustomStepper />
+
         </div>
     );
 }

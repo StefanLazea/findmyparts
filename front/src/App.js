@@ -39,7 +39,6 @@ function App() {
           <Route path="/register" component={Register} />
           <div>
             {isAuth && <NavigationBar triggerLogOut={triggerLogOut} />}
-
             <Route path="/home" exact component={Home} />
             <Route path="/parts" component={Parts} />
           </div>

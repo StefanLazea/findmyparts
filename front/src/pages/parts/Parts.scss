@@ -1,3 +1,9 @@
+.header-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 .switch-button {
     display: flex;
     flex-direction: row;
