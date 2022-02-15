@@ -2,8 +2,9 @@ import React, { useRef, useState } from 'react';
 import _ from "lodash";
 
 import Button from '@mui/material/Button';
+import Input from '@mui/material/Input';
+
 import CustomStepper from '../../components/stepper/Stepper'
-import ImageListItem from '@mui/material/ImageListItem';
 
 import './Home.scss'
 
@@ -31,7 +32,12 @@ export const Home = (props) => {
                 className='img'
                 loading="lazy"
             />
-
+            <label htmlFor="contained-button-file">
+                <Input accept="image/*" className="upload-file" multiple type="file" />
+                <Button variant="contained" component="span">
+                    Upload
+                </Button>
+            </label>
             <CustomStepper />
 
         </div>

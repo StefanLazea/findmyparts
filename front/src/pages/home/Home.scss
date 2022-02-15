@@ -12,28 +12,6 @@
     width: 300px;
     height: 300px;
 }
-// .image-view{
-//     display: flex;
-//     flex-direction:column;
-//     align-items: center;
-//     gap: 10px;
-// }
-
-// .input{
-//     display: none;
-// }
-
-// .upload-input{
-//     width: 100%;
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-//     gap: 5px;
-// }
-
-// .file-label{
-//     width: 30%;
-//     white-space: nowrap;
-//     overflow: hidden;
-//     text-overflow: ellipsis;
-// }
+.upload-file {
+    display: none;
+}
