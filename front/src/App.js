@@ -9,7 +9,6 @@ import {
 
 import { Home } from './pages/home/Home';
 import { Parts } from './pages/parts/Parts'
-import { AuthPage } from './pages/auth/AuthPage';
 import { Register } from './pages/auth/Register';
 import { Login } from './pages/auth/Login';
 import { toast } from 'react-toastify';

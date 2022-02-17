@@ -4,14 +4,14 @@ import { toast } from 'react-toastify';
 import { useHistory } from "react-router-dom";
 import Container from '@mui/material/Container';
 import axios from "axios";
-
 import './Login.scss';
 export const Login = (props) => {
     let history = useHistory();
+    console.log(process.env.REACT_APP_GOOGLE_ID)
 
     const handleLogin = (response) => {
         // console.log('googleData', response);
-        axios.post(`${process.env.REACT_APP_BACKEND_URL}/auth/google`, {
+        axios.post(`/auth/google`, {
 
             token: response.tokenId
         }, {

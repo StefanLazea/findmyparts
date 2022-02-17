@@ -7,7 +7,6 @@ import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
 import axios from 'axios';
-// console.log(process.env.REACT_APP_BACKEND_URL)
 axios.defaults.baseURL = 'http://localhost:3005/api';
 
 ReactDOM.render(
