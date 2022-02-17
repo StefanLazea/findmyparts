@@ -11,3 +11,16 @@
 .upload-file {
     display: none !important;
 }
+
+.steps-header{
+    margin-top: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.step-container {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
