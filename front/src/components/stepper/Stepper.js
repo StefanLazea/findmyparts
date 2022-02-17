@@ -141,12 +141,11 @@ ColorlibStepIcon.propTypes = {
     icon: PropTypes.node,
 };
 
-const steps = ['Asigurare', 'Rovigneta', 'ITP'];
 
-export default function CustomStepper({ step = 0, ...props }) {
+export default function CustomStepper({ currentStep = 0, steps, ...props }) {
     return (
 
-        <Stepper sx={{ width: '600px' }} alternativeLabel activeStep={step} connector={<ColorlibConnector />}>
+        <Stepper sx={{ width: '600px' }} alternativeLabel activeStep={currentStep} connector={<ColorlibConnector />}>
             {steps.map((label) => (
                 <Step key={label}>
                     <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>

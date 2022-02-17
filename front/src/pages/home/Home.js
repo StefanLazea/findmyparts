@@ -13,15 +13,20 @@ export const Home = (props) => {
     const inputRef = useRef();
     const [imgSrc, setImgSrc] = useState("https://via.placeholder.com/300")
     const [uploadFileName, setUploadFileName] = useState("")
-    const handleUpload = () => {
+    const [step, setStep] = useState(0);
+    const steps = ['Asigurare', 'Rovigneta', 'ITP'];
+
+
+    const handleUpload = (e) => {
+        console.log(e)
         inputRef.current?.click()
     }
+
     const handleChange = (ev) => {
         const fileUploaded = ev.target.files[0];
         setUploadFileName(fileUploaded.name)
         setImgSrc(URL.createObjectURL(fileUploaded))
         console.log(fileUploaded)
-
     }
     /** */
     return (
@@ -33,12 +38,12 @@ export const Home = (props) => {
                 loading="lazy"
             />
             <label htmlFor="contained-button-file">
-                <Input accept="image/*" className="upload-file" multiple type="file" />
-                <Button variant="contained" component="span">
+                <input ref={inputRef} className="upload-file" type="file" onChange={handleChange} />
+                <Button variant="contained" component="span" onClick={handleUpload}>
                     Upload
                 </Button>
             </label>
-            <CustomStepper />
+            <CustomStepper currentStep={step} steps={steps} />
 
         </div>
     );
