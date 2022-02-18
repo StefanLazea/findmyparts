@@ -10,7 +10,6 @@ export const Login = (props) => {
     console.log(process.env.REACT_APP_GOOGLE_ID)
 
     const handleLogin = (response) => {
-        // console.log('googleData', response);
         axios.post(`/auth/google`, {
 
             token: response.tokenId
