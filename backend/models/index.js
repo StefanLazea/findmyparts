@@ -3,6 +3,7 @@ const User = sequelize.import('./users');
 const Part = sequelize.import('./parts');
 const Stocks = sequelize.import('./stocks');
 const Cars = sequelize.import('./cars');
+const Documents = sequelize.import('./documents');
 
 // User.hasMany(Part);
 // Part.belongsTo(User);
@@ -12,9 +13,10 @@ Part.belongsToMany(User, { through: Stocks });
 
 User.hasMany(Cars);
 Cars.belongsTo(User);
-//Todo
-// Part.belongsToMany(Car, { through: 'compatibilities' });
-// Car.belongsToMany(Part, { through: 'compatibilities' });
+
+Cars.hasMany(Documents);
+Documents.belongsTo(Cars);
+
 
 module.exports = {
     User,

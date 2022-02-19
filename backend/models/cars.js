@@ -3,6 +3,8 @@ module.exports = (sequelize, DataTypes) => {
         'VIN': DataTypes.STRING,
         'numberPlate': DataTypes.STRING,
         'model': DataTypes.STRING,
+        'brand': DataTypes.STRING,
+        'type': DataTypes.STRING,
         'isEco': {
             type: DataTypes.BOOLEAN,
             defaultValue: false,
@@ -10,7 +12,8 @@ module.exports = (sequelize, DataTypes) => {
         'isHistoric': {
             type: DataTypes.BOOLEAN,
             defaultValue: false,
-        }
+        },
+
 
     });
 }
