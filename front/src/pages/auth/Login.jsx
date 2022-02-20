@@ -1,5 +1,7 @@
 import React from 'react';
 import { GoogleLogin } from 'react-google-login';
+import { GoogleLogout } from 'react-google-login';
+
 import { toast } from 'react-toastify';
 import { useHistory } from "react-router-dom";
 import Container from '@mui/material/Container';
@@ -34,8 +36,17 @@ export const Login = (props) => {
                     buttonText="Log in with Google"
                     onSuccess={(response) => handleLogin(response)}
                     onFailure={(response) => handleLogin(response)}
+                    prompt="select_account"
                     cookiePolicy={'single_host_origin'}
                 />
+                <GoogleLogout
+                    clientId={process.env.REACT_APP_GOOGLE_ID}
+                    buttonText="Logout"
+                    onLogoutSuccess={(response) => localStorage.clear()}
+                    onFailure={(response) => console.log(response)}
+                >
+                </GoogleLogout>
+
             </div>
         </Container>
     );
