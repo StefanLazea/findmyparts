@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     Link
 } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-// import Link from '@mui/material/Link';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
@@ -17,28 +16,22 @@ import MenuItem from '@mui/material/MenuItem';
 import './NavigationBar.scss'
 const pages = [
     { name: 'Piese', link: '/parts' },
+    { name: 'Masini', link: '/cars' },
     { name: 'Acasa', link: '/home' },
-    { name: 'Login', link: '/login' }
+    { name: 'Login', link: '/login' },
 ];
 
 export const NavigationBar = (props) => {
-    const [anchorElNav, setAnchorElNav] = React.useState(null);
-    // const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const [anchorElNav, setAnchorElNav] = useState(null);
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
     };
-    // const handleOpenUserMenu = (event) => {
-    //     setAnchorElUser(event.currentTarget);
-    // };
 
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
     };
 
-    // const handleCloseUserMenu = () => {
-    //     setAnchorElUser(null);
-    // };
     return (
         <AppBar position="static">
             <Container maxWidth="xl">
@@ -110,6 +103,13 @@ export const NavigationBar = (props) => {
                                 <Link to={page.link} className="text white">{page.name}</Link>
                             </Button>
                         ))}
+                        <Button
+                            onClick={handleCloseNavMenu}
+                            sx={{ my: 2, color: 'white', display: 'block' }}
+                        >
+                            Logout
+                        </Button>
+
                     </Box>
                 </Toolbar>
             </Container>

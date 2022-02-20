@@ -1,7 +1,5 @@
 const Parts = require('../models').Part;
 const PartsService = require('../services/part');
-const path = require("path");
-
 
 const getAllParts = async (req, res) => {
     try {
@@ -18,32 +16,16 @@ const savePart = async (req, res) => {
     if (!req.body) {
         return res.status(500).message({ message: "You need to send body params." })
     }
-    if (req.files) {
-        let image = req.files.image;
-        let relativeLocation = "../private/images/" + req.body.code + ".png";
-        location = path.resolve(__dirname, relativeLocation);
-
-        // image.mv(location, err => {
-        //     if (err) {
-        //         // console.log(err);
-        //         return res.status(500).send({ message: "A aparut o eroare la incarcarea imaginii!" })
-        //     }
-        // });
-    }
 
     if (!req.body.code) {
         return res.status(500).send({ message: "Nu puteti trimite fara cod!" });
     }
 
     let parts = {
-        name: req.body.name,
-        code: req.body.code,
-        photo: location,
-        stock: req.body.stock,
+        ...req.body
     }
 
     if (await PartsService.findPartByCode(parts.code) === null) {
-
         try {
             await Parts.create(parts);
         } catch (err) {
@@ -54,7 +36,27 @@ const savePart = async (req, res) => {
     return res.status(400).send({ message: "Part is already in" })
 };
 
+const updatePart = async (req, res) => {
+    console.log(req.params.partId)
+
+    return res.status(400).send({ message: "Part is already in" })
+};
+
+const deletePart = async (req, res) => {
+    const paramId = req.params.partId;
+    console.log(paramId)
+    const part = await PartsService.findPartById(paramId)
+    console.log(part)
+    if (!part) {
+        return res.status(404).send({ message: "Part not found" })
+    }
+
+    await part.destroy().then(() => { return res.send({ message: "Part deleted" }) });
+};
+
 module.exports = {
     getAllParts,
-    savePart
+    savePart,
+    updatePart,
+    deletePart
 }

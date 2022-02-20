@@ -17,20 +17,23 @@ const googleAuth = async (req, res) => {
     if (!token || _.isEmpty(token)) {
         return res.status(400).send({ message: 'No token found. Please use another way to auth.' })
     }
+
     const ticket = await client.verifyIdToken({
         idToken: token,
         audience: process.env.CLIENT_ID
     });
+
     if (!ticket) {
         return res.send({ message: 'Failed to authenticate' })
     }
+
     const { name, email, picture } = ticket.getPayload();
     const user = await User.upsert({
         name: name, email: email, picture: picture, authType: true, updatedAt: Date.now(),
     })
     console.log(user);
 
-    return res.send({ message: 'Success', token: token });
+    return res.send({ message: 'Success', token: token, user: { name, email, picture } });
 }
 
 module.exports = { createUser, getAllUsers, googleAuth }

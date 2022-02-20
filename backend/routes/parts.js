@@ -6,5 +6,6 @@ const PartsController = require('../controllers/parts');
 router.get("/", PartsController.getAllParts);
 
 router.post("/savePart", PartsController.savePart);
+router.delete("/:partId", PartsController.deletePart);
 
 module.exports = router;
