@@ -61,11 +61,13 @@ function App() {
         {!isAuth && <Redirect to='/login' />}
 
         <BrowserRouter basename='/'>
+          {/* DO NOT USE component like bellow in a Switch statement */}
+          {isAuth && <NavigationBar triggerLogOut={triggerLogOut} />}
+
           <Switch>
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
             <div>
-              {isAuth && <NavigationBar triggerLogOut={triggerLogOut} />}
               <Route path="/home" exact component={Home} />
               <Route path="/parts" component={Parts} />
               <Route path="/cars" component={Cars} />

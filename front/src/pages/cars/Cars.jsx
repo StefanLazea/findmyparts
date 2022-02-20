@@ -2,21 +2,23 @@ import React, { useState, useEffect } from 'react';
 
 import Container from '@mui/material/Container';
 import { CustomCard } from './CustomCard';
+import Grid from '@mui/material/Grid';
 
 import "./Cars.scss";
 
 export const Cars = (props) => {
 
     return (
-        <Container maxWidth="lg" >
-            <div className='cars-page'>
-                <CustomCard />
-                <CustomCard />
-                <CustomCard />
-            </div>
-            {/* add grid or flex when mapping through the cars */}
-
-        </Container>
+        <div className='cars-page'>
+            <Container>
+                {/* todo spacing right incorrect */}
+                <Grid container spacing={1}>
+                    <CustomCard />
+                    <CustomCard />
+                    <CustomCard />
+                </Grid>
+            </Container>
+        </div>
     );
 }
 
