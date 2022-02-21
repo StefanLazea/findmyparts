@@ -3,14 +3,12 @@ import { GoogleLogin } from 'react-google-login';
 import { GoogleLogout } from 'react-google-login';
 
 import { toast } from 'react-toastify';
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router";
 import Container from '@mui/material/Container';
 import axios from "axios";
 import './Login.scss';
 export const Login = (props) => {
-    let history = useHistory();
-    console.log(process.env.REACT_APP_GOOGLE_ID)
-
+    let navigate = useNavigate();
     const handleLogin = (response) => {
         axios.post(`/auth/google`, {
 
@@ -19,10 +17,9 @@ export const Login = (props) => {
             "Content-Type": "application/json"
         }
         ).then((res) => {
-            // console.log({ res })
             if (res.data.message === 'Success') {
                 localStorage.setItem('token', res.data.token)
-                history.push('/')
+                navigate.push('/')
             }
             toast(res.data.message);
         });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from "react-router-dom";
+import { useNavigate } from 'react-router';
 
 import Container from '@mui/material/Container';
 import { CustomCard } from './components/CustomCard';
@@ -8,7 +8,7 @@ import Grid from '@mui/material/Grid';
 import "./Cars.scss";
 
 export const Cars = (props) => {
-    let history = useHistory();
+    const navigate = useNavigate();
 
     const MOCK = [
         {
@@ -59,7 +59,15 @@ export const Cars = (props) => {
                 <Grid container rowSpacing={4} spacing={{ xs: 1, md: 3 }} columns={{ xs: 1, sm: 8, md: 12 }}>
                     {MOCK.map((car, index) =>
                         <Grid item xs={1} sm={4} md={4} key={index}>
-                            <CustomCard md={12} key={car.VIN} carData={car} onClick={() => history.push("/car-profile")} />
+                            <CustomCard
+                                md={12}
+                                key={car.VIN}
+                                carData={car}
+                                onClick={() =>
+                                    navigate("/car-profile", {
+                                        state: { room: "test" }
+                                    })
+                                } />
                         </Grid >
                     )}
                 </Grid>

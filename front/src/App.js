@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import {
-  BrowserRouter,
   Route,
-  Switch,
-  Redirect
+  Routes,
+  Navigate
 } from "react-router-dom";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
@@ -60,31 +59,25 @@ function App() {
 
       <div className="app">
 
-        {!isAuth && <Redirect to='/login' />}
+        {!isAuth && <Navigate to='/login' />}
 
-        <BrowserRouter basename='/'>
-          {/* DO NOT USE component like bellow in a Switch statement */}
-          {isAuth && <NavigationBar triggerLogOut={triggerLogOut} />}
+        {/* DO NOT USE component like bellow in a Switch statement */}
+        {isAuth && <NavigationBar triggerLogOut={triggerLogOut} />}
 
-          <Switch>
-            {/* non private routes */}
+        <Routes>
+          {/* non private routes */}
 
-            <Route path="/login" component={Login} />
-            <Route path="/register" component={Register} />
-            <Route path="/find-part" component={FindPart} />
-            {/* TBD is this remains like this */}
-            <Route path="/car-profile" component={CarProfile} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/find-part" element={<FindPart />} />
+          {/* TBD is this remains like this */}
+          <Route path="/car-profile" element={<CarProfile />} />
 
-
-            {/* TODO: private routes */}
-            <Route path="/home" exact component={Home} />
-            <Route path="/parts" component={Parts} />
-            <Route path="/cars" component={Cars} />
-
-
-
-          </Switch>
-        </BrowserRouter>
+          {/* TODO: private routes */}
+          <Route path="/home" exact element={<Home />} />
+          <Route path="/parts" element={<Parts />} />
+          <Route path="/cars" element={<Cars />} />
+        </Routes>
       </div >
     </ThemeProvider>
 
