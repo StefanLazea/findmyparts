@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   BrowserRouter,
   Route,
-  useHistory,
   Switch,
   Redirect
 } from "react-router-dom";
@@ -10,6 +9,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import { Home } from './pages/home/Home';
 import { Parts } from './pages/parts/Parts'
+import { FindPart } from './pages/parts/find-part/FindPart'
 import { Cars } from './pages/cars/Cars';
 import { Register } from './pages/auth/Register';
 import { Login } from './pages/auth/Login';
@@ -65,11 +65,19 @@ function App() {
           {isAuth && <NavigationBar triggerLogOut={triggerLogOut} />}
 
           <Switch>
+            {/* non private routes */}
+
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
+            <Route path="/findPart" component={FindPart} />
+
+            {/* TODO: private routes */}
             <Route path="/home" exact component={Home} />
             <Route path="/parts" component={Parts} />
             <Route path="/cars" component={Cars} />
+
+
+
           </Switch>
         </BrowserRouter>
       </div >

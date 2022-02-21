@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
-import SettingsIcon from '@mui/icons-material/Settings';
-import GroupAddIcon from '@mui/icons-material/GroupAdd';
-import VideoLabelIcon from '@mui/icons-material/VideoLabel';
+import CarRepairIcon from '@mui/icons-material/CarRepair';
+import DocumentScannerIcon from '@mui/icons-material/DocumentScanner';
+import EditRoadIcon from '@mui/icons-material/EditRoad';
 import Button from '@mui/material/Button';
 
 import CustomStepper from '../../components/stepper/Stepper'
@@ -12,13 +12,12 @@ import './Home.scss'
 export const Home = (props) => {
     const inputRef = useRef();
     const [imgSrc, setImgSrc] = useState("https://via.placeholder.com/300")
-    const [uploadFileName, setUploadFileName] = useState("")
+    const [, setUploadFileName] = useState("")
     const [step, setStep] = useState(-1);
     const stepsConfig = [
-        { label: 'ITP', icon: <SettingsIcon /> },
-        { label: 'Asigurare', icon: <GroupAddIcon /> },
-        { label: 'Rovigneta', icon: <VideoLabelIcon /> }];
-
+        { label: 'ITP', icon: <CarRepairIcon /> },
+        { label: 'Asigurare', icon: <DocumentScannerIcon /> },
+        { label: 'Rovigneta', icon: <EditRoadIcon /> }];
 
     const handleUpload = (e) => {
         console.log(e)
