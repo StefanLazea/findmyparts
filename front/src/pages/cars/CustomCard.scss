@@ -1,7 +1,13 @@
 .custom-card {
     margin-top: 20px;
-    padding: 10px 0 10px 10px;
+    //change percent to em/rem
+    padding: 2% 0 0 2%;
+    width: 30%;
     .cars-card-content {
+        .center-typo {
+            display: flex;
+            justify-content: center;
+        }
         .check {
             display: flex;
             flex-direction: row;
