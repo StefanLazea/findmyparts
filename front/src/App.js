@@ -13,6 +13,8 @@ import { FindPart } from './pages/parts/find-part/FindPart'
 import { Cars } from './pages/cars/Cars';
 import { Register } from './pages/auth/Register';
 import { Login } from './pages/auth/Login';
+import { CarProfile } from './pages/cars/car-profile/CarProfile';
+
 import { toast } from 'react-toastify';
 import { NavigationBar } from './components/navigation-bar/NavigationBar';
 import './App.scss';
@@ -69,7 +71,10 @@ function App() {
 
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
-            <Route path="/findPart" component={FindPart} />
+            <Route path="/find-part" component={FindPart} />
+            {/* TBD is this remains like this */}
+            <Route path="/car-profile" component={CarProfile} />
+
 
             {/* TODO: private routes */}
             <Route path="/home" exact component={Home} />

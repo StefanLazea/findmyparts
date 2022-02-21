@@ -2,7 +2,9 @@
     margin-top: 20px;
     //change percent to em/rem
     padding: 2% 0 0 2%;
-    width: 30%;
+    min-width: 30%;
+    width: 350px;
+
     .cars-card-content {
         .center-typo {
             display: flex;

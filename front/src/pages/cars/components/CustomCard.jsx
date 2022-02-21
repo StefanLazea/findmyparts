@@ -13,7 +13,7 @@ export const CustomCard = ({
 ) => {
     const checkColor = (check) => check ? "info" : "error"
     return (
-        <div className='custom-card'>
+        <div className='custom-card' onClick={props.onClick}>
             <Card>
                 <CardContent>
                     <div className='cars-card-content'>

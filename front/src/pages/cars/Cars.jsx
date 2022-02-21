@@ -1,12 +1,15 @@
 import React from 'react';
+import { useHistory } from "react-router-dom";
 
 import Container from '@mui/material/Container';
-import { CustomCard } from './CustomCard';
+import { CustomCard } from './components/CustomCard';
 import Grid from '@mui/material/Grid';
 
 import "./Cars.scss";
 
 export const Cars = (props) => {
+    let history = useHistory();
+
     const MOCK = [
         {
             VIN: "UUU123HFASGDA",
@@ -53,8 +56,12 @@ export const Cars = (props) => {
         <div className='cars-page'>
             <Container>
                 {/* todo spacing right incorrect */}
-                <Grid container spacing={1}>
-                    {MOCK.map(car => <CustomCard carData={car} />)}
+                <Grid container rowSpacing={4} spacing={{ xs: 1, md: 3 }} columns={{ xs: 1, sm: 8, md: 12 }}>
+                    {MOCK.map((car, index) =>
+                        <Grid item xs={1} sm={4} md={4} key={index}>
+                            <CustomCard md={12} key={car.VIN} carData={car} onClick={() => history.push("/car-profile")} />
+                        </Grid >
+                    )}
                 </Grid>
             </Container>
         </div>
