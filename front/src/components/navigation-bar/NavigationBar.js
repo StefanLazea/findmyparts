@@ -16,6 +16,7 @@ import MenuItem from '@mui/material/MenuItem';
 import './NavigationBar.scss'
 const pages = [
     { name: 'Piese', link: '/parts' },
+    { name: 'Cauta', link: '/find-part' },
     { name: 'Masini', link: '/cars' },
     { name: 'Acasa', link: '/home' },
     { name: 'Login', link: '/login' },
