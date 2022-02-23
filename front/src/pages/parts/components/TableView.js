@@ -15,6 +15,8 @@ export const TableView = () => {
         { name: 'name', label: 'denumire' },
         { name: 'code', label: 'Cod piesa' },
         { name: 'stock', label: 'Stoc' },
+        { name: 'stock', label: 'Pret' },
+
     ]
     const [dataList, setDataList] = useState([])
 
@@ -35,12 +37,14 @@ export const TableView = () => {
                 {dataList.map(item => {
                     return <TableRow
                         key={item.name}
+                        //remove this
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     >
                         <TableCell>{item.id}</TableCell>
                         <TableCell>{item.name}</TableCell>
                         <TableCell>{item.code}</TableCell>
                         <TableCell>{item.stock}</TableCell>
+                        <TableCell>{item.price}</TableCell>
                     </TableRow>
                 })}
 

@@ -9,8 +9,6 @@ import { TableView } from './components/TableView'
 import './Parts.scss';
 
 export const Parts = (props) => {
-
-
     const [cardsView, setCardsView] = useState(false)
     const [, setOpenAddModal] = useState(false);
 
