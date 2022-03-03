@@ -29,7 +29,11 @@ const detectImage = async (req, res) => {
     // Imports the Google Cloud client library
     // const filename = "/Users/stefan/Documents/projects/findmyparts/backend/controllers/wakeupcat.jpg";
     const client = new vision.ImageAnnotatorClient({ keyFilename: GOOGLE_KEY_JSON });
-    const buf = req.files.photo.data;
+
+    const buf = req.files?.photo?.data;
+    if (!buf) {
+        return res.send(500).send({ message: "Please send also the photo!" })
+    }
     const request = {
         "image": {
             "content": Buffer.from(buf, 'base64')
