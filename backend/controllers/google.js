@@ -35,6 +35,9 @@ const detectImage = async (req, res) => {
     const buf = req.files?.photo.data;
     // console.log(req.files.photo)
 
+    //TODO send data formdata - test from postman
+    //JSON.stringify
+
     if (_.isEmpty(buf)) {
         return res.status(500).send({ message: "Please send also the photo!" })
     }
