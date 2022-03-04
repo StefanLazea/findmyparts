@@ -1,4 +1,5 @@
 const vision = require('@google-cloud/vision');
+const _ = require("lodash")
 const GOOGLE_KEY_JSON = "/Users/stefan/Documents/gasestepiesa-924dba9c251f.json"
 const { MOCK } = require('./mock');
 const { CONSTANTS, BACKEND_CONSTANTS } = require('../resources/constants');
@@ -29,10 +30,13 @@ const detectImage = async (req, res) => {
     // Imports the Google Cloud client library
     // const filename = "/Users/stefan/Documents/projects/findmyparts/backend/controllers/wakeupcat.jpg";
     const client = new vision.ImageAnnotatorClient({ keyFilename: GOOGLE_KEY_JSON });
+    console.log(JSON.parse(req.body.photo))
+    // const buf = req.files?.photo?.data;
+    const buf = req.files?.photo.data;
+    // console.log(req.files.photo)
 
-    const buf = req.files?.photo?.data;
-    if (!buf) {
-        return res.send(500).send({ message: "Please send also the photo!" })
+    if (_.isEmpty(buf)) {
+        return res.status(500).send({ message: "Please send also the photo!" })
     }
     const request = {
         "image": {
