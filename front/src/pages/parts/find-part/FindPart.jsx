@@ -12,23 +12,15 @@ export const FindPart = (props) => {
     const [detectResult, setDetectResult] = useState({})
 
     const handleUpload = (e) => {
-        console.log(e)
         inputRef.current?.click()
     }
 
     const sendToDetect = (e) => {
         const formData = new FormData();
-        console.log(uploadedFile)
         formData.append("photo", uploadedFile)
         formData.append("documentType", "rca")
 
-        axios.post("/google/detect-image", formData, {
-            headers: {
-                // "Content-Type": 'multipart/form-data'
-                "Content-Type": 'application/json'
-
-            }
-        }).then((res) => {
+        axios.post("/google/detect-image", formData).then((res) => {
             if (!_.isEmpty(res.data)) {
                 console.log("here")
             }
@@ -43,15 +35,6 @@ export const FindPart = (props) => {
         const fileUploaded = ev.target.files[0];
         setImgSrc(URL.createObjectURL(fileUploaded))
         setUploadFile(fileUploaded)
-        // console.log(fileUploaded)
-
-        // const reader = new FileReader()
-        // reader.onload = async (ev) => {
-        //     const text = (ev.target.result)
-        //     console.log(text)
-        //     setUploadFile(text)
-        // };
-        // reader.readAsArrayBuffer(ev.target.files[0])
     }
 
     return (
