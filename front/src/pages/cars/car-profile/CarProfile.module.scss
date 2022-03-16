@@ -17,4 +17,16 @@
 
 .pageContainer {
     margin: 30px;
+    .header {
+        margin-bottom: 2%;
+    }
+    .title {
+        font-size: 24px;
+        font-weight: 600;
+    }
+}
+.carDetails {
+    display: flex;
+    flex-direction: row;
+    gap: 2%;
 }

@@ -3,6 +3,9 @@ import CarRepairIcon from '@mui/icons-material/CarRepair';
 import DocumentScannerIcon from '@mui/icons-material/DocumentScanner';
 import EditRoadIcon from '@mui/icons-material/EditRoad';
 import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import AddIcon from '@mui/icons-material/Add';
+import TextField from '@mui/material/TextField';
 
 //TODO imports refactoring
 import CustomStepper from '../../../components/stepper/Stepper';
@@ -32,9 +35,39 @@ export const CarProfile = (props) => {
     return (
         <div className={styles.pageContainer}>
             <div className={styles.header}>
-                <span>Masina ta, AG 77 VOB </span>
+                <span className={styles.title}>Masina ta, AG 77 VOB </span>
             </div>
 
+            <div className={styles.carDetails}>
+                <img
+                    src={"https://via.placeholder.com/300"}
+                    alt={"to update"}
+                    className={styles.img}
+                    loading="lazy"
+                />
+                <div className={styles.info}>
+
+                    <TextField
+                        disabled
+                        id="outlined-disabled"
+                        label="VIN"
+                        defaultValue="UU1DSJUI329JS223"
+                    />
+                    <TextField
+                        disabled
+                        id="outlined-disabled"
+                        label="VIN"
+                        defaultValue="UU1DSJUI329JS223"
+                    />
+                    <TextField
+                        disabled
+                        id="outlined-disabled"
+                        label="VIN"
+                        defaultValue="UU1DSJUI329JS223"
+                    />
+                </div>
+
+            </div>
             <div className={styles.carProfile}>
                 <div className={styles.stepsHeader}>
                     <Button variant="contained" onClick={prevStep}>
@@ -44,6 +77,7 @@ export const CarProfile = (props) => {
                         Next
                     </Button>
                 </div>
+                <IconButton color="primary" aria-label="grid view" onClick={() => { }}><AddIcon /></IconButton>
 
                 <div className={styles.stepContainer}>
                     <CustomStepper currentStep={step} steps={stepsConfig} onStepClick={(item) => console.log(item)} />
