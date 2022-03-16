@@ -16,3 +16,5 @@ REACT_APP_NAME=GasestePiesa.online
 REACT_APP_BACK_END_URL=http://localhost:3005
 ```
     
+
+Figma link https://www.figma.com/file/bohZXZbrAF9wnpt6wbJGgV/Disertatie?node-id=11%3A2
