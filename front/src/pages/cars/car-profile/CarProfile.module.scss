@@ -5,9 +5,6 @@
     justify-content: space-around;
 }
 
-.pageContainer{
-    height: 100%;
-}
 
 .stepContainer {
     margin-top: 30px;
@@ -16,13 +13,22 @@
 }
 
 .pageContainer {
-    margin: 30px;
+    // margin: 30px;
+    height: 100%;
+
     .header {
         margin-bottom: 2%;
+        margin-top: 2%;
+        .title {
+            font-size: 24px;
+            font-weight: 400;
+        }
     }
-    .title {
-        font-size: 24px;
-        font-weight: 600;
+    
+    .imageElement{
+        min-height: 300px;
+        min-width: 300px;
+        //TODO center image when in mobile 
     }
 }
 .carDetails {

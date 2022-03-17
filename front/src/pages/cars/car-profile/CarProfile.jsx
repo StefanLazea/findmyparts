@@ -6,10 +6,12 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import AddIcon from '@mui/icons-material/Add';
 import TextField from '@mui/material/TextField';
+import Grid from '@mui/material/Grid';
 
 //TODO imports refactoring
 import CustomStepper from '../../../components/stepper/Stepper';
 import styles from './CarProfile.module.scss'
+import { Box, Container } from '@mui/material';
 
 
 export const CarProfile = (props) => {
@@ -33,41 +35,57 @@ export const CarProfile = (props) => {
         }
     }
     return (
-        <div className={styles.pageContainer}>
+        <Container className={styles.pageContainer} >
             <div className={styles.header}>
                 <span className={styles.title}>Masina ta, AG 77 VOB </span>
             </div>
 
-            <div className={styles.carDetails}>
-                <img
-                    src={"https://via.placeholder.com/300"}
-                    alt={"to update"}
-                    className={styles.img}
-                    loading="lazy"
-                />
-                <div className={styles.info}>
-
-                    <TextField
-                        disabled
-                        id="outlined-disabled"
-                        label="VIN"
-                        defaultValue="UU1DSJUI329JS223"
+            <Grid container spacing={{ xs: 2, sm: 3, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+                <Grid item xs={4} sm={4} md={4} className={styles.imageElement}>
+                    <img
+                        src={"https://via.placeholder.com/300"}
+                        alt={"to update"}
+                        className={styles.img}
+                        loading="lazy"
                     />
-                    <TextField
-                        disabled
-                        id="outlined-disabled"
-                        label="VIN"
-                        defaultValue="UU1DSJUI329JS223"
-                    />
-                    <TextField
-                        disabled
-                        id="outlined-disabled"
-                        label="VIN"
-                        defaultValue="UU1DSJUI329JS223"
-                    />
-                </div>
-
-            </div>
+                </Grid>
+                <Grid item xs={4} sm={4} md={8} className='test'>
+                    <Grid container spacing={{ xs: 2, sm: 2, md: 3 }} columns={{ xs: 12, sm: 4, md: 12 }} align="center" justify="center" alignItems="center" >
+                        <Grid item xs={12} sm={8} md={4}>
+                            <TextField
+                                disabled
+                                id="outlined-disabled"
+                                label="VIN"
+                                defaultValue="UU1DSJUI329JS223"
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={8} md={4}>
+                            <TextField
+                                disabled
+                                id="outlined-disabled"
+                                label="VIN"
+                                defaultValue="UU1DSJUI329JS223"
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={8} md={4}>
+                            <TextField
+                                disabled
+                                id="outlined-disabled"
+                                label="VIN"
+                                defaultValue="UU1DSJUI329JS223"
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={8} md={4}>
+                            <TextField
+                                disabled
+                                id="outlined-disabled"
+                                label="VIN"
+                                defaultValue="UU1DSJUI329JS223"
+                            />
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Grid>
             <div className={styles.carProfile}>
                 <div className={styles.stepsHeader}>
                     <Button variant="contained" onClick={prevStep}>
@@ -83,7 +101,7 @@ export const CarProfile = (props) => {
                     <CustomStepper currentStep={step} steps={stepsConfig} onStepClick={(item) => console.log(item)} />
                 </div>
             </div>
-        </div>
+        </Container >
     );
 }
 
