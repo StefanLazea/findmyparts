@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 
 import Container from '@mui/material/Container';
-import { CustomCard } from './components/CustomCard';
+import { CustomCard } from './components/custom-card/CustomCard';
 import Grid from '@mui/material/Grid';
 
 import "./Cars.scss";
@@ -52,6 +52,15 @@ export const Cars = (props) => {
             hasRovigneta: false
         },
     ]
+
+    const getCars = () => {
+        console.log('get cars');
+    }
+
+    useEffect(() => {
+        getCars();
+    }, [])
+
     return (
         <div className='cars-page'>
             <Container>
