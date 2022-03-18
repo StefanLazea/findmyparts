@@ -11,7 +11,7 @@ import Grid from '@mui/material/Grid';
 //TODO imports refactoring
 import CustomStepper from '../../../components/stepper/Stepper';
 import styles from './CarProfile.module.scss'
-import { Box, Container } from '@mui/material';
+import { Box, Container, FormControl, Select, MenuItem, InputLabel } from '@mui/material';
 
 
 export const CarProfile = (props) => {
@@ -63,25 +63,43 @@ export const CarProfile = (props) => {
                             <TextField
                                 disabled
                                 id="outlined-disabled"
-                                label="VIN"
-                                defaultValue="UU1DSJUI329JS223"
+                                label="Model"
+                                defaultValue="Duster"
                             />
                         </Grid>
                         <Grid item xs={12} sm={8} md={4}>
                             <TextField
                                 disabled
                                 id="outlined-disabled"
-                                label="VIN"
-                                defaultValue="UU1DSJUI329JS223"
+                                label="Marca"
+                                defaultValue="Dacia"
                             />
                         </Grid>
                         <Grid item xs={12} sm={8} md={4}>
                             <TextField
                                 disabled
                                 id="outlined-disabled"
-                                label="VIN"
-                                defaultValue="UU1DSJUI329JS223"
+                                label="Numar inmatriculare"
+                                defaultValue="AG97VOB"
                             />
+                        </Grid>
+                        <Grid item xs={12} sm={8} md={4}>
+                            <FormControl fullWidth>
+                                <InputLabel id="demo-simple-select-label">Age</InputLabel>
+                                <Select
+                                    labelId="type"
+                                    id="car-type"
+                                    value={10}
+                                    label="Age"
+                                    disabled={true}
+                                    onChange={() => { }}
+                                >
+                                    <MenuItem value={10}>Ten</MenuItem>
+                                    <MenuItem value={20}>Twenty</MenuItem>
+                                    <MenuItem value={30}>Thirty</MenuItem>
+                                </Select>
+                            </FormControl>
+
                         </Grid>
                     </Grid>
                 </Grid>
