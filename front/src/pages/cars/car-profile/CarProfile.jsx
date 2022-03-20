@@ -84,7 +84,7 @@ export const CarProfile = (props) => {
                             />
                         </Grid>
                         <Grid item xs={12} sm={8} md={4}>
-                            <FormControl fullWidth>
+                            <FormControl classes={styles.typeControl}>
                                 <InputLabel id="demo-simple-select-label">Age</InputLabel>
                                 <Select
                                     labelId="type"
