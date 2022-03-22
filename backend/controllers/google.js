@@ -5,6 +5,7 @@ const { MOCK } = require('./mock');
 const { CONSTANTS, BACKEND_CONSTANTS } = require('../resources/constants');
 
 const REGEX_PRICE_LEI = /[\d|,|.|]{2,10} (lei)/g;
+
 const getFormattedResponseRCA = (text) => {
     const description = text[0]?.description.toLowerCase();
 
@@ -27,16 +28,10 @@ const getFormattedResponseRCA = (text) => {
 }
 
 const detectImage = async (req, res) => {
-    // Imports the Google Cloud client library
     // const filename = "/Users/stefan/Documents/projects/findmyparts/backend/controllers/wakeupcat.jpg";
     const client = new vision.ImageAnnotatorClient({ keyFilename: GOOGLE_KEY_JSON });
     console.log(req.files)
-    // const buf = req.files?.photo?.data;
     const buf = req.files?.photo.data;
-    // console.log(req.files.photo)
-
-    //TODO send data formdata - test from postman
-    //JSON.stringify
 
     if (_.isEmpty(buf)) {
         return res.status(500).send({ message: "Please send also the photo!" })
@@ -50,9 +45,6 @@ const detectImage = async (req, res) => {
 
     if (result) {
         const text = result.textAnnotations;
-
-
-        // const text = MOCK;
         const docType = req.body.documentType;
         let formattedResponse = {};
         if (docType === BACKEND_CONSTANTS.RCA) {
@@ -61,7 +53,7 @@ const detectImage = async (req, res) => {
         return res.status(200).send(formattedResponse)
 
     }
-    return res.status(404).send({ message: "sorry" })
+    return res.status(404).send({ message: "I haven't found any details in your image. Please try again." })
 
 }
 

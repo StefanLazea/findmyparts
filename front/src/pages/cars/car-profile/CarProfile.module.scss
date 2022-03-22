@@ -13,9 +13,7 @@
 }
 
 .pageContainer {
-    // margin: 30px;
-    height: 100%;
-
+    height: 100%; 
     .header {
         margin-bottom: 2%;
         margin-top: 2%;
@@ -30,8 +28,14 @@
         min-width: 300px;
         //TODO center image when in mobile 
     }
-    .typeControl{
-        max-width: 195px;
+
+    //overrides
+    .gridItem{
+        padding-left: 0px !important;
+    }
+
+    .formControl{
+        width: 195px;
     }
 }
 .carDetails {

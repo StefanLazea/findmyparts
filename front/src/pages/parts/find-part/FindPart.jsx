@@ -18,7 +18,7 @@ export const FindPart = (props) => {
     const sendToDetect = (e) => {
         const formData = new FormData();
         formData.append("photo", uploadedFile)
-        formData.append("documentType", "rca")
+        formData.append("documentType", "RCA")
 
         axios.post("/google/detect-image", formData).then((res) => {
             if (!_.isEmpty(res.data)) {

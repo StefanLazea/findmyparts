@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true
         },
         'name': DataTypes.STRING,
+        // 'beginDate': DataTypes.DATE,
         'expirationDate': DataTypes.DATE,
         'price': DataTypes.STRING,
     });
