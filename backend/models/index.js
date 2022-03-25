@@ -23,5 +23,6 @@ module.exports = {
     Part,
     Stocks,
     Cars,
+    Documents,
     sequelize,
 }

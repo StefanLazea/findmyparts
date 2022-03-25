@@ -47,6 +47,8 @@ const detectImage = async (req, res) => {
         const text = result.textAnnotations;
         const docType = req.body.documentType;
         let formattedResponse = {};
+
+        //TODO, format date to correct international date -> pass it as timestamp to FE
         if (docType === BACKEND_CONSTANTS.RCA) {
             formattedResponse = getFormattedResponseRCA(text);
         }
