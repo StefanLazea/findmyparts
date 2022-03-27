@@ -15,6 +15,9 @@ PUBLIC_URL=/
 REACT_APP_NAME=GasestePiesa.online
 REACT_APP_BACK_END_URL=http://localhost:3005
 ```
+
+
+https://stackoverflow.com/questions/9873197/how-to-convert-date-to-timestamp
     
 
 Figma link https://www.figma.com/file/bohZXZbrAF9wnpt6wbJGgV/Disertatie?node-id=11%3A2
