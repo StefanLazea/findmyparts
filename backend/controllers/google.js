@@ -5,7 +5,15 @@ const { MOCK } = require('./mock');
 const { CONSTANTS, BACKEND_CONSTANTS } = require('../resources/constants');
 
 const REGEX_PRICE_LEI = /[\d|,|.|]{2,10} (lei)/g;
+//todo: refactor
+const transformDateToTimestamp = (str) => {
+    const splittedDate = str.split('/');
+    const shortDateFormat = [splittedDate[1], splittedDate[0], splittedDate[2]].join('/')
+    console.log(str.split("/"))
+    return new Date(shortDateFormat).getTime();
+}
 
+//TODO test 
 const getFormattedResponseRCA = (text) => {
     const description = text[0]?.description.toLowerCase();
 
@@ -22,9 +30,13 @@ const getFormattedResponseRCA = (text) => {
     const fromDate = description.substring(fromDateBeginIndex, fromDateEndIndex)
     const endDate = description.substring(endDateBeginIndex, endDateEndIndex)
 
-    // console.log(description.match(/\d{2}(\D)\d{2}\1\d{4}/g))
     const price = [...new Set(description.match(REGEX_PRICE_LEI))];
-    return { fromDate: fromDate.trim(), endDate: endDate.trim(), price: price[0] };
+
+    return {
+        fromDate: transformDateToTimestamp(fromDate.trim()),
+        endDate: transformDateToTimestamp(endDate.trim()),
+        price: price[0]
+    };
 }
 
 const detectImage = async (req, res) => {

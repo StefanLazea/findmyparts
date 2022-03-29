@@ -16,9 +16,8 @@ dotenv.config();
 const PORT = process.env.PORT;
 model.sequelize.sync();
 
-app.use(express.static('../front/build'));
-
 app.use('/api', routes);
+app.use(express.static('../front/build'));
 
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "../front/build", 'index.html'))

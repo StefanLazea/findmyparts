@@ -1,6 +1,5 @@
 const Documents = require('../models').Documents;
 // const DocumentsService = require('../services/document');
-const moment = require("moment")
 const getAllDocuments = async (req, res) => {
     try {
         await Documents.findAll().then((allDocs) => { return res.status(200).send(allDocs) });
@@ -35,8 +34,32 @@ const addDocument = async (req, res) => {
     return res.status(200).send({ message: "Document has been created successfully" })
 };
 
+const getCarDocuments = async (req, res) => {
+    try {
+        await Documents.findAll({
+            where: {
+                carId: req.params.carId
+            }
+        }).then((allDocs) => {
+            const documents = allDocs.map((item) => {
+                const expirationTimestamp = new Date(item.dataValues.expirationDate).getTime();
+                let isExpired = false;
+                if (expirationTimestamp - new Date().getTime() < 0) {
+                    isExpired = true;
+                }
+                return { isExpired, ...item.dataValues }
+            })
+            return res.status(200).send(documents)
+        });
+    }
+    catch (err) {
+        return res.status(404).send({ message: "No elements found in the database", err });
+    }
+}
+
 module.exports = {
     getAllDocuments,
+    getCarDocuments,
     addDocument,
 
 }
