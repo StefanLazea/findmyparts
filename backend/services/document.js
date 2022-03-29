@@ -1,6 +1,7 @@
 const Documents = require('../models').Documents;
+const { Op } = require('sequelize');
 
-const findDocumentById = async (document) => {
+const findDocumentById = async (docId) => {
     let docFound;
     await Documents.findOne({
         where: { id: docId }
@@ -10,12 +11,14 @@ const findDocumentById = async (document) => {
 }
 
 const findDocumentByCarIdAndType = async ({ carId, type }) => {
+    console.log(carId, type)
     let docFound;
     await Documents.findOne({
         where: {
-            carId: carId,
-            //todo rename name to type in db
-            name: type
+            [Op.and]: [
+                { carId: carId },
+                { name: type }
+            ]
         }
     }).then((doc) => docFound = doc);
 

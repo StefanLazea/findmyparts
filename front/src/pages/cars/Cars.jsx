@@ -91,7 +91,7 @@ export const Cars = (props) => {
                                 carData={car}
                                 onClick={() =>
                                     navigate("/car-profile", {
-                                        state: { room: "test" }
+                                        state: { selectedCar: car }
                                     })
                                 } />
                         </Grid >

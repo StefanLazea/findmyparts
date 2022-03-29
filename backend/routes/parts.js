@@ -4,7 +4,6 @@ const PartsController = require('../controllers/parts');
 
 // router.get("/", authorizeGoogle, PartsController.getAllParts);
 router.get("/", PartsController.getAllParts);
-
 router.post("/savePart", PartsController.savePart);
 router.delete("/:partId", PartsController.deletePart);
 

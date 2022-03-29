@@ -33,7 +33,7 @@ const addDocument = async (req, res) => {
         carId: document.carId,
         type: req.params.type,
     })
-
+    console.log({ doc })
     if (doc) {
         return res.status(409).send({ message: "Documentul exista deja" })
     }
