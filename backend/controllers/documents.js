@@ -1,5 +1,5 @@
 const Documents = require('../models').Documents;
-// const DocumentsService = require('../services/document');
+const DocumentsService = require('../services/document');
 const getAllDocuments = async (req, res) => {
     try {
         await Documents.findAll().then((allDocs) => { return res.status(200).send(allDocs) });
@@ -19,12 +19,26 @@ const addDocument = async (req, res) => {
         return res.status(500).send({ message: "Nu puteti trimite fara id-ul masinii!" });
     }
 
+    // todo check for valid date && not to be a date from past
+    if (!req.body.expirationDate) {
+        return res.status(500).send({ message: "Nu puteti trimite fara data expirarii!" });
+    }
+
     const document = {
         ...req.body,
         name: req.params.type
     }
 
-    //TODO check if car has already a document with these dates
+    const doc = await DocumentsService.findDocumentByCarIdAndType({
+        carId: document.carId,
+        type: req.params.type,
+    })
+
+    if (doc) {
+        return res.status(409).send({ message: "Documentul exista deja" })
+    }
+
+    //TODO in case of buying another RCA it should call the update.
     try {
         await Documents.create(document);
     } catch (err) {
@@ -42,12 +56,10 @@ const getCarDocuments = async (req, res) => {
             }
         }).then((allDocs) => {
             const documents = allDocs.map((item) => {
-                const expirationTimestamp = new Date(item.dataValues.expirationDate).getTime();
-                let isExpired = false;
-                if (expirationTimestamp - new Date().getTime() < 0) {
-                    isExpired = true;
+                return {
+                    isExpired: DocumentsService.isDocExpired(item.dataValues.expirationDate),
+                    ...item.dataValues
                 }
-                return { isExpired, ...item.dataValues }
             })
             return res.status(200).send(documents)
         });
@@ -57,9 +69,21 @@ const getCarDocuments = async (req, res) => {
     }
 }
 
+const deleteDocument = async (req, res) => {
+    const paramId = req.params.docId;
+    console.log(paramId)
+    const doc = await DocumentsService.findDocumentById(paramId)
+    console.log(doc)
+    if (!doc) {
+        return res.status(404).send({ message: "Document not found" })
+    }
+
+    await doc.destroy().then(() => { return res.send({ message: "Document deleted" }) });
+}
+
 module.exports = {
     getAllDocuments,
     getCarDocuments,
     addDocument,
-
+    deleteDocument
 }
