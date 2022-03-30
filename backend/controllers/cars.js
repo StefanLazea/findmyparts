@@ -1,6 +1,6 @@
 const Cars = require('../models').Cars;
 const CarsService = require('../services/car');
-
+const { CAR_BRANDS_MOCK } = require('../utils/cars')
 const getAllCars = async (req, res) => {
     try {
         await Cars.findAll().then((allCars) => { return res.status(200).send(allCars) });
@@ -52,10 +52,13 @@ const saveCar = async (req, res) => {
 
 //     await part.destroy().then(() => { return res.send({ message: "Part deleted" }) });
 // };
-
+const getCarBrands = (req, res) => {
+    return res.status(200).send(CAR_BRANDS_MOCK);
+}
 module.exports = {
     getAllCars,
     saveCar,
+    getCarBrands,
     // updatePart,
     // deletePart
 }

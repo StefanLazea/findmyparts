@@ -6,5 +6,6 @@ router.get("/", CarsController.getAllCars);
 // router.get("/user/:userId", CarsController.getCarsByUserId);
 router.post("/save", CarsController.saveCar);
 // router.delete("/:carId", CarsController.deleteCar);
+router.get('/brands', CarsController.getCarBrands);
 
 module.exports = router;

@@ -2,39 +2,77 @@ import React, { useState } from "react";
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import {
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    FormControlLabel,
+    FormGroup,
+    Checkbox
+} from "@mui/material"
+
 
 export const AddCarDialog = (props) => {
     const { open, setOpen } = props;
     const handleClose = () => setOpen(false);
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
+    const handleSave = () => {
+
+
+    }
     return (
         <Dialog open={open} onClose={handleClose}>
             <DialogTitle>Adaugare masina</DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    To subscribe to this website, please enter your email address here. We
-                    will send updates occasionally.
+                    Avem nevoie de urmatoarele detalii pentru a retine masina ta.
                 </DialogContentText>
+
                 <TextField
                     autoFocus
-                    margin="dense"
-                    id="name"
-                    label="Email Address"
-                    type="email"
-                    fullWidth
+                    id="brand"
+                    label="numar inmatriculare"
                     variant="standard"
+                    fullWidth
                 />
+                <TextField
+                    autoFocus
+                    id="model"
+                    label="vin"
+                    variant="standard"
+                    fullWidth
+                />
+                <TextField
+                    autoFocus
+                    id="type"
+                    label="model"
+                    variant="standard"
+                    fullWidth
+                />
+                {/* add select soon */}
+                <TextField
+                    autoFocus
+                    id="type"
+                    label="brand"
+                    variant="standard"
+                    fullWidth
+                />
+                <TextField
+                    autoFocus
+                    id="type"
+                    label="caroserie"
+                    variant="standard"
+                    fullWidth
+                />
+                <FormGroup>
+                    <FormControlLabel control={<Checkbox />} label="Vehicul istoric" />
+                    <FormControlLabel disabled control={<Checkbox />} label="Vehicul electric" />
+                </FormGroup>
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose}>Anulare</Button>
-                <Button onClick={handleClose}>Salveaza</Button>
+                <Button onClick={handleSave}>Salveaza</Button>
             </DialogActions>
         </Dialog>
     );
