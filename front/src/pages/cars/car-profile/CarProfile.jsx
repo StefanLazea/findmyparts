@@ -18,20 +18,6 @@ export const CarProfile = (props) => {
         { label: 'RCA', icon: <DocumentScanner /> },
         { label: 'Rovigneta', icon: <EditRoad /> }];
 
-
-    // const nextStep = () => {
-    //     console.log(step, stepsConfig.length)
-    //     if (step < stepsConfig.length - 1) {
-    //         setStep((prev) => prev + 1);
-    //     }
-    // }
-
-    // const prevStep = () => {
-    //     if (step > -1) {
-    //         setStep((prev) => prev - 1);
-    //     }
-    // }
-
     useEffect(() => {
         console.log(state);
         axios.get(`/documents/car/${state?.selectedCar?.id}`).then((res) => {

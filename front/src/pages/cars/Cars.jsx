@@ -6,12 +6,14 @@ import { Grid, Container, IconButton } from '@mui/material';
 import { Add } from '@mui/icons-material';
 
 import { CustomCard } from './components/custom-card/CustomCard';
+import { AddCarDialog } from './components/add-car-dialog/AddCarDialog';
 
 import "./Cars.scss";
 
 export const Cars = (props) => {
     const navigate = useNavigate();
     const [cars, setCars] = useState([])
+    const [isModalOpen, setModalOpen] = useState(false);
 
     const MOCK = [
         {
@@ -80,7 +82,7 @@ export const Cars = (props) => {
 
             <Container>
                 {/* todo spacing right incorrect */}
-                <IconButton color="primary" aria-label="grid view" onClick={() => { }}><Add /></IconButton>
+                <IconButton color="primary" aria-label="grid view" onClick={() => setModalOpen(true)}><Add /></IconButton>
 
                 <Grid container rowSpacing={4} spacing={{ xs: 1, md: 3, md: 6 }} columns={{ xs: 1, sm: 8, md: 12 }}>
                     {cars.map((car, index) =>
@@ -98,6 +100,7 @@ export const Cars = (props) => {
                     )}
                 </Grid>
             </Container>
+            {isModalOpen && <AddCarDialog open={isModalOpen} setOpen={setModalOpen} />}
         </div>
     );
 }
