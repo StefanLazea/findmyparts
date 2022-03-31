@@ -1,5 +1,6 @@
 const Documents = require('../models').Documents;
 const DocumentsService = require('../services/document');
+
 const getAllDocuments = async (req, res) => {
     try {
         await Documents.findAll().then((allDocs) => { return res.status(200).send(allDocs) });
@@ -71,9 +72,7 @@ const getCarDocuments = async (req, res) => {
 
 const deleteDocument = async (req, res) => {
     const paramId = req.params.docId;
-    console.log(paramId)
     const doc = await DocumentsService.findDocumentById(paramId)
-    console.log(doc)
     if (!doc) {
         return res.status(404).send({ message: "Document not found" })
     }

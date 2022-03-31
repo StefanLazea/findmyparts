@@ -61,7 +61,7 @@ const detectImage = async (req, res) => {
         let formattedResponse = {};
 
         //TODO, format date to correct international date -> pass it as timestamp to FE
-        if (docType === BACKEND_CONSTANTS.RCA) {
+        if (docType === BACKEND_CONSTANTS.DOCUMENTS.RCA) {
             formattedResponse = getFormattedResponseRCA(text);
         }
         return res.status(200).send(formattedResponse)

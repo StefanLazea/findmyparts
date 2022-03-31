@@ -3,7 +3,8 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import * as yup from 'yup';
 // import { useFormik } from 'formik';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form } from 'formik';
+import { BODY_STYLE_VARIANTS } from '../mock.js'
 
 import {
     Dialog,
@@ -13,12 +14,14 @@ import {
     DialogTitle,
     FormControlLabel,
     FormGroup,
-    Checkbox
+    Checkbox,
+    MenuItem
 } from "@mui/material"
+import axios from "axios";
 
 
 export const AddCarDialog = (props) => {
-    const { open, setOpen } = props;
+    const { open, setOpen, reRender } = props;
     const handleClose = () => setOpen(false);
     const formRef = useRef();
     // const validationSchema = yup.object({
@@ -29,19 +32,27 @@ export const AddCarDialog = (props) => {
     //         .string('Enter the model')
     //         .required('Model is required'),
     // });
-    // const formik = useFormik({
-    //     initialValues: {
-    //         numberPlate: '',
-    //         brand: '',
-    //         model: '',
-    //         type: '',
-    //         vin: ''
-    //     },
-    //     // validationSchema: validationSchema,
-    //     onSubmit: (values) => {
-    //         console.log(values)
-    //     },
-    // });
+    const saveCar = (values) => {
+        console.log(values);
+
+        const payload = {
+            "VIN": values.vin,
+            "numberPlate": values.numberPlate,
+            "model": values.model,
+            "brand": values.brand,
+            //todo
+            "type": values.type,
+            "isEco": false,
+            "isElectric": values.isElectric,
+            "isHistoric": values.isHistoric,
+            "userId": "a8616d40-927c-11ec-af5a-2bfc6da2f954"
+        }
+        axios.post("/cars/save", payload).then(res => {
+            console.log(res)
+            reRender();
+            setOpen(false);
+        })
+    }
     return (
         <Dialog open={open} onClose={handleClose}>
             <DialogTitle>Adaugare masina</DialogTitle>
@@ -58,13 +69,14 @@ export const AddCarDialog = (props) => {
                         type: '',
                         vin: '',
                         isHistoric: true,
+                        isElectric: false
                     }}
                     onSubmit={values => {
                         // same shape as initial values
-                        console.log(values);
+                        saveCar(values);
                     }}
                 >
-                    {({ values, handleChange }) => (
+                    {({ values, handleChange, setFieldValue }) => (
                         <Form>
                             <TextField
                                 autoFocus
@@ -106,33 +118,31 @@ export const AddCarDialog = (props) => {
                                 variant="standard"
                                 fullWidth
                             />
-                            {/* add select soon */}
                             <TextField
-                                autoFocus
+                                select // tell TextField to render select
                                 id="type"
                                 name="type"
-                                label="type"
-                                variant="standard"
-                                value={values.type}
-                                onChange={handleChange}
-                                fullWidth
-                            />
-                            <TextField
-                                autoFocus
-                                id="body"
-                                name="body"
                                 label="caroserie"
+                                variant="standard"
                                 value={values.body}
                                 onChange={handleChange}
-                                variant="standard"
                                 fullWidth
-                            />
+                            >
+                                {BODY_STYLE_VARIANTS.map((item, index) =>
+                                    <MenuItem key={index} value={item}>
+                                        {item}
+                                    </MenuItem>
+                                )}
+
+
+                            </TextField>
                             <FormGroup>
                                 <FormControlLabel
                                     control={
                                         <Checkbox
                                             name="isHistoric"
-                                            checked
+                                            onChange={(e) => setFieldValue(e.target.name, e.target.checked)}
+
                                         />}
                                     label="Vehicul istoric"
                                 />
@@ -140,9 +150,11 @@ export const AddCarDialog = (props) => {
                                     control={
                                         <Checkbox
                                             name="isElectric"
-                                            checked
+                                            onChange={(e) => setFieldValue(e.target.name, e.target.checked)}
+
                                         />
                                     }
+
                                     label="Vehicul electric" />
                             </FormGroup>
                         </Form>

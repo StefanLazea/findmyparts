@@ -14,50 +14,9 @@ export const Cars = (props) => {
     const navigate = useNavigate();
     const [cars, setCars] = useState([])
     const [isModalOpen, setModalOpen] = useState(false);
-
-    const MOCK = [
-        {
-            VIN: "UUU123HFASGDA",
-            numberPlate: "AG77VOB",
-            brand: "Dacia",
-            model: "Duster",
-            //it has a more complex logic; TBD in backend
-            hasITP: true,
-            hasRCA: true,
-            hasRovigneta: false
-        },
-        {
-            VIN: "UUU123HFASGDA",
-            numberPlate: "AG77VOB",
-            brand: "Dacia",
-            model: "Duster",
-            //it has a more complex logic; TBD in backend
-            hasITP: true,
-            hasRCA: false,
-            hasRovigneta: false
-        },
-        {
-            VIN: "UUU123HFASGDA",
-            numberPlate: "AG77VOB",
-            brand: "Dacia",
-            model: "Duster",
-            //it has a more complex logic; TBD in backend
-            hasITP: true,
-            hasRCA: true,
-            hasRovigneta: true
-        },
-        {
-            VIN: "UUI231FDWSSDD",
-            numberPlate: "AG97VOB",
-            brand: "Dacia",
-            model: "Duster",
-            //it has a more complex logic; TBD in backend
-            hasITP: false,
-            hasRCA: false,
-            hasRovigneta: false
-        },
-    ]
-
+    const reRender = () => {
+        getCars();
+    }
     const getCars = () => {
         axios.get(`/cars`).then(response => {
             console.log(response.data);
@@ -100,7 +59,7 @@ export const Cars = (props) => {
                     )}
                 </Grid>
             </Container>
-            {isModalOpen && <AddCarDialog open={isModalOpen} setOpen={setModalOpen} />}
+            {isModalOpen && <AddCarDialog open={isModalOpen} setOpen={setModalOpen} reRender={reRender} />}
         </div>
     );
 }

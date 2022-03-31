@@ -5,9 +5,11 @@ const CONSTANTS = {
 }
 
 const BACKEND_CONSTANTS = {
-    ITP: 'ITP',
-    RCA: 'RCA',
-    ROVIGNETA: 'ROVIGNETA'
+    DOCUMENTS: {
+        ITP: 'ITP',
+        RCA: 'RCA',
+        ROVIGNETA: 'ROVIGNETA'
+    }
 }
 
 module.exports = { CONSTANTS, BACKEND_CONSTANTS }

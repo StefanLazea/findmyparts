@@ -1,13 +1,23 @@
 const Cars = require('../models').Cars;
+const Documents = require('../models').Documents;
+const _ = require("lodash")
+
 const CarsService = require('../services/car');
 const { CAR_BRANDS_MOCK } = require('../utils/cars')
+
 const getAllCars = async (req, res) => {
-    try {
-        await Cars.findAll().then((allCars) => { return res.status(200).send(allCars) });
+    const allCars = await Cars.findAll({
+        include: [
+            { model: Documents }
+        ],
+    });
+
+    if (!_.isEmpty(allCars)) {
+        return res.status(200).send(CarsService.getCarsFormattedResponse(allCars))
     }
-    catch (err) {
-        return res.status(404).send({ message: "No elements found in the database" });
-    }
+    return res.status(404).send({ message: "No elements found in the database" });
+
+
 }
 
 const saveCar = async (req, res) => {

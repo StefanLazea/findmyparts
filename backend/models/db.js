@@ -1,6 +1,9 @@
 let Sequelize = require('sequelize');
+let hierarchy = require('sequelize-hierarchy');
+
 let dotenv = require('dotenv');
 dotenv.config();
+hierarchy(Sequelize);
 
 const sequelize = new Sequelize(
     process.env.DB_NAME,
