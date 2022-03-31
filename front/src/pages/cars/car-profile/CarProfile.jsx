@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 
-import { Grid, Container, MenuItem, TextField, Button, IconButton } from '@mui/material';
+import { Grid, Container, MenuItem, TextField, IconButton } from '@mui/material';
 import { CarRepair, DocumentScanner, EditRoad, Add } from '@mui/icons-material';
 import _ from "lodash"
 import axios from "axios"
 
 import CustomStepper from '../../../components/stepper/Stepper';
 import styles from './CarProfile.module.scss'
+import { AddDocumentDialog } from '../components/add-document-dialog/AddDocumentDialog';
 
 export const CarProfile = (props) => {
     const [step, setStep] = useState(-1);
     const [documents, setDocuments] = useState({});
+    const [isModalOpen, setModalOpen] = useState(false);
+
     const { state } = useLocation();
     const stepsConfig = [
         { label: 'ITP', icon: <CarRepair /> },
@@ -20,6 +23,7 @@ export const CarProfile = (props) => {
 
     useEffect(() => {
         console.log(state);
+        console.log(documents)
         axios.get(`/documents/car/${state?.selectedCar?.id}`).then((res) => {
             const response = res.data;
             const isRcaAvailable = response.some(item => item.name === "RCA" && !item.isExpired)
@@ -39,6 +43,7 @@ export const CarProfile = (props) => {
             setDocuments(prev => { return { ...prev, ...{ isRcaAvailable, isITPAvailable, isRovAvailable } } })
         })
         return () => setStep(-1);
+
     }, []);
 
     return (
@@ -129,20 +134,18 @@ export const CarProfile = (props) => {
                 </Grid>
             </Grid>
             <div className={styles.carProfile}>
-                {/* <div className={styles.stepsHeader}>
-                    <Button variant="contained" onClick={prevStep}>
-                        Prev
-                    </Button>
-                    <Button variant="contained" onClick={nextStep}>
-                        Next
-                    </Button>
-                </div> */}
-                <IconButton color="primary" aria-label="grid view" onClick={() => { }}><Add /></IconButton>
-
+                <IconButton color="primary" aria-label="grid view" onClick={() => setModalOpen(true)}><Add /></IconButton>
                 <div className={styles.stepContainer}>
                     <CustomStepper currentStep={step} steps={stepsConfig} onStepClick={(item) => console.log(item)} />
                 </div>
             </div>
+
+            {isModalOpen &&
+                <AddDocumentDialog
+                    open={isModalOpen}
+                    setOpen={setModalOpen}
+                    reRender={() => { console.log("rerender me") }} />}
+
         </Container >
     );
 }

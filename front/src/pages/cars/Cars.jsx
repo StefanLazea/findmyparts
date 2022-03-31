@@ -20,18 +20,23 @@ export const Cars = (props) => {
     const getCars = () => {
         axios.get(`/cars`).then(response => {
             console.log(response.data);
-            const mockedResponse = response.data.map(item => {
-                return {
-                    ...item,
-                    hasITP: true,
-                    hasRCA: true,
-                    hasRovigneta: false
-                }
-            })
-            setCars(mockedResponse)
+            // const mockedResponse = response.data.map(item => {
+            //     return {
+            //         ...item,
+            //         hasITP: true,
+            //         hasRCA: true,
+            //         hasRovigneta: false
+            //     }
+            // })
+            setCars(response.data)
         })
     }
-
+    const deleteCar = (id) => {
+        axios.delete(`/cars/${id}`).then(res => {
+            console.log(res)
+            getCars();
+        })
+    }
     useEffect(() => {
         getCars();
     }, [])
@@ -43,13 +48,14 @@ export const Cars = (props) => {
                 {/* todo spacing right incorrect */}
                 <IconButton color="primary" aria-label="grid view" onClick={() => setModalOpen(true)}><Add /></IconButton>
 
-                <Grid container rowSpacing={4} spacing={{ xs: 1, md: 3, md: 6 }} columns={{ xs: 1, sm: 8, md: 12 }}>
+                <Grid container rowSpacing={4} spacing={{ xs: 1, sm: 3, md: 6 }} columns={{ xs: 1, sm: 8, md: 12 }}>
                     {cars.map((car, index) =>
                         <Grid item xs={1} sm={4} md={4} key={index}>
                             <CustomCard
                                 md={12}
                                 key={car.VIN}
                                 carData={car}
+                                onDelete={(id) => deleteCar(id)}
                                 onClick={() =>
                                     navigate("/car-profile", {
                                         state: { selectedCar: car }

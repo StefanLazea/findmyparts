@@ -51,24 +51,25 @@ const saveCar = async (req, res) => {
 //     return res.status(400).send({ message: "Part is already in" })
 // };
 
-// const deletePart = async (req, res) => {
-//     const paramId = req.params.partId;
-//     console.log(paramId)
-//     const part = await PartsService.findPartById(paramId)
-//     console.log(part)
-//     if (!part) {
-//         return res.status(404).send({ message: "Part not found" })
-//     }
+const deleteCar = async (req, res) => {
+    const paramId = req.params.carId;
+    console.log(paramId)
+    const car = await CarsService.findCarById(paramId)
+    if (!car) {
+        return res.status(404).send({ message: "Car not found" })
+    }
+    await car.destroy().then(() => { return res.send({ message: "Car deleted" }) });
+};
 
-//     await part.destroy().then(() => { return res.send({ message: "Part deleted" }) });
-// };
 const getCarBrands = (req, res) => {
     return res.status(200).send(CAR_BRANDS_MOCK);
 }
+
 module.exports = {
     getAllCars,
     saveCar,
     getCarBrands,
+    deleteCar,
     // updatePart,
     // deletePart
 }

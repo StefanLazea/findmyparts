@@ -5,3 +5,10 @@ export const BODY_STYLE_VARIANTS = [
     "mini-car"
 ]
 
+export const FUEL_VARIANTS = [
+    'benzina',
+    'motorina',
+    'benzina + gpl',
+    'hybrid',
+    'electric'
+]

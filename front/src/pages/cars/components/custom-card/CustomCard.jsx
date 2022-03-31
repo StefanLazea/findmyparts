@@ -1,11 +1,10 @@
 import React from 'react';
 
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
+import { Card, CardContent, CardHeader, Avatar, IconButton, Typography } from '@mui/material'
+import styles from "./CustomCard.module.scss"
+import { red } from '@mui/material/colors';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-
-import "./CustomCard.scss"
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export const CustomCard = ({
     carData = {},
@@ -13,28 +12,37 @@ export const CustomCard = ({
 ) => {
     const checkColor = (check) => check ? "info" : "error"
     return (
-        <div className='custom-card' onClick={props.onClick}>
+        <div className={styles.customCard} >
             <Card>
-                <CardContent>
-                    <div className='cars-card-content'>
-                        <Typography variant="h5" component="div" className='center-typo'>
-                            {carData.VIN}
-                        </Typography>
-                        <Typography sx={{ mb: 1.5 }} color="text.secondary" className='center-typo '>
+                <CardHeader
+                    avatar={
+                        <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+                            {carData?.numberPlate.split('-')[0] || "M"}
+                        </Avatar>
+                    }
+                    action={
+                        <IconButton aria-label="settings" onClick={() => props.onDelete(carData.id)}>
+                            <DeleteIcon />
+                        </IconButton>
+                    }
+                    title={carData.VIN}
+                    subheader={`${carData.brand} ${carData.model}`}
+                />
+                <CardContent onClick={props.onClick}>
+                    <div className={styles.carsCardContent}>
+                        <Typography variant="h5" component="div" className={styles.centerTypo}>
                             {carData.numberPlate}
                         </Typography>
-                        <Typography sx={{ mb: 1.2 }} color="text.secondary" className='center-typo '>
-                            {carData.brand} {carData.model}
-                        </Typography>
-                        <div className='check'>
+
+                        <div className={styles.check}>
                             <CheckCircleIcon color={checkColor(carData.hasITP)} />
                             ITP
                         </div>
-                        <div className='check'>
+                        <div className={styles.check}>
                             <CheckCircleIcon color={checkColor(carData.hasRCA)} />
                             RCA
                         </div>
-                        <div className='check'>
+                        <div className={styles.check}>
                             <CheckCircleIcon color={checkColor(carData.hasRovigneta)} />
                             Rovigneta
                         </div>

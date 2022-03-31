@@ -1,7 +1,6 @@
-import React, { useRef } from "react";
+import React, { useState, useRef } from "react";
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import * as yup from 'yup';
 import { Formik, Form } from 'formik';
 import { BODY_STYLE_VARIANTS, FUEL_VARIANTS } from '../mock.js'
 
@@ -14,52 +13,54 @@ import {
     FormControlLabel,
     FormGroup,
     Checkbox,
-    MenuItem
+    MenuItem,
+    Slide,
+    AppBar,
+    Toolbar,
+    IconButton,
+    Typography
 } from "@mui/material"
+import CloseIcon from '@mui/icons-material/Close';
+
 import axios from "axios";
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
 
-
-export const AddCarDialog = (props) => {
+export const AddDocumentDialog = (props) => {
     const { open, setOpen, reRender } = props;
     const handleClose = () => setOpen(false);
     const formRef = useRef();
-    const validationSchema = yup.object({
-        vin: yup
-            .string()
-            .min(4, 'seria de caroserie este prea scurta')
-            .required('vin-ul trebuie introdus'),
-        numberPlate: yup
-            .string()
-            .min(7, 'Nu este un numar corect')
-            .required('Numarul trebuie introdus'),
 
-    });
-    const saveCar = (values) => {
-        console.log(values);
-
-        const payload = {
-            "VIN": values.vin,
-            "numberPlate": values.numberPlate,
-            "model": values.model,
-            "brand": values.brand,
-            "type": values.type,
-            "isEco": false,
-            "isElectric": values.isElectric,
-            "isHistoric": values.isHistoric,
-            "userId": "a8616d40-927c-11ec-af5a-2bfc6da2f954"
-        }
-        axios.post("/cars/save", payload).then(res => {
-            console.log(res)
-            reRender();
-            setOpen(false);
-        })
+    const saveDocument = (values) => {
+        console.log(values)
     }
     return (
-        <Dialog open={open} onClose={handleClose}>
-            <DialogTitle>Adaugare masina</DialogTitle>
+        <Dialog
+            fullScreen
+            open={open}
+            onClose={handleClose}
+            TransitionComponent={Transition}
+        >
+            <AppBar sx={{ position: 'relative' }}>
+                <Toolbar>
+                    <IconButton
+                        edge="start"
+                        color="inherit"
+                        onClick={handleClose}
+                        aria-label="close"
+                    >
+                        <CloseIcon />
+                    </IconButton>
+                    <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+                        Adauga un nou document
+                    </Typography>
+
+                </Toolbar>
+            </AppBar>
             <DialogContent>
                 <DialogContentText>
-                    Avem nevoie de urmatoarele detalii pentru a retine masina ta.
+                    Adauga documentul tau. Incepe experienta prin alegerea tipului
                 </DialogContentText>
                 <Formik
                     innerRef={formRef}
@@ -73,38 +74,14 @@ export const AddCarDialog = (props) => {
                         isHistoric: true,
                         isElectric: false
                     }}
-                    validationSchema={validationSchema}
                     onSubmit={values => {
                         // same shape as initial values
-                        saveCar(values);
+                        saveDocument(values);
                     }}
                 >
                     {({ values, errors, handleChange, setFieldValue }) => (
                         <Form>
-                            <TextField
-                                autoFocus
-                                id="numberPlate"
-                                name="numberPlate"
-                                label="numar inmatriculare"
-                                value={values.numberPlate}
-                                onChange={handleChange}
-                                variant="standard"
-                                fullWidth
-                                error={errors.numberPlate}
-                                helperText={errors.numberPlate}
-                            />
-                            <TextField
-                                autoFocus
-                                id="vin"
-                                name="vin"
-                                label="vin"
-                                value={values.vin}
-                                onChange={handleChange}
-                                variant="standard"
-                                fullWidth
-                                error={errors.vin}
-                                helperText={errors.vin}
-                            />
+
                             <TextField
                                 autoFocus
                                 id="model"
