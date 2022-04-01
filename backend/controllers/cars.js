@@ -65,11 +65,22 @@ const getCarBrands = (req, res) => {
     return res.status(200).send(CAR_BRANDS_MOCK);
 }
 
+const getCarById = async (req, res) => {
+    const paramId = req.params.carId;
+    const car = await CarsService.findCarDetailsById(paramId)
+    if (!car) {
+        return res.status(404).send({ message: "Car not found" })
+    }
+    //refactor
+    return res.status(200).send(CarsService.getCarFormattedDetails(car))
+}
+
 module.exports = {
     getAllCars,
     saveCar,
     getCarBrands,
     deleteCar,
+    getCarById
     // updatePart,
     // deletePart
 }

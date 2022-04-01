@@ -1,10 +1,24 @@
 const Cars = require('../models').Cars;
+const Documents = require('../models').Documents;
+
 const { BACKEND_CONSTANTS } = require('../resources/constants');
 
 const findCarById = async (partId) => {
     let carFound;
     await Cars.findOne({
         where: { id: partId }
+    }).then((part) => carFound = part);
+
+    return carFound;
+}
+
+const findCarDetailsById = async (partId) => {
+    let carFound;
+    await Cars.findOne({
+        where: { id: partId },
+        include: [
+            { model: Documents }
+        ],
     }).then((part) => carFound = part);
 
     return carFound;
@@ -19,21 +33,25 @@ const findCarByVIN = async (vin) => {
 }
 
 const getCarsFormattedResponse = (allCars) => {
-    // console.log(allCars.toJSON())
     const jsonResponse = JSON.parse(JSON.stringify(allCars));
-
     const formattedResponse = jsonResponse.map((car) => {
-        const hasRCA = car.documents.some(doc => doc.name === BACKEND_CONSTANTS.DOCUMENTS.RCA)
-        const hasITP = car.documents.some(doc => doc.name === BACKEND_CONSTANTS.DOCUMENTS.ITP)
-        const hasRovigneta = car.documents.some(doc => doc.name === BACKEND_CONSTANTS.DOCUMENTS.ROVIGNETA)
-
-        console.log({ hasRCA })
-        return { ...car, hasRCA, hasITP, hasRovigneta };
+        return getCarFormattedDetails(car)
     })
     return formattedResponse;
 }
+
+const getCarFormattedDetails = (car) => {
+    const carParsed = JSON.parse(JSON.stringify(car));
+    const hasRCA = carParsed.documents.some(doc => doc.name === BACKEND_CONSTANTS.DOCUMENTS.RCA)
+    const hasITP = carParsed.documents.some(doc => doc.name === BACKEND_CONSTANTS.DOCUMENTS.ITP)
+    const hasRovigneta = carParsed.documents.some(doc => doc.name === BACKEND_CONSTANTS.DOCUMENTS.ROVIGNETA)
+    return { ...carParsed, hasRCA, hasITP, hasRovigneta };
+}
+
 module.exports = {
     findCarById,
     findCarByVIN,
-    getCarsFormattedResponse
+    getCarsFormattedResponse,
+    findCarDetailsById,
+    getCarFormattedDetails
 }
