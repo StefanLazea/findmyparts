@@ -1,20 +1,10 @@
-import React, { useState, useRef } from "react";
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import * as yup from 'yup';
-import { Formik, Form } from 'formik';
-import { BODY_STYLE_VARIANTS, FUEL_VARIANTS } from '../mock.js'
+import React from "react";
 
 import {
     Dialog,
     DialogActions,
     DialogContent,
     DialogContentText,
-    DialogTitle,
-    FormControlLabel,
-    FormGroup,
-    Checkbox,
-    MenuItem,
     Slide,
     AppBar,
     Toolbar,
@@ -27,14 +17,10 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export const AddDocumentDialog = (props) => {
+export const ScreenDialog = (props) => {
     const { open, setOpen } = props;
     const handleClose = () => setOpen(false);
-    const formRef = useRef();
 
-    const saveDocument = (values) => {
-        console.log(values)
-    }
 
     return (
         <Dialog

@@ -1,171 +1,87 @@
 import React, { useState, useRef } from "react";
 import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import { Formik, Form } from 'formik';
-import { BODY_STYLE_VARIANTS, FUEL_VARIANTS } from '../mock.js'
 
 import {
-    Dialog,
     DialogActions,
-    DialogContent,
-    DialogContentText,
-    DialogTitle,
-    FormControlLabel,
-    FormGroup,
-    Checkbox,
-    MenuItem,
-    Slide,
-    AppBar,
-    Toolbar,
-    IconButton,
-    Typography
 } from "@mui/material"
-import CloseIcon from '@mui/icons-material/Close';
-
+import styles from './AddDocumentDialog.module.scss'
+import _ from 'lodash'
 import axios from "axios";
-const Transition = React.forwardRef(function Transition(props, ref) {
-    return <Slide direction="up" ref={ref} {...props} />;
-});
+import { ScreenDialog } from "../../../../components/screen-dialog/ScreenDialog.jsx";
+
 
 export const AddDocumentDialog = (props) => {
     const { open, setOpen, reRender } = props;
     const handleClose = () => setOpen(false);
     const formRef = useRef();
+    const inputRef = useRef();
+    const [imgSrc, setImgSrc] = useState("https://via.placeholder.com/300")
+    const [uploadedFile, setUploadFile] = useState("")
+    const [detectResult, setDetectResult] = useState({})
 
+    const handleUpload = (e) => {
+        inputRef.current?.click()
+    }
+
+    const sendToDetect = (e) => {
+        const formData = new FormData();
+        formData.append("photo", uploadedFile)
+        formData.append("documentType", "RCA")
+
+        axios.post("/google/detect-image", formData).then((res) => {
+            if (!_.isEmpty(res.data)) {
+                console.log("here")
+            }
+            console.log(res)
+            setDetectResult(res.data)
+        })
+
+    }
+
+    const handleChange = (ev) => {
+        ev.preventDefault();
+        const fileUploaded = ev.target.files[0];
+        setImgSrc(URL.createObjectURL(fileUploaded))
+        setUploadFile(fileUploaded)
+    }
     const saveDocument = (values) => {
         console.log(values)
     }
+
+    const DialogFooterComponent = () =>
+        <DialogActions>
+            <Button onClick={handleClose}>Anulare</Button>
+            <Button onClick={() => formRef.current.submitForm()}>Salveaza</Button>
+        </DialogActions>
+
     return (
-        <Dialog
-            fullScreen
+        <ScreenDialog
             open={open}
-            onClose={handleClose}
-            TransitionComponent={Transition}
+            setOpen={setOpen}
+            title={"Adauga un nou document"}
+            description={"Adauga documentul tau. Incepe experienta prin alegerea tipului"}
+            footerActions={<DialogFooterComponent />}
         >
-            <AppBar sx={{ position: 'relative' }}>
-                <Toolbar>
-                    <IconButton
-                        edge="start"
-                        color="inherit"
-                        onClick={handleClose}
-                        aria-label="close"
-                    >
-                        <CloseIcon />
-                    </IconButton>
-                    <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-                        Adauga un nou document
-                    </Typography>
+            <div className={styles.addDocument}>
+                <div className={styles.uploadInput}>
+                    <img
+                        src={imgSrc}
+                        alt={"to update"}
+                        className={styles.img}
+                        loading="lazy"
+                    />
+                    <label htmlFor="contained-button-file">
+                        <input ref={inputRef} className={styles.uploadFile} type="file" onChange={handleChange} />
+                        <Button variant="contained" component="span" onClick={handleUpload}>
+                            Upload
+                        </Button>
+                        <Button variant="contained" component="span" onClick={sendToDetect}>
+                            Send to detect
+                        </Button>
+                    </label>
+                </div>
+            </div>
 
-                </Toolbar>
-            </AppBar>
-            <DialogContent>
-                <DialogContentText>
-                    Adauga documentul tau. Incepe experienta prin alegerea tipului
-                </DialogContentText>
-                <Formik
-                    innerRef={formRef}
-                    initialValues={{
-                        numberPlate: '',
-                        brand: '',
-                        model: '',
-                        type: BODY_STYLE_VARIANTS[0],
-                        vin: '',
-                        fuel: FUEL_VARIANTS[0],
-                        isHistoric: true,
-                        isElectric: false
-                    }}
-                    onSubmit={values => {
-                        // same shape as initial values
-                        saveDocument(values);
-                    }}
-                >
-                    {({ values, errors, handleChange, setFieldValue }) => (
-                        <Form>
-
-                            <TextField
-                                autoFocus
-                                id="model"
-                                name="model"
-                                label="model"
-                                value={values.model}
-                                onChange={handleChange}
-                                variant="standard"
-                                fullWidth
-                            />
-                            <TextField
-                                autoFocus
-                                id="brand"
-                                name="brand"
-                                label="brand"
-                                value={values.brand}
-                                onChange={handleChange}
-                                variant="standard"
-                                fullWidth
-                            />
-                            <TextField
-                                select // tell TextField to render select
-                                id="type"
-                                name="type"
-                                label="caroserie"
-                                variant="standard"
-                                value={values.type}
-                                onChange={handleChange}
-                                fullWidth
-                            >
-                                {BODY_STYLE_VARIANTS.map((item, index) =>
-                                    <MenuItem key={index} value={item}>
-                                        {item}
-                                    </MenuItem>
-                                )}
-                            </TextField>
-                            <TextField
-                                select // tell TextField to render select
-                                id="fuel"
-                                name="fuel"
-                                label="combustibil"
-                                variant="standard"
-                                value={values.fuel}
-                                onChange={handleChange}
-                                fullWidth
-                            >
-                                {FUEL_VARIANTS.map((item, index) =>
-                                    <MenuItem key={index} value={item}>
-                                        {item}
-                                    </MenuItem>
-                                )}
-
-
-                            </TextField>
-                            <FormGroup>
-                                <FormControlLabel
-                                    control={
-                                        <Checkbox
-                                            name="isHistoric"
-                                            onChange={(e) => setFieldValue(e.target.name, e.target.checked)}
-
-                                        />}
-                                    label="Vehicul istoric"
-                                />
-                                <FormControlLabel
-                                    control={
-                                        <Checkbox
-                                            name="isElectric"
-                                            onChange={(e) => setFieldValue(e.target.name, e.target.checked)}
-
-                                        />
-                                    }
-
-                                    label="Vehicul electric" />
-                            </FormGroup>
-                        </Form>
-                    )}
-                </Formik>
-            </DialogContent>
-            <DialogActions>
-                <Button onClick={handleClose}>Anulare</Button>
-                <Button onClick={() => formRef.current.submitForm()}>Salveaza</Button>
-
-            </DialogActions>
-        </Dialog>
+        </ScreenDialog >
     );
 }

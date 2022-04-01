@@ -9,7 +9,7 @@ import axios from "axios"
 import CustomStepper from '../../../components/stepper/Stepper';
 import styles from './CarProfile.module.scss'
 import { AddDocumentDialog } from '../components/add-document-dialog/AddDocumentDialog';
-
+import { PageContainer } from '../../../components/page-container/PageContainer'
 export const CarProfile = (props) => {
     const [step, setStep] = useState(-1);
     const [documents, setDocuments] = useState({});
@@ -47,7 +47,7 @@ export const CarProfile = (props) => {
     }, []);
 
     return (
-        <Container className={styles.pageContainer} >
+        <PageContainer>
             <div className={styles.header}>
                 <span className={styles.title}>Masina ta, AG 77 VOB </span>
             </div>
@@ -146,7 +146,7 @@ export const CarProfile = (props) => {
                     setOpen={setModalOpen}
                     reRender={() => { console.log("rerender me") }} />}
 
-        </Container >
+        </PageContainer>
     );
 }
 

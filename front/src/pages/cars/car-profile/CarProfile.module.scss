@@ -12,10 +12,9 @@
     justify-content: center;
 }
 
-.pageContainer {
-    height: 100%; 
+
     .header {
-        margin-bottom: 2%;
+        // margin-bottom: 2%;
         margin-top: 2%;
         .title {
             font-size: 24px;
@@ -37,7 +36,7 @@
     .formControl{
         width: 195px;
     }
-}
+
 .carDetails {
     display: flex;
     flex-direction: row;
