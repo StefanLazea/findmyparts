@@ -1,7 +1,6 @@
 const vision = require('@google-cloud/vision');
 const _ = require("lodash")
 const GOOGLE_KEY_JSON = "/Users/stefan/Documents/gasestepiesa-924dba9c251f.json"
-const { MOCK } = require('./mock');
 const { CONSTANTS, BACKEND_CONSTANTS } = require('../resources/constants');
 
 const REGEX_PRICE_LEI = /[\d|,|.|]{2,10} (lei)/g;
@@ -13,7 +12,7 @@ const transformDateToTimestamp = (str) => {
     return new Date(shortDateFormat).getTime();
 }
 
-//TODO test 
+//TODO test and refactor
 const getFormattedResponseRCA = (text) => {
     const description = text[0]?.description.toLowerCase();
 
@@ -30,12 +29,15 @@ const getFormattedResponseRCA = (text) => {
     const fromDate = description.substring(fromDateBeginIndex, fromDateEndIndex)
     const endDate = description.substring(endDateBeginIndex, endDateEndIndex)
 
-    const price = [...new Set(description.match(REGEX_PRICE_LEI))];
+    const uniqueDetectedPrice = [...new Set(description.match(REGEX_PRICE_LEI))];
+    const price = uniqueDetectedPrice[0].toLowerCase().split(" ")[0];
+    const currency = uniqueDetectedPrice[0].toLowerCase().split(" ")[1]
 
     return {
         fromDate: transformDateToTimestamp(fromDate.trim()),
-        endDate: transformDateToTimestamp(endDate.trim()),
-        price: price[0]
+        expirationDate: transformDateToTimestamp(endDate.trim()),
+        price: price,
+        currency: currency
     };
 }
 
