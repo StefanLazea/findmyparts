@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 
-import { Grid, Container, MenuItem, TextField, IconButton } from '@mui/material';
+import { Grid, MenuItem, TextField, IconButton } from '@mui/material';
 import { CarRepair, DocumentScanner, EditRoad, Add } from '@mui/icons-material';
 import _ from "lodash"
 import axios from "axios"
@@ -61,7 +61,7 @@ export const CarProfile = (props) => {
                         loading="lazy"
                     />
                 </Grid>
-                <Grid item xs={4} sm={4} md={8} className='test'>
+                <Grid item xs={4} sm={4} md={8}>
                     <Grid container spacing={{ xs: 2, sm: 2, md: 3 }} columns={{ xs: 12, sm: 4, md: 12 }} align="center" justify="center" alignItems="center" >
                         <Grid item xs={12} sm={8} md={4} classes={{ item: styles.gridItem }}>
                             <TextField
@@ -144,7 +144,9 @@ export const CarProfile = (props) => {
                 <AddDocumentDialog
                     open={isModalOpen}
                     setOpen={setModalOpen}
-                    reRender={() => { console.log("rerender me") }} />}
+                    reRender={() => { console.log("rerender me") }}
+                    carId={state?.selectedCar?.id}
+                />}
 
         </PageContainer>
     );
