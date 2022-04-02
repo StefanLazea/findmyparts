@@ -34,9 +34,8 @@ export const AddCarDialog = (props) => {
             .required('Numarul trebuie introdus'),
 
     });
-    const saveCar = (values) => {
-        console.log(values);
 
+    const saveCar = (values) => {
         const payload = {
             "VIN": values.vin,
             "numberPlate": values.numberPlate,
@@ -49,7 +48,6 @@ export const AddCarDialog = (props) => {
             "userId": "a8616d40-927c-11ec-af5a-2bfc6da2f954"
         }
         axios.post("/cars/save", payload).then(res => {
-            console.log(res)
             reRender();
             setOpen(false);
         })

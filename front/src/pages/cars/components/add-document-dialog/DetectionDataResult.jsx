@@ -14,12 +14,14 @@ import DatePicker from '@mui/lab/DatePicker';
 import styles from './AddDocumentDialog.module.scss';
 
 export const DetectionDataResult = (props) => {
-    const { type, carId, detectionData, formRef } = props;
+    const { type, carId, detectionData, formRef, reRender, closeScreen } = props;
 
     const saveDocument = (values) => {
         console.log({ values })
         axios.post(`/documents/add/${values.name}`, values).then((res) => {
             console.log(res.data)
+            closeScreen();
+            reRender();
         }).catch((err) => {
             toast.error(
                 err.response.data.message,

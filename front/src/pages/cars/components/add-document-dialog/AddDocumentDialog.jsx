@@ -7,7 +7,6 @@ import {
     FormControl,
     RadioGroup,
     FormLabel,
-    TextField,
     Button
 } from "@mui/material";
 import _ from 'lodash';
@@ -131,7 +130,14 @@ export const AddDocumentDialog = (props) => {
                     </Grid>
                 </Grid>
                 <Grid item xs={8} sm={8} md={12} >
-                    <DetectionDataResult type={type} detectionData={detectionResult} formRef={formRef} carId={carId} />
+                    <DetectionDataResult
+                        type={type}
+                        detectionData={detectionResult}
+                        formRef={formRef}
+                        carId={carId}
+                        reRender={reRender}
+                        closeScreen={handleClose}
+                    />
                 </Grid>
             </Grid>
         </ScreenDialog >

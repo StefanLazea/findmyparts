@@ -21,6 +21,7 @@ export const CarProfile = (props) => {
         { label: 'RCA', icon: <DocumentScanner /> },
         { label: 'Rovigneta', icon: <EditRoad /> }];
 
+
     useEffect(() => {
         axios.get(`/documents/car/${state?.selectedCar?.id}`).then((res) => {
             const response = res.data;
@@ -42,7 +43,7 @@ export const CarProfile = (props) => {
         })
         return () => setStep(-1);
 
-    }, []);
+    }, [triggerRender]);
 
     return (
         <PageContainer>
@@ -142,7 +143,7 @@ export const CarProfile = (props) => {
                 <AddDocumentDialog
                     open={isModalOpen}
                     setOpen={setModalOpen}
-                    reRender={() => { console.log("rerender me") }}
+                    reRender={() => setTriggerRender(prev => !prev)}
                     carId={state?.selectedCar?.id}
                 />}
 
