@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import _ from 'lodash';
 import axios from "axios";
+import { toast } from 'react-toastify';
 
 import { ScreenDialog } from "../../../../components/screen-dialog/ScreenDialog.jsx";
 import { DetectionDataResult } from './DetectionDataResult'
@@ -41,9 +42,29 @@ export const AddDocumentDialog = (props) => {
 
         axios.post("/google/detect-image", formData).then((res) => {
             if (!_.isEmpty(res.data)) {
-                console.log("here")
+                setDetectionResult(res.data)
+                toast.success("Detection success", {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
             }
-            setDetectionResult(res.data)
+        }).catch((err) => {
+            toast.error(
+                err.response.data.message,
+                {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
         })
 
     }

@@ -6,7 +6,7 @@ import {
 import _ from 'lodash'
 import axios from 'axios';
 import { Formik } from 'formik';
-
+import { toast } from 'react-toastify';
 import DateAdapter from '@mui/lab/AdapterMoment';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
@@ -20,6 +20,19 @@ export const DetectionDataResult = (props) => {
         console.log({ values })
         axios.post(`/documents/add/${values.name}`, values).then((res) => {
             console.log(res.data)
+        }).catch((err) => {
+            toast.error(
+                err.response.data.message,
+                {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+
         })
     }
 

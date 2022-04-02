@@ -14,7 +14,7 @@ export const CarProfile = (props) => {
     const [step, setStep] = useState(-1);
     const [documents, setDocuments] = useState({});
     const [isModalOpen, setModalOpen] = useState(false);
-
+    const [triggerRender, setTriggerRender] = useState(false);
     const { state } = useLocation();
     const stepsConfig = [
         { label: 'ITP', icon: <CarRepair /> },
@@ -22,8 +22,6 @@ export const CarProfile = (props) => {
         { label: 'Rovigneta', icon: <EditRoad /> }];
 
     useEffect(() => {
-        console.log(state);
-        console.log(documents)
         axios.get(`/documents/car/${state?.selectedCar?.id}`).then((res) => {
             const response = res.data;
             const isRcaAvailable = response.some(item => item.name === "RCA" && !item.isExpired)
