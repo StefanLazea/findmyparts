@@ -80,9 +80,19 @@ const deleteDocument = async (req, res) => {
     await doc.destroy().then(() => { return res.send({ message: "Document deleted" }) });
 }
 
+const getDocument = async (req, res) => {
+    const paramId = req.params.docId;
+    const doc = await DocumentsService.findDocumentById(paramId)
+    if (!doc) {
+        return res.status(404).send({ message: "Doc not found" })
+    }
+    return res.status(200).send(doc)
+}
+
 module.exports = {
     getAllDocuments,
     getCarDocuments,
     addDocument,
-    deleteDocument
+    deleteDocument,
+    getDocument
 }
