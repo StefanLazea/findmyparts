@@ -132,7 +132,7 @@ export const CarProfile = (props) => {
                     </Grid>
                 </Grid>
             </Grid>
-            <div className={styles.carProfile}>
+            <div className={styles.carProfileStepper}>
                 <IconButton color="primary" aria-label="grid view" onClick={() => setModalOpen(true)}><Add /></IconButton>
                 <div className={styles.stepContainer}>
                     <CustomStepper currentStep={step} steps={stepsConfig} onStepClick={(item) => console.log(item)} />

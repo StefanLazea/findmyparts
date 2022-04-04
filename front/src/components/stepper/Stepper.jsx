@@ -6,31 +6,49 @@ import { Tooltip } from '@mui/material';
 
 import { ColorlibStepIcon, ColorlibConnector } from './ColorlibStepIcon.jsx'
 
-export default function CustomStepper({
+const CustomStepper = ({
     currentStep = 0,
     steps = [],
     onStepClick = () => { },
     stepperWidth = '600px',
+    tooltip = false,
+    tooltipHeader = 'N/a',
     ...props }
-) {
+) => {
+    console.log({ steps })
+    const StepLabelItem = ({ item }) => {
+        return (
+            <StepLabel
+                StepIconComponent={(props) => {
+                    const stepLabelProps = { ...props, icon: item.icon };
+                    return <ColorlibStepIcon {...stepLabelProps} />
+                }}
+                onClick={(e) => onStepClick(item)}
+            >
+                {item.label}
+            </StepLabel>
+        )
+
+    }
+    const _getStepItem = (item) => {
+        if (props.tooltip) {
+            return <Tooltip title={tooltipHeader}>
+                <StepLabelItem item={item} />
+            </Tooltip>
+        }
+        return <StepLabelItem item={item} />
+
+    }
     return (
         <Stepper sx={{ width: stepperWidth }} alternativeLabel activeStep={currentStep} connector={<ColorlibConnector />}>
             {steps.map((item) => (
                 <Step key={item.label}>
-                    <Tooltip title="Delete">
-                        <StepLabel
-                            StepIconComponent={(props) => {
-                                const stepLabelProps = { ...props, icon: item.icon };
-                                return <ColorlibStepIcon {...stepLabelProps} />
-                            }}
-                            onClick={(e) => onStepClick(item)}
-                        >
-                            {item.label}
-                        </StepLabel>
-                    </Tooltip>
+                    {_getStepItem(item)}
                 </Step >
             ))
             }
         </Stepper >
     );
 }
+
+export default CustomStepper;

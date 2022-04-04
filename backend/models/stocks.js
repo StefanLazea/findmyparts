@@ -6,5 +6,7 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true
         },
         'quantity': DataTypes.STRING,
-    }, { timestamps: false });
+        'currency': DataTypes.STRING,
+        'price': DataTypes.FLOAT
+    });
 }

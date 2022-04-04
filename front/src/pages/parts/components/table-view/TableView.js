@@ -1,21 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import _ from 'lodash';
 
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material"
 
 export const TableView = () => {
     const columns = [
         { name: 'id', label: 'id' },
         { name: 'name', label: 'denumire' },
-        { name: 'code', label: 'Cod piesa' },
-        { name: 'stock', label: 'Stoc' },
-        { name: 'stock', label: 'Pret' },
+        { name: 'code', label: 'cod piesa' },
+        { name: 'stock', label: 'stoc' },
+        { name: 'stock', label: 'pret' },
 
     ]
     const [dataList, setDataList] = useState([])
@@ -29,14 +24,14 @@ export const TableView = () => {
             <TableHead>
                 <TableRow>
                     {columns.map(column => {
-                        return <TableCell key={column.name}>{column.label}</TableCell>
+                        return <TableCell key={_.uniqueId()}>{column.label}</TableCell>
                     })}
                 </TableRow>
             </TableHead>
             <TableBody>
                 {dataList.map(item => {
                     return <TableRow
-                        key={item.name}
+                        key={_.uniqueId()}
                         //remove this
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     >

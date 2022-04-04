@@ -8,8 +8,8 @@ const Documents = sequelize.import('./documents');
 // User.hasMany(Part);
 // Part.belongsTo(User);
 
-User.belongsToMany(Part, { through: Stocks });
 Part.belongsToMany(User, { through: Stocks });
+User.belongsToMany(Part, { through: Stocks });
 
 User.hasMany(Cars);
 Cars.belongsTo(User);

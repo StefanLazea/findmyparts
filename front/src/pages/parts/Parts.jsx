@@ -5,7 +5,7 @@ import TableRowsIcon from '@mui/icons-material/TableRows';
 import AddIcon from '@mui/icons-material/Add';
 
 import Container from '@mui/material/Container';
-import { TableView } from './components/TableView'
+import { TableView } from './components/table-view/TableView'
 import './Parts.scss';
 
 export const Parts = (props) => {

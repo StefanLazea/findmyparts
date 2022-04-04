@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import axios from 'axios';
-
-import { Grid, Container, IconButton } from '@mui/material';
+import { toast } from 'react-toastify'
+import { Grid, IconButton } from '@mui/material';
 import { Add } from '@mui/icons-material';
 
 import { CustomCard } from './components/custom-card/CustomCard';
@@ -19,21 +19,20 @@ export const Cars = (props) => {
     }
     const getCars = () => {
         axios.get(`/cars`).then(response => {
-            console.log(response.data);
-            // const mockedResponse = response.data.map(item => {
-            //     return {
-            //         ...item,
-            //         hasITP: true,
-            //         hasRCA: true,
-            //         hasRovigneta: false
-            //     }
-            // })
             setCars(response.data)
         })
     }
     const deleteCar = (id) => {
         axios.delete(`/cars/${id}`).then(res => {
-            console.log(res)
+            toast.success("Car deleted with success", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
             getCars();
         })
     }
