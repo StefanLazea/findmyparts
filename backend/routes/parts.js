@@ -6,7 +6,7 @@ const PartsController = require('../controllers/parts');
 router.get("/", PartsController.getAllParts);
 // router.post("/savePart", PartsController.savePart);
 router.post("/savePart", PartsController.savePart);
-
+router.put("/:partId", PartsController.updatePart);
 router.delete("/:partId", PartsController.deletePart);
 
 router.get("/users/:userId/stock", PartsController.getUsersPartsWithStock)
