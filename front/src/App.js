@@ -19,7 +19,7 @@ import { toast } from 'react-toastify';
 import { NavigationBar } from './components/navigation-bar/NavigationBar';
 import './App.scss';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { GlobalContextProvide } from "./global-context"
 toast.configure();
 
 function App() {
@@ -56,32 +56,31 @@ function App() {
   }
 
   return (
+    <GlobalContextProvide >
+      <ThemeProvider theme={darkTheme}>
+        {isAuth && <NavigationBar triggerLogOut={triggerLogOut} />}
+        <div className="app">
+          {!isAuth && <Navigate to='/login' />}
 
-    <ThemeProvider theme={darkTheme}>
-      {isAuth && <NavigationBar triggerLogOut={triggerLogOut} />}
-      <div className="app">
-        {!isAuth && <Navigate to='/login' />}
+          {/* DO NOT USE component like bellow in a Switch statement */}
+          {/* <Container> */}
+          <Routes>
+            {/* non private routes */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/find-part" element={<FindPart />} />
+            {/* TBD is this remains like this */}
+            <Route path="/car-profile" element={<CarProfile />} />
 
-        {/* DO NOT USE component like bellow in a Switch statement */}
-        {/* <Container> */}
-
-        <Routes>
-          {/* non private routes */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/find-part" element={<FindPart />} />
-          {/* TBD is this remains like this */}
-          <Route path="/car-profile" element={<CarProfile />} />
-
-          {/* TODO: private routes */}
-          <Route path="/home" exact element={<Home />} />
-          <Route path="/parts" element={<Parts />} />
-          <Route path="/cars" element={<Cars />} />
-        </Routes>
-        {/* </Container> */}
-      </div >
-    </ThemeProvider>
-
+            {/* TODO: private routes */}
+            <Route path="/home" exact element={<Home />} />
+            <Route path="/parts" element={<Parts />} />
+            <Route path="/cars" element={<Cars />} />
+          </Routes>
+          {/* </Container> */}
+        </div >
+      </ThemeProvider>
+    </GlobalContextProvide>
   );
 }
 
