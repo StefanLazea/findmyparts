@@ -66,21 +66,16 @@ const getUsersPartsWithStock = async (req, res) => {
 }
 
 //TODO test/error testing
-const getPartsStock = async (req, res) => {
-    const part = await Parts.findByPk("ecb8dac0-b4e9-11ec-9cc6-81a0ff08c188")
-    const user = await Users.findByPk("e0351e80-b4e9-11ec-9cc6-81a0ff08c188")
+const getAllPartsStock = async (req, res) => {
+    const found = await Parts.findAll({
+        include: { model: Users, attributes: ["id", "email"] }
+    });
+    if (_.isEmpty(found)) {
+        return res.status(404).send({ message: "No elements found in the database" });
 
-    // if (!_.isEmpty(partsStock)) {
-    //     return res.status(200).send(partsStock)
-    // }
-    // part.getUsersStocks().then(stock => console.log(JSON.parse(JSON.stringify(stock))))
-    // const stock = await user.getPartsStocks() //.then(stock => console.log(JSON.parse(JSON.stringify(stock))))
-    // if (stock) {
-    //     return res.status(200).send(stock)
-    // }
-    // const parts = await Parts.findAll()
+    }
+    return res.status(200).send(found)
 
-    return res.status(404).send({ message: "No elements found in the database" });
 }
 
 //TODO update part not just stock 
@@ -129,20 +124,17 @@ const updatePart = async (req, res) => {
 
 const deletePart = async (req, res) => {
     const paramId = req.params.partId;
-    console.log(paramId)
     const part = await PartsService.findPartById(paramId)
-    console.log(part)
     if (!part) {
         return res.status(404).send({ message: "Part not found" })
     }
-
     await part.destroy().then(() => { return res.send({ message: "Part deleted" }) });
 };
 
 module.exports = {
     getAllParts,
     getUsersPartsWithStock,
-    getPartsStock,
+    getAllPartsStock,
     savePart,
     updatePart,
     deletePart
