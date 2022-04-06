@@ -19,7 +19,14 @@ const findPartById = async (partId) => {
 
     return partFound;
 }
+
+const findUserPartById = async ({ user, partId } = {}) => {
+    return await user.getParts({
+        where: { id: partId }
+    });
+}
 module.exports = {
     findPartByCode,
-    findPartById
+    findPartById,
+    findUserPartById
 }

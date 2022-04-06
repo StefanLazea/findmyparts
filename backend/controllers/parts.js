@@ -83,50 +83,48 @@ const getPartsStock = async (req, res) => {
     return res.status(404).send({ message: "No elements found in the database" });
 }
 
+//TODO update part not just stock 
 const updatePart = async (req, res) => {
-    const updatedStock = {
+    if (_.isEmpty(req.body.userId)) {
+        return res.status(500).send({ message: "Please add userId" })
+    }
+    const requestStock = {
         price: req.body.price,
         currency: "lei",
         quantity: req.body.quantity,
     }
     const partId = req.params.partId;
-
-    const userId = req.body.userId
-    const user = await Users.findByPk(userId, {
+    const user = await Users.findByPk(req.body?.userId, {
         include: [{
             model: Parts,
             through: { attributes: [] }
         }]
     });
-    const foundPart = await user.getParts({
-        // include: [{
-        //     model: Stocks
-        // }]
-        where: { id: partId }
-        // joinTableAttributes: ["quantity", "price", "userId"],
-        // where: { partId: partId }
-    });
+
+    const foundPart = await PartsService.findUserPartById({ user, partId });
+    const foundPartJSON = JSON.parse(JSON.stringify(foundPart));
+
+    if (_.isEmpty(foundPartJSON)) {
+        return res.status(404).send({ message: "Part not found" });
+    }
+
+    const oldStockValues = { ...foundPartJSON[0]?.stocks }
+    const calculatedNewStock = {
+        ...oldStockValues,
+        quantity: Number(oldStockValues.quantity) + Number(requestStock.quantity),
+        price: requestStock.price,
+    }
     const updatedPart = await user.setParts(foundPart,
         {
-            through: updatedStock
+            through: calculatedNewStock
         }
     )
-    // const currentStock = await Stocks.findAll({ where: { partId: partId } })
-    console.log(JSON.parse(JSON.stringify(foundPart)))
 
-    // console.log(JSON.parse(JSON.stringify(partsResult)))
-    // const partsResult = await user.getParts({
-    //     joinTableAttributes: ["quantity", "price", "userId"]
-    // });
-    // console.log(partsResult)
+    if (!updatedPart) {
+        return res.status(400).send({ message: "Part couldn't be updated" })
+    }
 
-    // if ( !updatePart) {
-    //     return res.status(500).send({ message: 'issue creating part' });
-
-    // }
-    return res.status(200).send({ message: "Added part and added stock" });
-
-    return res.status(400).send({ message: "Part is already in" })
+    return res.status(200).send({ message: "Updated part and updated stock" });
 };
 
 const deletePart = async (req, res) => {
