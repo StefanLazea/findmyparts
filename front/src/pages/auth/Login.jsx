@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { GoogleLogin } from 'react-google-login';
 import { GoogleLogout } from 'react-google-login';
 
@@ -6,9 +6,13 @@ import { toast } from 'react-toastify';
 import { useNavigate } from "react-router";
 import Container from '@mui/material/Container';
 import axios from "axios";
+import { addUserId, useGlobalContext } from "../../global-context"
+import _ from 'lodash';
+
 import './Login.scss';
 export const Login = (props) => {
-    let navigate = useNavigate();
+    const { state: { userId }, dispatch } = useGlobalContext();
+    useEffect(() => { console.log(userId) }, [userId])
     const handleLogin = (response) => {
         axios.post(`/auth/google`, {
 
@@ -19,7 +23,9 @@ export const Login = (props) => {
         ).then((res) => {
             if (res.data.message === 'Success') {
                 localStorage.setItem('token', res.data.token)
-                navigate.push('/')
+                const userId = _.get(res, 'data.user.id', '');
+                //todo navigation
+                dispatch(addUserId(userId))
             }
             toast(res.data.message);
         });

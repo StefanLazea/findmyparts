@@ -109,3 +109,4 @@ dist
 .tern-port
 .history
 front/credentials.json
+.DS_Store

@@ -5,7 +5,6 @@ import {
   Navigate
 } from "react-router-dom";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Container } from '@mui/material';
 
 import { Home } from './pages/home/Home';
 import { Parts } from './pages/parts/Parts'

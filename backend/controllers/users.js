@@ -1,4 +1,5 @@
 const User = require('../models').User;
+const UserServices = require('../services/user')
 const { OAuth2Client } = require('google-auth-library')
 const client = new OAuth2Client(process.env.CLIENT_ID)
 const _ = require('lodash');
@@ -28,12 +29,14 @@ const googleAuth = async (req, res) => {
     }
 
     const { name, email, picture } = ticket.getPayload();
-    const user = await User.upsert({
+    const userUpsert = await User.upsert({
         name: name, email: email, picture: picture, authType: true, updatedAt: Date.now(),
     })
-    console.log(user);
+    console.log({ userUpsert });
+    let userId = JSON.parse(JSON.stringify(await UserServices.findUserByEmail(email))).id;
 
-    return res.send({ message: 'Success', token: token, user: { name, email, picture } });
+
+    return res.send({ message: 'Success', token: token, user: { name, email, picture, id: userId } });
 }
 
 module.exports = { createUser, getAllUsers, googleAuth }

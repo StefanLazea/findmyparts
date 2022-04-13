@@ -2,14 +2,25 @@ import * as React from 'react'
 
 const CountContext = React.createContext()
 
-function countReducer(state, action) {
+const initialState = {
+    count: 0,
+    userId: 0
+}
+const ACTIONS = {
+    ADD_USER_ID: 'addUserId',
+}
+export const addUserId = (userId) => ({
+    type: ACTIONS.ADD_USER_ID,
+    userId
+})
+
+function storeReducer(state = initialState, action) {
     switch (action.type) {
-        case 'increment': {
-            console.log("here")
-            return { count: state.count + 1 }
-        }
-        case 'decrement': {
-            return { count: state.count - 1 }
+        case ACTIONS.ADD_USER_ID: {
+            return {
+                ...state,
+                userId: action.userId,
+            };
         }
         default: {
             throw new Error(`Unhandled action type: ${action.type}`)
@@ -18,7 +29,7 @@ function countReducer(state, action) {
 }
 
 function GlobalContextProvide({ children }) {
-    const [state, dispatch] = React.useReducer(countReducer, { count: 0 })
+    const [state, dispatch] = React.useReducer(storeReducer, initialState)
     // NOTE: you *might* need to memoize this value
     // Learn more in http://kcd.im/optimize-context
     const value = { state, dispatch }

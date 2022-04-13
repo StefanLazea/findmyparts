@@ -1,18 +1,19 @@
 import React, { useEffect } from 'react';
 import './Home.scss'
-import { useGlobalContext } from "../../global-context"
+import { addUserId, useGlobalContext } from "../../global-context"
 
 export const Home = (props) => {
-    const { state: { count }, dispatch
-    } = useGlobalContext();
+    const { state: { userId }, dispatch } = useGlobalContext();
     useEffect(() => {
-        console.log({ count });
-
-    }, [count])
+        console.log({ userId });
+    }, [userId])
     return (
         <div className="home-page">
             Hello, Stefan
-            <button onClick={() => dispatch({ type: "increment" })} >Click</button>
+            <button onClick={() => {
+                dispatch(addUserId('8765'))
+
+            }} >Click</button>
 
         </div>
     );
