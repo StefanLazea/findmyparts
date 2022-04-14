@@ -4,6 +4,7 @@ import TextField from '@mui/material/TextField';
 import * as yup from 'yup';
 import { Formik, Form } from 'formik';
 import { BODY_STYLE_VARIANTS, FUEL_VARIANTS } from '../mock.js'
+import { useGlobalContext } from "../../../../global-context"
 
 import {
     Dialog,
@@ -22,7 +23,9 @@ import axios from "axios";
 export const AddCarDialog = (props) => {
     const { open, setOpen, reRender } = props;
     const handleClose = () => setOpen(false);
+    const { state: { userId } } = useGlobalContext();
     const formRef = useRef();
+    console.log({ userId })
     const validationSchema = yup.object({
         vin: yup
             .string()
@@ -45,7 +48,7 @@ export const AddCarDialog = (props) => {
             "isEco": false,
             "isElectric": values.isElectric,
             "isHistoric": values.isHistoric,
-            "userId": "a8616d40-927c-11ec-af5a-2bfc6da2f954"
+            "userId": userId
         }
         axios.post("/cars/save", payload).then(res => {
             reRender();
@@ -88,7 +91,7 @@ export const AddCarDialog = (props) => {
                                 onChange={handleChange}
                                 variant="standard"
                                 fullWidth
-                                error={errors.numberPlate}
+                                error={errors.numberPlate ? true : false}
                                 helperText={errors.numberPlate}
                             />
                             <TextField
@@ -100,7 +103,7 @@ export const AddCarDialog = (props) => {
                                 onChange={handleChange}
                                 variant="standard"
                                 fullWidth
-                                error={errors.vin}
+                                error={errors.vin ? true : false}
                                 helperText={errors.vin}
                             />
                             <TextField

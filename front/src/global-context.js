@@ -4,7 +4,7 @@ const CountContext = React.createContext()
 
 const initialState = {
     count: 0,
-    userId: 0
+    userId: localStorage.getItem('userId') || 0 // TODO: save as cookie not as this
 }
 const ACTIONS = {
     ADD_USER_ID: 'addUserId',
@@ -17,6 +17,7 @@ export const addUserId = (userId) => ({
 function storeReducer(state = initialState, action) {
     switch (action.type) {
         case ACTIONS.ADD_USER_ID: {
+            localStorage.setItem('userId', action.userId);
             return {
                 ...state,
                 userId: action.userId,
