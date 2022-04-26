@@ -7,6 +7,7 @@ export const Home = (props) => {
     useEffect(() => {
         console.log({ userId });
     }, [userId])
+
     return (
         <div className="home-page">
             Hello, Stefan

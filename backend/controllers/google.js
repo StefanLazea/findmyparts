@@ -15,7 +15,7 @@ const transformDateToTimestamp = (str) => {
 //TODO test and refactor
 const getFormattedResponseRCA = (text) => {
     const description = text[0]?.description.toLowerCase();
-
+    console.log(description)
     //for start data
     const fromDateIndexOf = description.indexOf(CONSTANTS.PRE_DATE_IDENTIFIER)
     const fromDateBeginIndex = fromDateIndexOf + CONSTANTS.PRE_DATE_IDENTIFIER.length;
@@ -64,7 +64,11 @@ const detectImage = async (req, res) => {
 
         //TODO, format date to correct international date -> pass it as timestamp to FE
         if (docType === BACKEND_CONSTANTS.DOCUMENTS.RCA) {
-            formattedResponse = getFormattedResponseRCA(text);
+            try {
+                formattedResponse = getFormattedResponseRCA(text);
+            } catch (err) {
+                return res.status(500).send({ message: 'We encountered a problem. Try again later.' })
+            }
         }
         return res.status(200).send(formattedResponse)
 
