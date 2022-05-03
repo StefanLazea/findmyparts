@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 
-import { Grid, IconButton } from '@mui/material';
+import { IconButton } from '@mui/material';
 import { CarRepair, DocumentScanner, EditRoad, Add } from '@mui/icons-material';
-import _ from "lodash"
 import axios from "axios"
 
 import CustomStepper from '../../../components/stepper/Stepper';
@@ -18,6 +17,7 @@ export const CarProfile = (props) => {
     const [isModalOpen, setModalOpen] = useState(false);
     const [triggerRender, setTriggerRender] = useState(false);
     const { state } = useLocation();
+
     const stepsConfig = [
         { label: 'ITP', icon: <CarRepair /> },
         { label: 'RCA', icon: <DocumentScanner /> },

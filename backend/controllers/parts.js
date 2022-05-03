@@ -21,6 +21,9 @@ const savePart = async (req, res) => {
         code: req.body.code,
         photo: req.body?.photo
     }
+    if (_.isNil(part)) {
+        return res.status(400).send({ message: 'Please send a body or a correct format' })
+    }
     const createdPart = await Parts.create(part);
     const userId = req.body.userId
     const user = await Users.findByPk(userId)
