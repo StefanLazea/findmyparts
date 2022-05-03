@@ -1,0 +1,44 @@
+.stepsHeader{
+    margin-top: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+
+.stepContainer {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+
+    .header {
+        // margin-bottom: 2%;
+        margin-top: 2%;
+        .title {
+            font-size: 24px;
+            font-weight: 400;
+        }
+    }
+    
+    .imageElement{
+        min-height: 300px;
+        min-width: 300px;
+        //TODO center image when in mobile 
+    }
+
+    //overrides
+    .gridItem{
+        padding-left: 0px !important;
+    }
+
+    .formControl{
+        width: 195px;
+    }
+
+.carDetails {
+    display: flex;
+    flex-direction: row;
+    gap: 2%;
+}

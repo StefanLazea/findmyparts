@@ -2,7 +2,18 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import _ from 'lodash';
 
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material"
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Paper,
+    IconButton
+} from "@mui/material"
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 export const TableView = () => {
     const columns = [
@@ -32,14 +43,21 @@ export const TableView = () => {
                 {dataList.map(item => {
                     return <TableRow
                         key={_.uniqueId()}
-                        //remove this
-                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                    //remove this
+                    // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     >
                         <TableCell>{item.id}</TableCell>
                         <TableCell>{item.name}</TableCell>
                         <TableCell>{item.code}</TableCell>
                         <TableCell>{item.stock}</TableCell>
                         <TableCell>{item.price}</TableCell>
+                        <TableCell>
+                            <IconButton color="primary" onClick={() => console.log(item)}><DeleteIcon /></IconButton>
+                        </TableCell>
+                        <TableCell>
+                            <IconButton color="primary" onClick={() => console.log(item)}><EditIcon /></IconButton>
+                        </TableCell>
+
                     </TableRow>
                 })}
 
