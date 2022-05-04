@@ -13,7 +13,7 @@ import { Cars } from './pages/cars/Cars';
 import { Register } from './pages/auth/Register';
 import { Login } from './pages/auth/Login';
 import { CarProfile } from './pages/cars/car-profile/CarProfile';
-
+import { PartProfile } from './pages/parts/part-profile/PartProfile'
 import { toast } from 'react-toastify';
 import { NavigationBar } from './components/navigation-bar/NavigationBar';
 import './App.scss';
@@ -65,16 +65,18 @@ function App() {
           {/* <Container> */}
           <Routes>
             {/* non private routes */}
+            <Route path="/home" exact element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/find-part" element={<FindPart />} />
             {/* TBD is this remains like this */}
+            <Route path="/cars" element={<Cars />} />
             <Route path="/car-profile" element={<CarProfile />} />
 
-            {/* TODO: private routes */}
-            <Route path="/home" exact element={<Home />} />
             <Route path="/parts" element={<Parts />} />
-            <Route path="/cars" element={<Cars />} />
+            <Route path="/find-part" element={<FindPart />} />
+            <Route path="/part-profile" element={<PartProfile />} />
+
+            {/* TODO: private routes */}
           </Routes>
           {/* </Container> */}
         </div >
