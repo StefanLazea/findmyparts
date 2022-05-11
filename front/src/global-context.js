@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-const CountContext = React.createContext()
+const GlobalContext = React.createContext()
 
 const initialState = {
     count: 0,
@@ -9,6 +9,8 @@ const initialState = {
 const ACTIONS = {
     ADD_USER_ID: 'addUserId',
 }
+
+//todo add a actions.js file into a global-context directory
 export const addUserId = (userId) => ({
     type: ACTIONS.ADD_USER_ID,
     userId
@@ -34,12 +36,12 @@ function GlobalContextProvide({ children }) {
     // NOTE: you *might* need to memoize this value
     // Learn more in http://kcd.im/optimize-context
     const value = { state, dispatch }
-    return <CountContext.Provider value={value}>{children}</CountContext.Provider>
+    return <GlobalContext.Provider value={value}>{children}</GlobalContext.Provider>
 }
 
 //custom hook
 function useGlobalContext() {
-    const context = React.useContext(CountContext);
+    const context = React.useContext(GlobalContext);
     if (context === undefined) {
         throw new Error("useGlobalContext must be used with a Provider")
     }
