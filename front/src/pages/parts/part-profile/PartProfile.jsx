@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useLocation } from 'react-router';
 
 import { PageContainer } from '../../../components/page-container/PageContainer'
-import { DetailCard } from '../components/detail-card/DetailCard';
+import { SummaryCard } from '../components/summary-card/SummaryCard';
 
 import { Grid } from '@mui/material';
 import _ from 'lodash'
@@ -23,16 +23,16 @@ export const PartProfile = ({ ...props }) => {
             <div className={styles.summariesGrid}>
                 <Grid container rowSpacing={4} spacing={{ xs: 1, sm: 3, md: 6 }} columns={{ xs: 1, sm: 8, md: 12 }}>
                     <Grid item xs={1} sm={3} md={3}>
-                        <DetailCard />
+                        <SummaryCard />
                     </Grid>
                     <Grid item xs={1} sm={3} md={3}>
-                        <DetailCard />
+                        <SummaryCard />
                     </Grid>
                     <Grid item xs={1} sm={3} md={3}>
-                        <DetailCard />
+                        <SummaryCard />
                     </Grid>
                     <Grid item xs={1} sm={3} md={3}>
-                        <DetailCard />
+                        <SummaryCard />
                     </Grid>
                 </Grid>
             </div>

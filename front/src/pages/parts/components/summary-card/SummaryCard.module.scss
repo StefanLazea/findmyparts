@@ -1,0 +1,17 @@
+.summaryCard {
+   background-color: #2C8C99;
+}
+.summaryCardContent {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   .text {
+      color: white;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+   }
+   .title {
+      font-size: 22px;
+   }
+}
