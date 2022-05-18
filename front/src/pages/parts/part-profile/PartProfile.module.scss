@@ -4,6 +4,7 @@
 .title {
     font-size: 20px;
     font-weight: 400;
+    margin-bottom: 20px;
 }
 
 .partsDivider {
@@ -11,6 +12,14 @@
     margin-bottom: 20px !important;
 }
 
+.partsHeader {
+    min-height: 30%;
+}
+
 .usersPartsList{
-    
+    min-height: 70%;
+}
+
+.partsContainer{
+    height: inherit;
 }

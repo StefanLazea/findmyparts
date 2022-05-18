@@ -1,0 +1,27 @@
+// .summaryCard {
+//     // background-color: #2C8C99 !important;
+//  }
+
+ .summaryCardContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+ 
+    .text {
+    //    color: white;
+       display: flex;
+       flex-direction: row;
+       justify-content: center;
+    }
+
+    .requestPart {
+       display: flex;
+       flex-direction: row;
+       align-items: center;
+       justify-content: space-between;
+    }
+
+    .title {
+       font-size: 22px;
+    }
+ }
