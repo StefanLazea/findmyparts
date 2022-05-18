@@ -4,17 +4,17 @@ import { Card, CardContent, Typography } from '@mui/material'
 
 import styles from './SummaryCard.module.scss'
 
-export const SummaryCard = ({ ...props }) => {
+export const SummaryCard = ({ data, ...props }) => {
 
     return (
         <Card classes={{ root: styles.summaryCard }}>
             <CardContent onClick={props.onClick}>
                 <div className={styles.summaryCardContent}>
                     <Typography component="div" className={`${styles.title} ${styles.text}`}>
-                        Pretul mediu
+                        {data.label}
                     </Typography>
                     <Typography component="div" className={styles.text}>
-                        100 lei
+                        {data.value}
                     </Typography>
                 </div>
             </CardContent>

@@ -21,7 +21,6 @@ const getAllCars = async (req, res) => {
 }
 
 const saveCar = async (req, res) => {
-    console.log(req.body)
     if (!req.body) {
         return res.status(500).message({ message: "You need to send body params." })
     }
