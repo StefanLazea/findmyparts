@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 
 import { PageContainer } from '../../../components/page-container/PageContainer'
@@ -10,9 +10,11 @@ import EditIcon from '@mui/icons-material/Edit';
 import _ from 'lodash'
 
 import styles from './PartProfile.module.scss'
+import axios from 'axios';
 
 export const PartProfile = ({ ...props }) => {
     const { state } = useLocation();
+    const [usersWithPart, setUsersWithPart] = useState([])
     const selectedPart = _.get(state, 'selectedPart', {});
     const summaryDetails = [
         {
@@ -33,7 +35,11 @@ export const PartProfile = ({ ...props }) => {
         }
     ]
     useEffect(() => {
-        console.log(selectedPart)
+        axios.get('/parts/0d5bc5c0-cb16-11ec-b68e-eb7fb4661e00/users/stock').then(res => {
+            const users = _.get(res, 'data.users', []);
+            console.log(users)
+            setUsersWithPart(users)
+        })
     }, [state])
 
     return <PageContainer classes={{ root: styles.partsContainer }}>
@@ -52,7 +58,7 @@ export const PartProfile = ({ ...props }) => {
             </div>
             <div className={styles.summariesGrid}>
                 <Grid container rowSpacing={4} spacing={{ xs: 1, sm: 3, md: 6 }} columns={{ xs: 1, sm: 6, md: 12 }}>
-                    {summaryDetails.map(item => <Grid item xs={1} sm={3} md={3}>
+                    {summaryDetails.map(item => <Grid item xs={1} sm={3} md={3} key={_.uniqueId()}>
                         <SummaryCard data={item} />
                     </Grid>)}
 
@@ -63,31 +69,10 @@ export const PartProfile = ({ ...props }) => {
         <div className={styles.usersPartsList}>
             <span className={styles.title}>Utilizatori care au aceeasi piesa</span>
             <Grid container rowSpacing={2} spacing={{ xs: 1, sm: 3, md: 6 }} columns={{ xs: 1, sm: 6, md: 12 }}>
-                <Grid item xs={1} sm={3} md={6}>
-                    <PartOwnerCard />
-                </Grid>
-                <Grid item xs={1} sm={3} md={6}>
-                    <PartOwnerCard />
-                </Grid>
-                <Grid item xs={1} sm={3} md={6}>
-                    <PartOwnerCard />
-                </Grid>
-                <Grid item xs={1} sm={3} md={6}>
-                    <PartOwnerCard />
-                </Grid>
-                <Grid item xs={1} sm={3} md={6}>
-                    <PartOwnerCard />
-                </Grid>
-                <Grid item xs={1} sm={3} md={6}>
-                    <PartOwnerCard />
-                </Grid>
-                <Grid item xs={1} sm={3} md={6}>
-                    <PartOwnerCard />
-                </Grid>
-                <Grid item xs={1} sm={3} md={6}>
-                    <PartOwnerCard />
-                </Grid>
-
+                {usersWithPart.map(userWithPart =>
+                    <Grid item xs={1} sm={3} md={6} key={_.uniqueId()}>
+                        <PartOwnerCard data={userWithPart} />
+                    </Grid>)}
             </Grid>
         </div>
     </PageContainer>

@@ -3,7 +3,6 @@ const Users = require('../models').User;
 const Stocks = require('../models').Stock;
 const _ = require("lodash")
 const PartsService = require('../services/part');
-// const UsersService = require('../services/user');
 
 const getAllParts = async (req, res) => {
     try {
@@ -50,7 +49,13 @@ const savePart = async (req, res) => {
 }
 
 //TODO test and treat cases when body and items from it are missing
-const getUsersPartsWithStock = async (req, res) => {
+/**
+ * get all parts with user and stock details
+ * @param {*} req 
+ * @param {*} res 
+ * @returns 
+ */
+const getAllPartsWithUserStock = async (req, res) => {
     const user = await Users.findByPk(req.params.userId, {
         include: [{
             model: Parts,
@@ -68,7 +73,31 @@ const getUsersPartsWithStock = async (req, res) => {
     return res.status(200).send(partsResult)
 }
 
+/**
+ * Get one part given the partId in the params
+ * @param {*} req 
+ * @param {*} res 
+ * @returns part object with user and stock detail
+ */
+const getOnePartWithUserStock = async (req, res) => {
+    const found = await Parts.findAll({
+        include: { model: Users, attributes: ["id", "email"] },
+        where: { id: req.params.partId }
+    });
+    if (_.isEmpty(found)) {
+        return res.status(404).send({ message: "No elements found in the database" });
+
+    }
+    return res.status(200).send(found[0])
+}
+
 //TODO test/error testing
+/**
+ * Get all parts along with user details and stock details
+ * @param {*} req 
+ * @param {*} res 
+ * @returns 
+ */
 const getAllPartsStock = async (req, res) => {
     const found = await Parts.findAll({
         include: { model: Users, attributes: ["id", "email"] }
@@ -136,8 +165,9 @@ const deletePart = async (req, res) => {
 
 module.exports = {
     getAllParts,
-    getUsersPartsWithStock,
+    getAllPartsWithUserStock,
     getAllPartsStock,
+    getOnePartWithUserStock,
     savePart,
     updatePart,
     deletePart
