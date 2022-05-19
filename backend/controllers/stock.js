@@ -38,7 +38,8 @@ const getUserStockDetails = async (req, res) => {
 
     return res.send({
         mediumPrice: mediumPrice,
-        stock: totalStock,
+        allStock: totalStock,
+        userStock: foundPartStock.quantity,
         userPrice: foundPartStock.price
     })
 }
