@@ -17,6 +17,7 @@ const PORT = process.env.PORT;
 model.sequelize.sync();
 
 app.use('/api', routes);
+
 app.use(express.static('../front/build'));
 
 app.get("*", (req, res) => {

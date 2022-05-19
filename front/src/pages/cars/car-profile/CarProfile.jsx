@@ -13,7 +13,7 @@ import { PageContainer } from '../../../components/page-container/PageContainer'
 
 export const CarProfile = (props) => {
     const [step, setStep] = useState(-1);
-    const [documents, setDocuments] = useState({});
+    const [_, setDocuments] = useState({});
     const [isModalOpen, setModalOpen] = useState(false);
     const [triggerRender, setTriggerRender] = useState(false);
     const { state } = useLocation();

@@ -4,6 +4,7 @@ const usersRouter = require('./auth');
 const carsRouter = require('./cars');
 const googleRouter = require('./google')
 const documentsRouter = require('./documents')
+const stocksRouter = require('./stocks')
 
 const { authorizeGoogle } = require('../services/authorize')
 
@@ -14,6 +15,7 @@ router.use('/auth', usersRouter);
 router.use('/google', googleRouter);
 router.use('/documents', documentsRouter);
 
+router.use('/stocks', stocksRouter);
 
 router.get('/test', authorizeGoogle, (req, res) => {
     res.send({ message: "hello" })

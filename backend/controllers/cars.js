@@ -44,12 +44,6 @@ const saveCar = async (req, res) => {
     return res.status(400).send({ message: "Car is already in" })
 };
 
-// const updatePart = async (req, res) => {
-//     console.log(req.params.partId)
-
-//     return res.status(400).send({ message: "Part is already in" })
-// };
-
 const deleteCar = async (req, res) => {
     const paramId = req.params.carId;
     console.log(paramId)

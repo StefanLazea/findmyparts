@@ -38,7 +38,6 @@ const savePart = async (req, res) => {
     const partsResult = await user.getParts({
         joinTableAttributes: ["quantity", "price", "userId"]
     });
-    console.log(partsResult)
 
     if (!createdPart && !addedPart) {
         return res.status(500).send({ message: 'issue creating part' });
@@ -84,6 +83,8 @@ const getOnePartWithUserStock = async (req, res) => {
         include: { model: Users, attributes: ["id", "email"] },
         where: { id: req.params.partId }
     });
+    const fnd = JSON.parse(JSON.stringify(found))
+
     if (_.isEmpty(found)) {
         return res.status(404).send({ message: "No elements found in the database" });
 
