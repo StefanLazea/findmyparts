@@ -58,6 +58,8 @@ function App() {
     <GlobalContextProvide >
       <ThemeProvider theme={darkTheme}>
         {isAuth && <NavigationBar triggerLogOut={triggerLogOut} />}
+        {/* <SocketProvider> */}
+
         <div className="app">
           {!isAuth && <Navigate to='/login' />}
 

@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
+
 import IconButton from '@mui/material/IconButton';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import TableRowsIcon from '@mui/icons-material/TableRows';
 import AddIcon from '@mui/icons-material/Add';
-
 import Container from '@mui/material/Container';
+
+import { AddPartDialog } from './components/add-part/AddPartDialog';
 import { TableView } from './components/table-view/TableView'
+
 import './Parts.scss';
 
 export const Parts = (props) => {
     const [cardsView, setCardsView] = useState(false)
-    const [, setOpenAddModal] = useState(false);
+    const [openModal, setOpenAddModal] = useState(false);
 
     const CardsView = () => {
         return <div>grid</div>
@@ -26,6 +29,7 @@ export const Parts = (props) => {
                 </div>
             </div>
             {cardsView ? <CardsView /> : <TableView />}
+            {openModal && <AddPartDialog open={openModal} setOpen={setOpenAddModal} />}
         </Container>
     );
 }

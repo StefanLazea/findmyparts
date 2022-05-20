@@ -11,6 +11,7 @@ import axios from 'axios';
 export const PartsDetailsView = ({ partId, ...props }) => {
     const { state: { userId } } = useGlobalContext();
     const [details, setDetails] = useState([]);
+
     useEffect(() => {
         axios.get(`/stocks/details/user/${userId}/part/${partId}`).then(res => {
             console.log(res.data)

@@ -35,9 +35,9 @@ const savePart = async (req, res) => {
             }
         }
     )
-    const partsResult = await user.getParts({
-        joinTableAttributes: ["quantity", "price", "userId"]
-    });
+    // const partsResult = await user.getParts({
+    //     joinTableAttributes: ["quantity", "price", "userId"]
+    // });
 
     if (!createdPart && !addedPart) {
         return res.status(500).send({ message: 'issue creating part' });

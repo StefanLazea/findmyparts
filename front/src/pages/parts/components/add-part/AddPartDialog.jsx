@@ -1,9 +1,13 @@
 import React, { useRef } from "react";
+
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import * as yup from 'yup';
+
+import { useGlobalContext } from '../../../../global-context';
+
+// import * as yup from 'yup';
 import { Formik, Form } from 'formik';
-import { BODY_STYLE_VARIANTS, FUEL_VARIANTS } from '../mock.js'
+// import { BODY_STYLE_VARIANTS, FUEL_VARIANTS } from '../mock.js'
 
 import {
     Dialog,
@@ -21,6 +25,8 @@ import axios from "axios";
 
 export const AddPartDialog = (props) => {
     const { open, setOpen, reRender } = props;
+    const { state: { userId } } = useGlobalContext();
+
     const handleClose = () => setOpen(false);
     const formRef = useRef();
     // const validationSchema = yup.object({
@@ -37,17 +43,19 @@ export const AddPartDialog = (props) => {
 
     const savePart = (values) => {
         const payload = {
-            "code": "7700112322",
-            "name": "bieleta",
-            "price": 78,
-            "stock": 20,
-            "photo": "",
-            "userId": '',
+            code: values.code,
+            name: values.name,
+            price: values.price,
+            quantity: values.stock,
+            photo: "",
+            userId: userId
 
         }
         console.log(values)
-        axios.post("/cars/parts", payload).then(res => {
-            reRender();
+        axios.post("/parts", payload).then(res => {
+            // reRender();
+            console.log(res)
+
             setOpen(false);
         })
     }
@@ -61,10 +69,12 @@ export const AddPartDialog = (props) => {
                 <Formik
                     innerRef={formRef}
                     initialValues={{
-                        name: '',
-                        code: '',
-                        stock: 1,
-                        price: 20,
+                        code: "",
+                        name: "",
+                        price: 0,
+                        quantity: 0,
+                        photo: "",
+                        userId: userId
                     }}
                     // validationSchema={validationSchema}
                     onSubmit={values => {
@@ -118,40 +128,7 @@ export const AddPartDialog = (props) => {
                                 variant="standard"
                                 fullWidth
                             />
-                            <TextField
-                                select // tell TextField to render select
-                                id="type"
-                                name="type"
-                                label="caroserie"
-                                variant="standard"
-                                value={values.type}
-                                onChange={handleChange}
-                                fullWidth
-                            >
-                                {BODY_STYLE_VARIANTS.map((item, index) =>
-                                    <MenuItem key={index} value={item}>
-                                        {item}
-                                    </MenuItem>
-                                )}
-                            </TextField>
-                            <TextField
-                                select // tell TextField to render select
-                                id="fuel"
-                                name="fuel"
-                                label="combustibil"
-                                variant="standard"
-                                value={values.fuel}
-                                onChange={handleChange}
-                                fullWidth
-                            >
-                                {FUEL_VARIANTS.map((item, index) =>
-                                    <MenuItem key={index} value={item}>
-                                        {item}
-                                    </MenuItem>
-                                )}
 
-
-                            </TextField>
                             <FormGroup>
                                 <FormControlLabel
                                     control={

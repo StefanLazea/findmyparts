@@ -19,11 +19,13 @@
     "express": "^4.17.1",
     "express-fileupload": "^1.1.9",
     "google-auth-library": "^7.10.1",
+    "http": "^0.0.1-security",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "mysql2": "^2.1.0",
     "sequelize": "^5.21.6",
-    "sequelize-hierarchy": "^2.0.4"
+    "sequelize-hierarchy": "^2.0.4",
+    "socket.io": "^4.5.1"
   }
 }
