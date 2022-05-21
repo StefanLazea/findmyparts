@@ -17,8 +17,13 @@ const findUserByEmail = async (email) => {
     return userFound;
 }
 
+const findUserByPk = async (userId) => {
+    const user = await Users.findByPk(userId)
+    return user;
+}
 
 module.exports = {
     findUserById,
-    findUserByEmail
+    findUserByEmail,
+    findUserByPk,
 }

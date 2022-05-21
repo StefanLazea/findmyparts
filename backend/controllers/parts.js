@@ -1,13 +1,11 @@
 const Parts = require('../models').Part;
 const Users = require('../models').User;
-const Stocks = require('../models').Stock;
 const _ = require("lodash")
 const PartsService = require('../services/part');
 
 const getAllParts = async (req, res) => {
     try {
         Parts.findAll().then((allParts) => { return res.status(200).send(allParts) });
-        const count = Parts.getUsers
     }
     catch (err) {
         return res.status(404).send({ message: "No elements found in the database" });
@@ -20,9 +18,15 @@ const savePart = async (req, res) => {
         code: req.body.code,
         photo: req.body?.photo
     }
+    const partAlreadyExist = await PartsService.findPartByCode(req.body.code);
+
+    if (partAlreadyExist) {
+        return res.status(302).send({ message: 'Please send an unique code' })
+    }
     if (_.isNil(part)) {
         return res.status(400).send({ message: 'Please send a body or a correct format' })
     }
+    console.log(await PartsService.findPartByCode(req.body.code))
     const createdPart = await Parts.create(part);
     const userId = req.body.userId
     const user = await Users.findByPk(userId)
