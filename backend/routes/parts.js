@@ -3,7 +3,7 @@ const PartsController = require('../controllers/parts');
 // const { authorizeGoogle } = require('../services/authorize');
 
 router.get("/", PartsController.getAllParts);
-router.post("/savePart", PartsController.savePart);
+router.post("/", PartsController.savePart);
 router.put("/:partId", PartsController.updatePart);
 router.delete("/:partId", PartsController.deletePart);
 router.get("/:partId/users/stock", PartsController.getOnePartWithUserStock)

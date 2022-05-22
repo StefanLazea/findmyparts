@@ -46,16 +46,13 @@ export const AddPartDialog = (props) => {
             code: values.code,
             name: values.name,
             price: values.price,
-            quantity: values.stock,
+            quantity: values.quantity,
             photo: "",
             userId: userId
 
         }
-        console.log(values)
+        console.log(payload)
         axios.post("/parts", payload).then(res => {
-            // reRender();
-            console.log(res)
-
             setOpen(false);
         })
     }
@@ -86,70 +83,50 @@ export const AddPartDialog = (props) => {
                         <Form>
                             <TextField
                                 autoFocus
-                                id="numberPlate"
-                                name="numberPlate"
-                                label="numar inmatriculare"
-                                value={values.numberPlate}
+                                id="code"
+                                name="code"
+                                label="codul piesei"
+                                value={values.code}
                                 onChange={handleChange}
                                 variant="standard"
                                 fullWidth
-                                error={errors.numberPlate}
-                                helperText={errors.numberPlate}
+                                error={errors.code}
+                                helperText={errors.code}
                             />
                             <TextField
                                 autoFocus
-                                id="vin"
-                                name="vin"
-                                label="vin"
-                                value={values.vin}
+                                id="name"
+                                name="name"
+                                label="denumire"
+                                value={values.name}
                                 onChange={handleChange}
                                 variant="standard"
                                 fullWidth
-                                error={errors.vin}
-                                helperText={errors.vin}
+                                error={errors.name}
+                                helperText={errors.name}
                             />
                             <TextField
                                 autoFocus
-                                id="model"
-                                name="model"
-                                label="model"
-                                value={values.model}
+                                id="price"
+                                name="price"
+                                label="pret"
+                                type="number"
+                                value={values.price}
                                 onChange={handleChange}
                                 variant="standard"
                                 fullWidth
                             />
                             <TextField
                                 autoFocus
-                                id="brand"
-                                name="brand"
-                                label="brand"
-                                value={values.brand}
+                                id="quantity"
+                                name="quantity"
+                                label="quantity"
+                                type="number"
+                                value={values.quantity}
                                 onChange={handleChange}
                                 variant="standard"
                                 fullWidth
                             />
-
-                            <FormGroup>
-                                <FormControlLabel
-                                    control={
-                                        <Checkbox
-                                            name="isHistoric"
-                                            onChange={(e) => setFieldValue(e.target.name, e.target.checked)}
-
-                                        />}
-                                    label="Vehicul istoric"
-                                />
-                                <FormControlLabel
-                                    control={
-                                        <Checkbox
-                                            name="isElectric"
-                                            onChange={(e) => setFieldValue(e.target.name, e.target.checked)}
-
-                                        />
-                                    }
-
-                                    label="Vehicul electric" />
-                            </FormGroup>
                         </Form>
                     )}
                 </Formik>

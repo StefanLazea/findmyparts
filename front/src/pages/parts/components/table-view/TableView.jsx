@@ -17,6 +17,8 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
+import styles from './TableView.module.scss'
+
 export const TableView = () => {
     const columns = [
         { name: 'id', label: 'id' },
@@ -59,11 +61,10 @@ export const TableView = () => {
                     {dataList.map(item => {
                         return <TableRow
                             key={_.uniqueId()}
-                            onClick={() => openPartProfile(item)}
                         >
                             <TableCell>{item.id}</TableCell>
                             <TableCell>{item.name}</TableCell>
-                            <TableCell>{item.code}</TableCell>
+                            <TableCell classes={{ root: styles.linkProfile }} onClick={() => openPartProfile(item)}>{item.code}</TableCell>
                             <TableCell>{item.stock}</TableCell>
                             <TableCell>{item.price}</TableCell>
                             <TableCell>
