@@ -17,7 +17,6 @@ dotenv.config();
 
 const PORT = process.env.PORT;
 model.sequelize.sync();
-// bindWebSocket(app)
 app.use('/api', routes);
 
 app.use(express.static('../front/build'));
@@ -27,12 +26,14 @@ app.get("*", (req, res) => {
 });
 
 const server = http.createServer(app);
+
 const io = require("socket.io")(server, {
     cors: {
         origin: "http://localhost:3001",
         methods: ["GET", "POST"]
     }
 });
+
 io.on("connection", (socket) => {
     console.log("New client connected");
     bindWebSocket(socket)

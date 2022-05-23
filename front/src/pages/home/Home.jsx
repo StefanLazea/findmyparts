@@ -1,24 +1,18 @@
 import React, { useEffect } from 'react';
 import './Home.scss'
 import { addUserId, useGlobalContext } from "../../global-context"
-import socketIOClient from "socket.io-client";
-const ENDPOINT = 'http://localhost:3005'
 export const Home = (props) => {
-    const socket = socketIOClient(ENDPOINT);
+    const { state: { socket, userId } } = useGlobalContext();
+
     useEffect(() => {
         console.log('aici')
-        socket.on("connect", data => {
-            console.log('here')
-            console.log(data);
-        });
-        const handler = (part) => {
-            console.log('client side am primit', part)
+        const handler = (parts) => {
+            console.log('client side am primit', parts)
         }
-        socket.on('newPartInStock', handler)
-        return () => socket.off("newPartInStock", handler);
+        socket.on('partsListUpdate', handler)
+        return () => socket.off("partsListUpdate", handler);
     }, [])
 
-    const { state: { userId }, dispatch } = useGlobalContext();
     useEffect(() => {
         console.log({ userId });
     }, [userId])

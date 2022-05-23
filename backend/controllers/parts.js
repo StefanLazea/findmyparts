@@ -5,7 +5,8 @@ const PartsService = require('../services/part');
 
 const getAllParts = async (req, res) => {
     try {
-        Parts.findAll().then((allParts) => { return res.status(200).send(allParts) });
+        const parts = await PartsService.findAll();
+        return res.status(200).send(parts);
     }
     catch (err) {
         return res.status(404).send({ message: "No elements found in the database" });
@@ -26,7 +27,6 @@ const savePart = async (req, res) => {
     if (_.isNil(part)) {
         return res.status(400).send({ message: 'Please send a body or a correct format' })
     }
-    console.log(await PartsService.findPartByCode(req.body.code))
     const createdPart = await Parts.create(part);
     const userId = req.body.userId
     const user = await Users.findByPk(userId)
@@ -39,16 +39,11 @@ const savePart = async (req, res) => {
             }
         }
     )
-    // const partsResult = await user.getParts({
-    //     joinTableAttributes: ["quantity", "price", "userId"]
-    // });
-
     if (!createdPart && !addedPart) {
         return res.status(500).send({ message: 'issue creating part' });
 
     }
     return res.status(200).send({ message: "Added part and added stock" });
-
 }
 
 //TODO test and treat cases when body and items from it are missing

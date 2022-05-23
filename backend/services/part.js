@@ -1,5 +1,8 @@
 const Parts = require('../models').Part;
 
+const findAll = async () => {
+    return await Parts.findAll();
+}
 const findPartByCode = async (code) => {
     let partFound;
     await Parts.findOne({
@@ -28,5 +31,6 @@ const findUserPartById = async ({ user, partId } = {}) => {
 module.exports = {
     findPartByCode,
     findPartById,
-    findUserPartById
+    findUserPartById,
+    findAll,
 }

@@ -4,7 +4,9 @@ import {
   Routes,
   Navigate
 } from "react-router-dom";
+
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { toast } from 'react-toastify';
 
 import { Home } from './pages/home/Home';
 import { Parts } from './pages/parts/Parts'
@@ -14,11 +16,14 @@ import { Register } from './pages/auth/Register';
 import { Login } from './pages/auth/Login';
 import { CarProfile } from './pages/cars/car-profile/CarProfile';
 import { PartProfile } from './pages/parts/part-profile/PartProfile'
-import { toast } from 'react-toastify';
 import { NavigationBar } from './components/navigation-bar/NavigationBar';
-import './App.scss';
-import 'react-toastify/dist/ReactToastify.css';
+
 import { GlobalContextProvide } from "./global-context"
+
+import 'react-toastify/dist/ReactToastify.css';
+
+import './App.scss';
+
 toast.configure();
 
 function App() {
@@ -55,16 +60,14 @@ function App() {
   }
 
   return (
-    <GlobalContextProvide >
+    <GlobalContextProvide>
       <ThemeProvider theme={darkTheme}>
         {isAuth && <NavigationBar triggerLogOut={triggerLogOut} />}
-        {/* <SocketProvider> */}
 
         <div className="app">
           {!isAuth && <Navigate to='/login' />}
 
           {/* DO NOT USE component like bellow in a Switch statement */}
-          {/* <Container> */}
           <Routes>
             {/* non private routes */}
             <Route path="/home" exact element={<Home />} />
@@ -80,9 +83,9 @@ function App() {
 
             {/* TODO: private routes */}
           </Routes>
-          {/* </Container> */}
         </div >
       </ThemeProvider>
+
     </GlobalContextProvide>
   );
 }
