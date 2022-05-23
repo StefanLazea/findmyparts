@@ -17,22 +17,26 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
+import { useGlobalContext } from '../../../../global-context'
 import styles from './TableView.module.scss'
 
 export const TableView = () => {
     const columns = [
-        { name: 'id', label: 'id' },
+        // { name: 'id', label: 'id' },
         { name: 'name', label: 'denumire' },
         { name: 'code', label: 'cod piesa' },
-        { name: 'stock', label: 'stoc' },
-        { name: 'stock', label: 'pret' },
-
+        { name: 'quantity', label: 'stoc' },
+        { name: 'price', label: 'pret' },
+        { name: 'delete', label: '' },
+        { name: 'edit', label: '' },
     ]
     const [dataList, setDataList] = useState([])
     const [reRender, setRerender] = useState(false)
     const navigate = useNavigate();
+    const { state: { socket } } = useGlobalContext();
 
     useEffect(() => {
+        //TODO needs works on format
         axios.get(`/parts/users/stock`).then(response => { setDataList(response.data) })
     }, [reRender]);
 
@@ -46,6 +50,15 @@ export const TableView = () => {
             state: { selectedPart: item }
         })
     }
+
+    useEffect(() => {
+        const handler = (parts) => {
+            console.log('client side am primit', parts)
+            setDataList(parts)
+        }
+        socket.on('partsListUpdate', handler)
+        return () => socket.off("partsListUpdate", handler);
+    }, [])
 
     return (
         <TableContainer component={Paper}>
@@ -62,10 +75,10 @@ export const TableView = () => {
                         return <TableRow
                             key={_.uniqueId()}
                         >
-                            <TableCell>{item.id}</TableCell>
+                            {/* <TableCell>{item.id}</TableCell> */}
                             <TableCell>{item.name}</TableCell>
                             <TableCell classes={{ root: styles.linkProfile }} onClick={() => openPartProfile(item)}>{item.code}</TableCell>
-                            <TableCell>{item.stock}</TableCell>
+                            <TableCell>{item.quantity}</TableCell>
                             <TableCell>{item.price}</TableCell>
                             <TableCell>
                                 <IconButton color="primary" onClick={() => deletePart(item)}><DeleteIcon /></IconButton>
