@@ -19,19 +19,35 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import { useGlobalContext } from '../../../../global-context'
 import styles from './TableView.module.scss'
+import { EditPartDialog } from '../edit-part/EditPartDialog';
 
-export const TableView = () => {
-    const columns = [
+export const TableView = ({ showAllParts, ...props }) => {
+    const columns2 = [
         { name: 'name', label: 'denumire' },
         { name: 'code', label: 'cod piesa' },
         { name: 'total', label: 'stoc total' },
         { name: 'delete', label: '' },
-        { name: 'edit', label: '' },
+        // ...!showAllParts ? { name: 'edit', label: '' } : {}
+        // ...(!showAllParts && { name: 'edit', label: '' }),
     ]
+    const [columns, setColumns] = useState([
+        { name: 'name', label: 'denumire' },
+        { name: 'code', label: 'cod piesa' },
+        { name: 'total', label: 'stoc total' },
+        { name: 'delete', label: '' },
+    ])
     const [dataList, setDataList] = useState([])
+    const [selectedPart, setSelectedPart] = useState({})
+    const [openEditModal, setOpenEditModal] = useState(false)
     const [reRender, setRerender] = useState(false)
     const navigate = useNavigate();
     const { state: { socket } } = useGlobalContext();
+
+    useEffect(() => {
+        if (!showAllParts) {
+            setColumns((prev) => [...prev, { name: 'edit', label: '' }])
+        }
+    }, [showAllParts])
 
     useEffect(() => {
         //TODO needs works on format
@@ -43,7 +59,12 @@ export const TableView = () => {
 
     const deletePart = (part) => {
         console.log(part)
-        axios.delete(`/parts/${part.id}`).then(response => { console.log(response); setRerender(prev => !prev) })
+        axios.delete(`/parts/${part.id}`).then(response => {
+            console.log(response);
+            //  setRerender(prev => !prev)
+            socket.emit('deletePart', part.id)
+
+        })
     }
 
     const openPartProfile = (item) => {
@@ -76,7 +97,6 @@ export const TableView = () => {
                         return <TableRow
                             key={_.uniqueId()}
                         >
-                            {/* <TableCell>{item.id}</TableCell> */}
                             <TableCell>{item.name}</TableCell>
                             <TableCell classes={{ root: styles.linkProfile }} onClick={() => openPartProfile(item)}>{item.code}</TableCell>
                             <TableCell>{item.total}</TableCell>
@@ -84,15 +104,25 @@ export const TableView = () => {
                             <TableCell>
                                 <IconButton color="primary" onClick={() => deletePart(item)}><DeleteIcon /></IconButton>
                             </TableCell>
-                            <TableCell>
-                                <IconButton color="primary" onClick={() => console.log(item)}><EditIcon /></IconButton>
-                            </TableCell>
+                            {!showAllParts &&
+                                <TableCell>
+                                    <IconButton color="primary" onClick={() => { setSelectedPart(item); setOpenEditModal(true) }}><EditIcon /></IconButton>
+                                </TableCell>
+                            }
 
                         </TableRow>
                     })}
 
                 </TableBody>
             </Table>
+            {selectedPart
+                && openEditModal
+                && <EditPartDialog
+                    part={selectedPart}
+                    open={openEditModal}
+                    setOpen={setOpenEditModal}
+                />
+            }
         </TableContainer>
     );
 }

@@ -1,46 +1,57 @@
-import React, { useRef } from "react";
-
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
+import React, { useEffect, useRef, useState } from "react";
 
 import { useGlobalContext } from '../../../../global-context';
 
-// import * as yup from 'yup';
-import { Formik, Form } from 'formik';
-// import { BODY_STYLE_VARIANTS, FUEL_VARIANTS } from '../mock.js'
-
 import {
+    Button,
+    TextField,
     Dialog,
     DialogActions,
     DialogContent,
     DialogContentText,
     DialogTitle,
-    FormControlLabel,
-    FormGroup,
-    Checkbox,
-    MenuItem
 } from "@mui/material"
+
+// import * as yup from 'yup';
+import { Formik, Form } from 'formik';
+import _ from 'lodash'
 import axios from "axios";
 
 
 export const EditPartDialog = (props) => {
-    const { open, setOpen } = props;
+    const { part, open, setOpen } = props;
     const { state: { userId, socket } } = useGlobalContext();
+    const formRef = useRef();
+    const [selectedPart, setSelectedPart] = useState({});
+
+    useEffect(() => {
+        if (!_.isEmpty(part)) {
+            const userStock = part.stocks.filter(item => item.userId === userId);
+            console.log(userStock)
+            setSelectedPart(prev => {
+                return {
+                    ...prev,
+                    ...{
+                        name: part.name,
+                        code: part.code,
+                        id: part.id,
+                        quantity: _.get(userStock, '[0].quantity', 0),
+                        price: _.get(userStock, '[0].price', 0)
+                    }
+                }
+            })
+            console.log({
+                name: part.name,
+                code: part.code,
+                id: part.id,
+                quantity: _.get(userStock, '[0].quantity', 0),
+                price: _.get(userStock, '[0].price', 0)
+            })
+        }
+
+    }, [part])
 
     const handleClose = () => setOpen(false);
-    const formRef = useRef();
-    // const validationSchema = yup.object({
-    //     vin: yup
-    //         .string()
-    //         .min(4, 'seria de caroserie este prea scurta')
-    //         .required('vin-ul trebuie introdus'),
-    //     numberPlate: yup
-    //         .string()
-    //         .min(7, 'Nu este un numar corect')
-    //         .required('Numarul trebuie introdus'),
-
-    // });
-
     const savePart = (values) => {
         const payload = {
             code: values.code,
@@ -51,33 +62,31 @@ export const EditPartDialog = (props) => {
             userId: userId
 
         }
-        console.log(payload)
-        axios.post("/parts", payload).then(res => {
-            // setOpen(false);
-            socket.emit("savePart", { code: '123' });
+        axios.put(`/parts/${part.id}`, payload).then(res => {
+            setOpen(false);
+            socket.emit("updatePart", { code: '123' });
 
         })
     }
     return (
         <Dialog open={open} onClose={handleClose}>
-            <DialogTitle>Adaugare piesa</DialogTitle>
+            <DialogTitle>Editare piesa</DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    Avem nevoie de urmatoarele detalii pentru a retine piesa pe care o ai.
+                    Avem nevoie de urmatoarele detalii pentru a modifica piesa pe care o ai.
                 </DialogContentText>
                 <Formik
                     innerRef={formRef}
                     initialValues={{
-                        code: "",
-                        name: "",
-                        price: 0,
-                        quantity: 0,
+                        code: selectedPart.code,
+                        name: selectedPart.name,
+                        price: selectedPart.price,
+                        quantity: selectedPart.quantity,
                         photo: "",
                         userId: userId
                     }}
                     // validationSchema={validationSchema}
                     onSubmit={values => {
-                        // same shape as initial values
                         savePart(values);
                     }}
                 >

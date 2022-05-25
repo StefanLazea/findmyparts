@@ -6,8 +6,12 @@ const bindWebSocket = (socket) => {
     })
     socket.on('savePart', async (part) => {
         console.log('am primit ', part)
-        const partsList = JSON.parse(JSON.stringify(await PartsService.findAll()));
-        console.log({ partsList })
+        const partsList = JSON.parse(JSON.stringify(await PartsService.findAllQuery()));
+        socket.emit('partsListUpdate', partsList)
+    })
+    socket.on('deletePart', async (partId) => {
+        console.log('am sters piesa', partId)
+        const partsList = JSON.parse(JSON.stringify(await PartsService.findAllQuery()));
         socket.emit('partsListUpdate', partsList)
     })
 }

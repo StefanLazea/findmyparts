@@ -10,16 +10,19 @@ import _ from 'lodash'
 
 import styles from './PartProfile.module.scss'
 import axios from 'axios';
+import { EditPartDialog } from '../components/edit-part/EditPartDialog';
 
 export const PartProfile = () => {
     const { state } = useLocation();
     const [usersWithPart, setUsersWithPart] = useState([])
+    const [openEditModal, setOpenEditModal] = useState(false)
     const selectedPart = _.get(state, 'selectedPart', {});
 
+    console.log('PART SELECTED', selectedPart)
     useEffect(() => {
         axios.get(`/parts/${selectedPart.id}/users/stock`).then(res => {
             const users = _.get(res, 'data.users', []);
-            console.log(users)
+            console.log('BINGO', users)
             setUsersWithPart(users)
         })
     }, [state])
@@ -27,13 +30,16 @@ export const PartProfile = () => {
     return <PageContainer classes={{ root: styles.partsContainer }}>
         <div className={styles.partsHeader}>
             <div className={styles.profileTitle}>
-                <span className={styles.title}>Piesa ta, {selectedPart.code}</span>
+                <div className={styles.textContainer}>
+                    <span className={styles.title}>Piesa ta, {selectedPart.code}</span>
+                    <span className={styles.subtitle}>{selectedPart.name}</span>
+                </div>
                 <IconButton
                     edge="start"
                     color="inherit"
                     onClick={() => { }}
                     aria-label="close"
-                    disabled
+                    onClick={() => setOpenEditModal(true)}
                 >
                     <EditIcon />
                 </IconButton>
@@ -50,5 +56,6 @@ export const PartProfile = () => {
                     </Grid>)}
             </Grid>
         </div>
+        {openEditModal && <EditPartDialog part={selectedPart} open={openEditModal} setOpen={setOpenEditModal} />}
     </PageContainer>
 }

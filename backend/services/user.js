@@ -1,4 +1,5 @@
 const Users = require('../models').User;
+const Parts = require('../models').Part;
 
 const findUserById = async (userId) => {
     console.log("bingo", userId)
@@ -22,8 +23,18 @@ const findUserByPk = async (userId) => {
     return user;
 }
 
+const findUserWithParts = async (userId) => {
+    return await Users.findByPk(userId, {
+        include: [{
+            model: Parts,
+            // through: { attributes: [] }
+        }]
+    });
+}
+
 module.exports = {
     findUserById,
     findUserByEmail,
     findUserByPk,
+    findUserWithParts
 }

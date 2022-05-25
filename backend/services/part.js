@@ -70,10 +70,15 @@ const findUserPartById = async ({ user, partId } = {}) => {
         where: { id: partId }
     });
 }
+
+const updatePart = async (partId, part) => {
+    return await Parts.update(part, { where: { id: partId } })
+}
 module.exports = {
     findPartByCode,
     findPartById,
     findUserPartById,
     findAll,
-    findAllQuery
+    findAllQuery,
+    updatePart
 }

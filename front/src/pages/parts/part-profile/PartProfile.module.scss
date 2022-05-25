@@ -1,7 +1,17 @@
-.title {
-    font-size: 20px;
-    font-weight: 400;
+
+.textContainer {
+    display: flex;
+    flex-direction: column;
+    .title {
+        font-size: 20px;
+        font-weight: 400;
+    }
+    .subtitle{
+        font-size: 14px;
+        font-weight: 400;
+    }
 }
+
 
 .partsDivider {
     margin-top: 20px !important;

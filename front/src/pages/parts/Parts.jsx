@@ -24,7 +24,7 @@ export const Parts = (props) => {
                     <IconButton color="primary" aria-label="grid view" onClick={() => setShowAllParts(false)}><PersonIcon sx={{ color: !showAllParts ? '#2C8C99' : '#00000' }} /></IconButton>
                 </div>
             </div>
-            <TableView />
+            <TableView showAllParts={showAllParts} />
             {openModal && <AddPartDialog open={openModal} setOpen={setOpenAddModal} />}
         </Container>
     );

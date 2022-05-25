@@ -2,6 +2,7 @@ const Parts = require('../models').Part;
 const Users = require('../models').User;
 const _ = require("lodash")
 const PartsService = require('../services/part');
+const UsersService = require('../services/user');
 
 const getAllParts = async (req, res) => {
     try {
@@ -124,26 +125,24 @@ const updatePart = async (req, res) => {
     if (_.isEmpty(req.body.userId)) {
         return res.status(500).send({ message: "Please add userId" })
     }
+    const part = {
+        name: req.body.name,
+        code: req.body.code
+    }
     const requestStock = {
         price: req.body.price,
         currency: "lei",
         quantity: req.body.quantity,
     }
     const partId = req.params.partId;
-    const user = await Users.findByPk(req.body?.userId, {
-        include: [{
-            model: Parts,
-            through: { attributes: [] }
-        }]
-    });
 
+    const user = await UsersService.findUserWithParts(req.body.userId);
     const foundPart = await PartsService.findUserPartById({ user, partId });
-    const foundPartJSON = JSON.parse(JSON.stringify(foundPart));
+    let foundPartJSON = JSON.parse(JSON.stringify(foundPart));
 
     if (_.isEmpty(foundPartJSON)) {
         return res.status(404).send({ message: "Part not found" });
     }
-
     const oldStockValues = { ...foundPartJSON[0]?.stocks }
     const calculatedNewStock = {
         ...oldStockValues,
@@ -155,6 +154,12 @@ const updatePart = async (req, res) => {
             through: calculatedNewStock
         }
     )
+    try {
+        await PartsService.updatePart(partId, part);
+
+    } catch (err) {
+        return res.status(500).send({ message: "We encountered an error!", err })
+    }
 
     if (!updatedPart) {
         return res.status(400).send({ message: "Part couldn't be updated" })
