@@ -38,10 +38,12 @@ function GlobalContextProvide({ children }) {
     const [state, dispatch] = React.useReducer(storeReducer, initialState)
     // NOTE: you *might* need to memoize this value
     // Learn more in http://kcd.im/optimize-context
-    initialState.socket.on("connect", data => {
-        console.log('Socket is connected')
-        console.log(data);
-    });
+    React.useEffect(() => {
+        initialState.socket.on("connect", data => {
+            console.log("Socket connected");
+        });
+    }, [])
+
     const value = { state, dispatch }
     return <GlobalContext.Provider value={value}>{children}</GlobalContext.Provider>
 }

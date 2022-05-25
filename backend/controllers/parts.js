@@ -82,7 +82,6 @@ const getOnePartWithUserStock = async (req, res) => {
         include: { model: Users, attributes: ["id", "email"] },
         where: { id: req.params.partId }
     });
-    const fnd = JSON.parse(JSON.stringify(found))
 
     if (_.isEmpty(found)) {
         return res.status(404).send({ message: "No elements found in the database" });
@@ -98,16 +97,26 @@ const getOnePartWithUserStock = async (req, res) => {
  * @param {*} res 
  * @returns 
  */
-const getAllPartsStock = async (req, res) => {
-    const found = await Parts.findAll({
-        include: { model: Users, attributes: ["id", "email"] }
-    });
+const getAllPartsStockDetails = async (req, res) => {
+    const found = await PartsService.findAllQuery();
+    console.log(JSON.parse(JSON.stringify(found)))
     if (_.isEmpty(found)) {
         return res.status(404).send({ message: "No elements found in the database" });
 
     }
     return res.status(200).send(found)
+}
 
+const getAllPartsStock = async (req, res) => {
+    const found = await Parts.findAll({
+        include: { model: Users, attributes: ["id", "email"] }
+    });
+    console.log(JSON.parse(JSON.stringify(found)))
+    if (_.isEmpty(found)) {
+        return res.status(404).send({ message: "No elements found in the database" });
+
+    }
+    return res.status(200).send(found)
 }
 
 //TODO update part not just stock 
@@ -170,5 +179,6 @@ module.exports = {
     getOnePartWithUserStock,
     savePart,
     updatePart,
-    deletePart
+    deletePart,
+    getAllPartsStockDetails
 }

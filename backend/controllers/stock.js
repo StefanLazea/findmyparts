@@ -1,4 +1,19 @@
 const StockService = require('../services/stock')
+const Stocks = require('../models').Stocks;
+const Parts = require('../models').Part;
+const Users = require('../models').User;
+
+const _ = require("lodash")
+
+const getAllStocks = async (req, res) => {
+    const found = await Stocks.findAll({ include: { model: Parts, attributes: ["code", "name"] } });
+    console.log(JSON.parse(JSON.stringify(found)))
+    if (_.isEmpty(found)) {
+        return res.status(404).send({ message: "No elements found in the database" });
+
+    }
+    return res.status(200).send(found)
+}
 
 const getUserStock = async (req, res) => {
     const paramId = req.params.userId;
@@ -47,5 +62,6 @@ const getUserStockDetails = async (req, res) => {
 module.exports = {
     getUserStock,
     getPartStock,
-    getUserStockDetails
+    getUserStockDetails,
+    getAllStocks
 }

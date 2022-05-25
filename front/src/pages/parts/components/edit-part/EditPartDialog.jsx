@@ -23,7 +23,7 @@ import {
 import axios from "axios";
 
 
-export const AddPartDialog = (props) => {
+export const EditPartDialog = (props) => {
     const { open, setOpen } = props;
     const { state: { userId, socket } } = useGlobalContext();
 

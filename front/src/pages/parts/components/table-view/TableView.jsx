@@ -22,11 +22,9 @@ import styles from './TableView.module.scss'
 
 export const TableView = () => {
     const columns = [
-        // { name: 'id', label: 'id' },
         { name: 'name', label: 'denumire' },
         { name: 'code', label: 'cod piesa' },
-        { name: 'quantity', label: 'stoc' },
-        { name: 'price', label: 'pret' },
+        { name: 'total', label: 'stoc total' },
         { name: 'delete', label: '' },
         { name: 'edit', label: '' },
     ]
@@ -37,7 +35,10 @@ export const TableView = () => {
 
     useEffect(() => {
         //TODO needs works on format
-        axios.get(`/parts/users/stock`).then(response => { setDataList(response.data) })
+        axios.get(`/parts/users/stock/details`).then(response => {
+            console.log(response)
+            setDataList(response.data)
+        })
     }, [reRender]);
 
     const deletePart = (part) => {
@@ -78,8 +79,8 @@ export const TableView = () => {
                             {/* <TableCell>{item.id}</TableCell> */}
                             <TableCell>{item.name}</TableCell>
                             <TableCell classes={{ root: styles.linkProfile }} onClick={() => openPartProfile(item)}>{item.code}</TableCell>
-                            <TableCell>{item.quantity}</TableCell>
-                            <TableCell>{item.price}</TableCell>
+                            <TableCell>{item.total}</TableCell>
+                            {/* <TableCell>{item.price}</TableCell> */}
                             <TableCell>
                                 <IconButton color="primary" onClick={() => deletePart(item)}><DeleteIcon /></IconButton>
                             </TableCell>
