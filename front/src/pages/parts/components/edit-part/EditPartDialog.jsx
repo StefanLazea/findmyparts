@@ -64,8 +64,11 @@ export const EditPartDialog = (props) => {
         }
         axios.put(`/parts/${part.id}`, payload).then(res => {
             setOpen(false);
-            socket.emit("updatePart", part.id);
-
+            if (props.oneUserDisplay) {
+                socket.emit("updatePart", part.id, userId);
+            } else {
+                socket.emit("updatePart", part.id);
+            }
         })
     }
     return (

@@ -21,42 +21,35 @@ import { useGlobalContext } from 'global-context'
 import styles from './TableView.module.scss'
 import { EditPartDialog } from '../edit-part/EditPartDialog';
 
+const ALL_USERS_COLUMNS = [
+    { name: 'name', label: 'denumire' },
+    { name: 'code', label: 'cod piesa' },
+    { name: 'total', label: 'stoc total' },
+    { name: 'delete', label: '' },
+]
 export const TableView = ({ showAllParts, ...props }) => {
-    const columns2 = [
-        { name: 'name', label: 'denumire' },
-        { name: 'code', label: 'cod piesa' },
-        { name: 'total', label: 'stoc total' },
-        { name: 'delete', label: '' },
-        // ...!showAllParts ? { name: 'edit', label: '' } : {}
-        // ...(!showAllParts && { name: 'edit', label: '' }),
-    ]
-    const [columns, setColumns] = useState([
-        { name: 'name', label: 'denumire' },
-        { name: 'code', label: 'cod piesa' },
-        { name: 'total', label: 'stoc total' },
-        { name: 'delete', label: '' },
-    ])
+    const [columns, setColumns] = useState(ALL_USERS_COLUMNS)
     const [dataList, setDataList] = useState([])
     const [selectedPart, setSelectedPart] = useState({})
     const [openEditModal, setOpenEditModal] = useState(false)
-    const [reRender, setRerender] = useState(false)
     const navigate = useNavigate();
-    const { state: { socket } } = useGlobalContext();
+    const { state: { socket, userId } } = useGlobalContext();
 
     useEffect(() => {
         if (!showAllParts) {
             setColumns((prev) => [...prev, { name: 'edit', label: '' }])
+        } else {
+            setColumns(ALL_USERS_COLUMNS)
         }
     }, [showAllParts])
 
     useEffect(() => {
-        //TODO needs works on format
-        //replace so that you can see parts without stock
-        axios.get(`/parts/users/stock/details`).then(response => {
+        const path = showAllParts ? `/parts/users/stock/details` : `/parts/users/${userId}/stock/details`
+        axios.get(path).then(response => {
             console.log(response)
             setDataList(response.data)
         })
-    }, [reRender]);
+    }, [showAllParts]);
 
     const deletePart = (part) => {
         console.log(part)
@@ -78,7 +71,11 @@ export const TableView = ({ showAllParts, ...props }) => {
             setDataList(parts)
         }
         socket.on('partsListUpdate', handler)
-        return () => socket.off("partsListUpdate", handler);
+        socket.on('refreshProfilePage', handler)
+        return () => {
+            socket.off("partsListUpdate", handler);
+            socket.off("refreshProfilePage", handler);
+        };
     }, [])
 
     return (
@@ -120,6 +117,7 @@ export const TableView = ({ showAllParts, ...props }) => {
                     part={selectedPart}
                     open={openEditModal}
                     setOpen={setOpenEditModal}
+                    oneUserDisplay={true}
                 />
             }
         </TableContainer>

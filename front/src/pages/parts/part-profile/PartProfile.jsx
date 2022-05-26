@@ -68,6 +68,7 @@ export const PartProfile = () => {
                     </Grid>)}
             </Grid>
         </div>
+        {/* TODO handle update case, trigger other events use /parts/c4aace40-dc52-11ec-805d-35558522ce40/users/stock */}
         {openEditModal && <EditPartDialog part={selectedPart} open={openEditModal} setOpen={setOpenEditModal} />}
     </PageContainer>
 }

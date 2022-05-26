@@ -4,8 +4,9 @@ const sequelize = require('../models/db')
 const findAll = async () => {
     return await Parts.findAll();
 }
-const findAllQuery = async () => {
-    const query = "select \
+const findQuery = async (userId = '') => {
+
+    const queryAll = "select \
         parts.id,\
         parts.name, \
         parts.code, \
@@ -21,7 +22,23 @@ const findAllQuery = async () => {
                 on users.id = stocks.userId\
         where parts.id = stocks.partId and users.id = stocks.userId \
         "
-    const result = await sequelize.query(query,
+    const queryOne = `select \
+        parts.id,\
+        parts.name, \
+        parts.code, \
+        users.id as 'stocks.userId', \
+        users.email as 'stocks.email',\
+        stocks.quantity as 'stocks.quantity',\
+        stocks.price as 'stocks.price',\
+        stocks.id as 'stocks.id'\
+        from stocks \
+            LEFT JOIN parts\
+                on parts.id = stocks.partId\
+            LEFT JOIN users\
+                on users.id = stocks.userId\
+        where parts.id = stocks.partId and stocks.userId='${userId}' \
+        `
+    const result = await sequelize.query(userId !== '' ? queryOne : queryAll,
         {
             type: sequelize.QueryTypes.SELECT,
             nest: true,
@@ -44,6 +61,7 @@ const findAllQuery = async () => {
     })
     return filteredResult;
 }
+
 
 
 const findPartByCode = async (code) => {
@@ -80,6 +98,6 @@ module.exports = {
     findPartById,
     findUserPartById,
     findAll,
-    findAllQuery,
+    findQuery,
     updatePart
 }

@@ -100,7 +100,7 @@ const getOnePartWithUserStock = async (req, res) => {
  * @returns 
  */
 const getAllPartsStockDetails = async (req, res) => {
-    const found = await PartsService.findAllQuery();
+    const found = await PartsService.findQuery();
     console.log(JSON.parse(JSON.stringify(found)))
     if (_.isEmpty(found)) {
         return res.status(404).send({ message: "No elements found in the database" });
@@ -109,7 +109,7 @@ const getAllPartsStockDetails = async (req, res) => {
     return res.status(200).send(found)
 }
 const getPartStockDetails = async (req, res) => {
-    const found = await PartsService.findAllQuery();
+    const found = await PartsService.findQuery(req.params.userId);
     console.log(JSON.parse(JSON.stringify(found)))
     if (_.isEmpty(found)) {
         return res.status(404).send({ message: "No elements found in the database" });
