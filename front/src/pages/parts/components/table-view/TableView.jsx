@@ -17,7 +17,7 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
-import { useGlobalContext } from '../../../../global-context'
+import { useGlobalContext } from 'global-context'
 import styles from './TableView.module.scss'
 import { EditPartDialog } from '../edit-part/EditPartDialog';
 
@@ -51,6 +51,7 @@ export const TableView = ({ showAllParts, ...props }) => {
 
     useEffect(() => {
         //TODO needs works on format
+        //replace so that you can see parts without stock
         axios.get(`/parts/users/stock/details`).then(response => {
             console.log(response)
             setDataList(response.data)
@@ -61,9 +62,7 @@ export const TableView = ({ showAllParts, ...props }) => {
         console.log(part)
         axios.delete(`/parts/${part.id}`).then(response => {
             console.log(response);
-            //  setRerender(prev => !prev)
             socket.emit('deletePart', part.id)
-
         })
     }
 

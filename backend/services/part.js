@@ -45,6 +45,7 @@ const findAllQuery = async () => {
     return filteredResult;
 }
 
+
 const findPartByCode = async (code) => {
     let partFound;
     await Parts.findOne({

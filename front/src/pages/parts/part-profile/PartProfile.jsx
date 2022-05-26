@@ -1,22 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
+import axios from 'axios';
 
-import { PageContainer } from '../../../components/page-container/PageContainer'
-import { PartOwnerCard } from '../components/part-owner-card/PartOwnerCard';
-import { PartsDetailsView } from '../components/part-details-view/PartsDetailsView'
 import { Grid, Divider, IconButton } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
-import _ from 'lodash'
 
-import styles from './PartProfile.module.scss'
-import axios from 'axios';
+import { PageContainer } from 'components/page-container/PageContainer'
+import { PartOwnerCard } from '../components/part-owner-card/PartOwnerCard';
+import { PartsDetailsView } from '../components/part-details-view/PartsDetailsView'
 import { EditPartDialog } from '../components/edit-part/EditPartDialog';
+import { useGlobalContext } from '../../../global-context';
+
+import _ from 'lodash'
+import styles from './PartProfile.module.scss'
 
 export const PartProfile = () => {
     const { state } = useLocation();
     const [usersWithPart, setUsersWithPart] = useState([])
     const [openEditModal, setOpenEditModal] = useState(false)
     const selectedPart = _.get(state, 'selectedPart', {});
+    const { state: { userId, socket } } = useGlobalContext();
 
     console.log('PART SELECTED', selectedPart)
     useEffect(() => {
@@ -26,6 +29,15 @@ export const PartProfile = () => {
             setUsersWithPart(users)
         })
     }, [state])
+
+    useEffect(() => {
+        console.log('refresh')
+        const handler = (parts) => {
+            console.log('client side am primit', parts)
+            // setDataList(parts)
+        }
+        socket.on('refreshProfilePage', handler)
+    }, [])
 
     return <PageContainer classes={{ root: styles.partsContainer }}>
         <div className={styles.partsHeader}>

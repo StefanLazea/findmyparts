@@ -5,11 +5,11 @@ import { IconButton } from '@mui/material';
 import { CarRepair, DocumentScanner, EditRoad, Add } from '@mui/icons-material';
 import axios from "axios"
 
-import CustomStepper from '../../../components/stepper/Stepper';
+import CustomStepper from 'components/stepper/Stepper';
 import styles from './CarProfile.module.scss'
 import { AddDocumentDialog } from '../components/add-document-dialog/AddDocumentDialog';
 import { CarDetails } from '../components/car-details-editable/CarDetails'
-import { PageContainer } from '../../../components/page-container/PageContainer'
+import { PageContainer } from 'components/page-container/PageContainer'
 
 export const CarProfile = (props) => {
     const [step, setStep] = useState(-1);

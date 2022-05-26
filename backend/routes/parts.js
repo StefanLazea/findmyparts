@@ -11,6 +11,6 @@ router.get("/users/:userId/stock", PartsController.getAllPartsWithUserStock)
 
 router.get("/users/stock", PartsController.getAllPartsStock)
 router.get("/users/stock/details", PartsController.getAllPartsStockDetails)
-
+router.get("/:partId/users/stock/details", PartsController.getPartStockDetails)
 
 module.exports = router;

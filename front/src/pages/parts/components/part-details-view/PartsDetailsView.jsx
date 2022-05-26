@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { SummaryCard } from '../summary-card/SummaryCard';
-import { useGlobalContext } from '../../../../global-context';
+import { useGlobalContext } from 'global-context';
 import { Grid } from '@mui/material';
 import _ from 'lodash'
 

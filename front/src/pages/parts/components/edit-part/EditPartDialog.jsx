@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import { useGlobalContext } from '../../../../global-context';
+import { useGlobalContext } from 'global-context';
 
 import {
     Button,
@@ -64,7 +64,7 @@ export const EditPartDialog = (props) => {
         }
         axios.put(`/parts/${part.id}`, payload).then(res => {
             setOpen(false);
-            socket.emit("updatePart", { code: '123' });
+            socket.emit("updatePart", part.id);
 
         })
     }

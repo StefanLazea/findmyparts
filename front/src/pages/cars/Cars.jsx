@@ -7,7 +7,7 @@ import { Add } from '@mui/icons-material';
 
 import { CustomCard } from './components/custom-card/CustomCard';
 import { AddCarDialog } from './components/add-car-dialog/AddCarDialog';
-import { PageContainer } from '../../components/page-container/PageContainer'
+import { PageContainer } from 'components/page-container/PageContainer'
 import "./Cars.scss";
 
 export const Cars = (props) => {

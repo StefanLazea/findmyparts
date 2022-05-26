@@ -3,7 +3,7 @@ import React, { useRef } from "react";
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 
-import { useGlobalContext } from '../../../../global-context';
+import { useGlobalContext } from 'global-context';
 
 // import * as yup from 'yup';
 import { Formik, Form } from 'formik';

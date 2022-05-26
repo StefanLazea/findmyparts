@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import * as yup from 'yup';
 import { Formik, Form } from 'formik';
 import { BODY_STYLE_VARIANTS, FUEL_VARIANTS } from '../mock.js'
-import { useGlobalContext } from "../../../../global-context"
+import { useGlobalContext } from "global-context"
 
 import {
     Dialog,

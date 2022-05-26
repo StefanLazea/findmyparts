@@ -13,10 +13,10 @@ import _ from 'lodash';
 import axios from "axios";
 import { toast } from 'react-toastify';
 
-import { ScreenDialog } from "../../../../components/screen-dialog/ScreenDialog.jsx";
+import { ScreenDialog } from "components/screen-dialog/ScreenDialog.jsx";
 import { DetectionDataResult } from './DetectionDataResult'
 
-import { BACKEND_PROPERTY_VALUE } from '../../../../constants/backend-accessors'
+import { BACKEND_PROPERTY_VALUE } from 'constants/backend-accessors'
 import styles from './AddDocumentDialog.module.scss';
 
 export const AddDocumentDialog = (props) => {

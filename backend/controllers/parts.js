@@ -91,7 +91,8 @@ const getOnePartWithUserStock = async (req, res) => {
     return res.status(200).send(found[0])
 }
 
-//TODO test/error testing
+//TODO this will only return parts with stock
+//need a better route
 /**
  * Get all parts along with user details and stock details
  * @param {*} req 
@@ -99,6 +100,15 @@ const getOnePartWithUserStock = async (req, res) => {
  * @returns 
  */
 const getAllPartsStockDetails = async (req, res) => {
+    const found = await PartsService.findAllQuery();
+    console.log(JSON.parse(JSON.stringify(found)))
+    if (_.isEmpty(found)) {
+        return res.status(404).send({ message: "No elements found in the database" });
+
+    }
+    return res.status(200).send(found)
+}
+const getPartStockDetails = async (req, res) => {
     const found = await PartsService.findAllQuery();
     console.log(JSON.parse(JSON.stringify(found)))
     if (_.isEmpty(found)) {
@@ -185,5 +195,6 @@ module.exports = {
     savePart,
     updatePart,
     deletePart,
-    getAllPartsStockDetails
+    getAllPartsStockDetails,
+    getPartStockDetails
 }
