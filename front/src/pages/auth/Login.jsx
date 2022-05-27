@@ -2,10 +2,11 @@ import React, { useEffect } from 'react';
 import { GoogleLogin } from 'react-google-login';
 import { GoogleLogout } from 'react-google-login';
 
-import { toast } from 'react-toastify';
 import Container from '@mui/material/Container';
+import { addUserId, useGlobalContext } from "global-context"
+
 import axios from "axios";
-import { addUserId, useGlobalContext } from "../../global-context"
+import { toast } from 'react-toastify';
 import _ from 'lodash';
 
 import './Login.scss';

@@ -16,35 +16,41 @@ import styles from './PartProfile.module.scss'
 
 export const PartProfile = () => {
     const { state } = useLocation();
-    const [usersWithPart, setUsersWithPart] = useState([])
+    const partId = _.get(state, 'selectedPart.id', {});
+    const initPart = _.get(state, 'selectedPart', {})
+
     const [openEditModal, setOpenEditModal] = useState(false)
-    const selectedPart = _.get(state, 'selectedPart', {});
-    const { state: { userId, socket } } = useGlobalContext();
-
-    console.log('PART SELECTED', selectedPart)
-    useEffect(() => {
-        axios.get(`/parts/${selectedPart.id}/users/stock`).then(res => {
-            const users = _.get(res, 'data.users', []);
-            console.log('BINGO', users)
-            setUsersWithPart(users)
+    const [selectedPart, setSelectedPart] = useState();
+    const { state: { socket } } = useGlobalContext();
+    const getPartStocks = () => {
+        axios.get(`/parts/${partId}/users/stock/details`).then(res => {
+            setSelectedPart(res.data)
         })
-    }, [state])
+    }
 
     useEffect(() => {
-        console.log('refresh')
-        const handler = (parts) => {
-            console.log('client side am primit', parts)
-            // setDataList(parts)
-        }
-        socket.on('refreshProfilePage', handler)
+        getPartStocks();
     }, [])
 
+    useEffect(() => {
+        const handler = (part) => {
+            console.log('client side am primit', part)
+            // setDataList(part)
+            getPartStocks()
+        }
+        socket.on('refreshProfilePage', handler)
+        return () => socket.off('refreshProfilePage', handler)
+    }, [])
+
+    // if (isLoading) {
+    //     return <div>is loading</div>
+    // }
     return <PageContainer classes={{ root: styles.partsContainer }}>
         <div className={styles.partsHeader}>
             <div className={styles.profileTitle}>
                 <div className={styles.textContainer}>
-                    <span className={styles.title}>Piesa ta, {selectedPart.code}</span>
-                    <span className={styles.subtitle}>{selectedPart.name}</span>
+                    <span className={styles.title}>Piesa ta, {_.get(selectedPart, 'code', initPart.code)}</span>
+                    <span className={styles.subtitle}>{_.get(selectedPart, 'name', initPart.name)}</span>
                 </div>
                 <IconButton
                     edge="start"
@@ -56,13 +62,13 @@ export const PartProfile = () => {
                     <EditIcon />
                 </IconButton>
             </div>
-            <PartsDetailsView partId={selectedPart.id} />
+            <PartsDetailsView partId={partId} />
             <Divider classes={{ root: styles.partsDivider }} />
         </div>
         <div className={styles.usersPartsList}>
             <span className={styles.title}>Utilizatori care au aceeasi piesa</span>
             <Grid container rowSpacing={2} spacing={{ xs: 1, sm: 3, md: 6 }} columns={{ xs: 1, sm: 6, md: 12 }}>
-                {usersWithPart.map(userWithPart =>
+                {_.get(selectedPart, 'stocks', []).map(userWithPart =>
                     <Grid item xs={1} sm={3} md={6} key={_.uniqueId()}>
                         <PartOwnerCard data={userWithPart} />
                     </Grid>)}

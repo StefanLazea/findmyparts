@@ -1,13 +1,10 @@
 import React, { useRef } from "react";
-
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-
 import { useGlobalContext } from 'global-context';
 
+import { toast } from 'react-toastify';
 // import * as yup from 'yup';
 import { Formik, Form } from 'formik';
-// import { BODY_STYLE_VARIANTS, FUEL_VARIANTS } from '../mock.js'
+import axios from "axios";
 
 import {
     Dialog,
@@ -15,13 +12,9 @@ import {
     DialogContent,
     DialogContentText,
     DialogTitle,
-    FormControlLabel,
-    FormGroup,
-    Checkbox,
-    MenuItem
+    Button,
+    TextField
 } from "@mui/material"
-import axios from "axios";
-
 
 export const AddPartDialog = (props) => {
     const { open, setOpen } = props;
@@ -51,11 +44,10 @@ export const AddPartDialog = (props) => {
             userId: userId
 
         }
-        console.log(payload)
         axios.post("/parts", payload).then(res => {
-            // setOpen(false);
-            socket.emit("savePart", { code: '123' });
-
+            toast(res.data.message);
+            socket.emit("savePart", payload);
+            setOpen(false)
         })
     }
     return (

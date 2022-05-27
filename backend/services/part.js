@@ -4,8 +4,50 @@ const sequelize = require('../models/db')
 const findAll = async () => {
     return await Parts.findAll();
 }
+const findOnePartQuery = async ({ partId }) => {
+    console.log(partId)
+    const query = `select \
+        parts.id,\
+        parts.name, \
+        parts.code, \
+        users.id as 'stocks.userId', \
+        users.email as 'stocks.email',\
+        stocks.quantity as 'stocks.quantity',\
+        stocks.price as 'stocks.price',\
+        stocks.id as 'stocks.stockId'\
+        from stocks \
+            LEFT JOIN parts\
+                on parts.id = stocks.partId\
+            LEFT JOIN users\
+                on users.id = stocks.userId\
+        where stocks.partId='${partId}' and users.id = stocks.userId \
+        `
+    const result = await sequelize.query(query,
+        {
+            type: sequelize.QueryTypes.SELECT,
+            nest: true,
+            // plain: true, //gives unique value
+            raw: true
+        }
+    );
+    const jsonResult = JSON.parse(JSON.stringify(result))
+    console.log('asjaidsda', jsonResult)
+    const filteredResult = []
+    jsonResult.forEach(item => {
+        const foundIndex = filteredResult.findIndex(result => result.id === item.id)
+        if (foundIndex !== -1) {
+            const itemFound = filteredResult[foundIndex]
+            itemFound.stocks.push(item.stocks)
+            const total = itemFound.stocks.reduce((acc, current) => acc + current.quantity, 0)
+            itemFound.total = total;
+        } else {
+            filteredResult.push({ ...item, stocks: [{ ...item.stocks }], total: item.stocks.quantity })
+        }
+    })
+    console.log(filteredResult)
+    return filteredResult[0];
+}
 const findQuery = async (userId = '') => {
-
     const queryAll = "select \
         parts.id,\
         parts.name, \
@@ -14,7 +56,7 @@ const findQuery = async (userId = '') => {
         users.email as 'stocks.email',\
         stocks.quantity as 'stocks.quantity',\
         stocks.price as 'stocks.price',\
-        stocks.id as 'stocks.id'\
+        stocks.id as 'stocks.stockId'\
         from stocks \
             LEFT JOIN parts\
                 on parts.id = stocks.partId\
@@ -30,7 +72,7 @@ const findQuery = async (userId = '') => {
         users.email as 'stocks.email',\
         stocks.quantity as 'stocks.quantity',\
         stocks.price as 'stocks.price',\
-        stocks.id as 'stocks.id'\
+        stocks.id as 'stocks.stockId'\
         from stocks \
             LEFT JOIN parts\
                 on parts.id = stocks.partId\
@@ -38,6 +80,7 @@ const findQuery = async (userId = '') => {
                 on users.id = stocks.userId\
         where parts.id = stocks.partId and stocks.userId='${userId}' \
         `
+    console.log('USER ID', userId)
     const result = await sequelize.query(userId !== '' ? queryOne : queryAll,
         {
             type: sequelize.QueryTypes.SELECT,
@@ -99,5 +142,6 @@ module.exports = {
     findUserPartById,
     findAll,
     findQuery,
-    updatePart
+    updatePart,
+    findOnePartQuery
 }

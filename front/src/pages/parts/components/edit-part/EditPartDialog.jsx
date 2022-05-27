@@ -23,7 +23,7 @@ export const EditPartDialog = (props) => {
     const { state: { userId, socket } } = useGlobalContext();
     const formRef = useRef();
     const [selectedPart, setSelectedPart] = useState({});
-
+    console.log({ part })
     useEffect(() => {
         if (!_.isEmpty(part)) {
             const userStock = part.stocks.filter(item => item.userId === userId);

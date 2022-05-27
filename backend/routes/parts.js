@@ -21,6 +21,9 @@ router.get("/users/stock/details", PartsController.getAllPartsStockDetails)
  * Get one user's parts - with user and stock details
  */
 router.get("/users/:userId/stock/details", PartsController.getPartStockDetails)
-// router.get("/users/stock", PartsController.getAllPartsStock)
+/**
+ * Get one part - with user and stock details
+ */
+router.get("/:partId/users/stock/details", PartsController.getOnePartDetails)
 
 module.exports = router;

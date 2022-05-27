@@ -9,10 +9,11 @@ import styles from './PartsDetailsView.module.scss'
 import axios from 'axios';
 
 export const PartsDetailsView = ({ partId, ...props }) => {
-    const { state: { userId } } = useGlobalContext();
+    const { state: { userId, socket } } = useGlobalContext();
     const [details, setDetails] = useState([]);
 
-    useEffect(() => {
+
+    const getPartsSummary = () => {
         axios.get(`/stocks/details/user/${userId}/part/${partId}`).then(res => {
             console.log(res.data)
             const detailsData = [
@@ -34,9 +35,22 @@ export const PartsDetailsView = ({ partId, ...props }) => {
                 }
             ]
             setDetails(detailsData)
-
         })
+    }
+    useEffect(() => {
+        getPartsSummary();
     }, [])
+
+    // useEffect(() => {
+    //     console.log('refresh')
+    //     const handler = (parts) => {
+    //         console.log('client side am primit', parts)
+    //         // setDataList(parts)
+    //         getPartsSummary()
+    //     }
+    //     socket.on('refreshProfilePage', handler)
+    //     return () => socket.off('refreshProfilePage', handler)
+    // }, [])
 
     return (
         <div className={styles.summariesGrid}>

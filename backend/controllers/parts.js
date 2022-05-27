@@ -144,6 +144,7 @@ const updatePart = async (req, res) => {
         currency: "lei",
         quantity: req.body.quantity,
     }
+    console.log("bingoooo", requestStock)
     const partId = req.params.partId;
 
     const user = await UsersService.findUserWithParts(req.body.userId);
@@ -187,6 +188,15 @@ const deletePart = async (req, res) => {
     await part.destroy().then(() => { return res.send({ message: "Part deleted" }) });
 };
 
+const getOnePartDetails = async (req, res) => {
+    const found = await PartsService.findOnePartQuery({ partId: req.params.partId });
+    console.log(JSON.parse(JSON.stringify(found)))
+    if (_.isEmpty(found)) {
+        return res.status(404).send({ message: "No elements found in the database" });
+
+    }
+    return res.status(200).send(found)
+}
 module.exports = {
     getAllParts,
     getAllPartsWithUserStock,
@@ -196,5 +206,6 @@ module.exports = {
     updatePart,
     deletePart,
     getAllPartsStockDetails,
-    getPartStockDetails
+    getPartStockDetails,
+    getOnePartDetails
 }

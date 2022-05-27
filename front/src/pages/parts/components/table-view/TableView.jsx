@@ -52,7 +52,6 @@ export const TableView = ({ showAllParts, ...props }) => {
     }, [showAllParts]);
 
     const deletePart = (part) => {
-        console.log(part)
         axios.delete(`/parts/${part.id}`).then(response => {
             console.log(response);
             socket.emit('deletePart', part.id)
@@ -65,18 +64,19 @@ export const TableView = ({ showAllParts, ...props }) => {
         })
     }
 
+    //socket update
     useEffect(() => {
         const handler = (parts) => {
             console.log('client side am primit', parts)
             setDataList(parts)
         }
         socket.on('partsListUpdate', handler)
-        socket.on('refreshProfilePage', handler)
+        // socket.on('refreshProfilePage', handler)
         return () => {
             socket.off("partsListUpdate", handler);
-            socket.off("refreshProfilePage", handler);
+            // socket.off("refreshProfilePage", handler);
         };
-    }, [])
+    }, [socket])
 
     return (
         <TableContainer component={Paper}>
@@ -117,6 +117,7 @@ export const TableView = ({ showAllParts, ...props }) => {
                     part={selectedPart}
                     open={openEditModal}
                     setOpen={setOpenEditModal}
+                    //todo
                     oneUserDisplay={true}
                 />
             }

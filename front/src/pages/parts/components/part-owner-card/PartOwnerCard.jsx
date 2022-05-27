@@ -23,7 +23,7 @@ export const PartOwnerCard = ({ data, ...props }) => {
                         </IconButton>
                     </div>
                     <Typography component="div" >
-                        Stoc: 200
+                        {data.quantity}
                     </Typography>
 
                 </div>

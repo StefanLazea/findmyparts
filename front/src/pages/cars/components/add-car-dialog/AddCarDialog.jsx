@@ -1,10 +1,10 @@
 import React, { useRef } from "react";
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
+import { useGlobalContext } from "global-context"
+
+import { toast } from 'react-toastify';
 import * as yup from 'yup';
 import { Formik, Form } from 'formik';
-import { BODY_STYLE_VARIANTS, FUEL_VARIANTS } from '../mock.js'
-import { useGlobalContext } from "global-context"
+import axios from "axios";
 
 import {
     Dialog,
@@ -15,15 +15,17 @@ import {
     FormControlLabel,
     FormGroup,
     Checkbox,
+    Button,
+    TextField,
     MenuItem
 } from "@mui/material"
-import axios from "axios";
 
+import { BODY_STYLE_VARIANTS, FUEL_VARIANTS } from '../mock.js'
 
 export const AddCarDialog = (props) => {
-    const { open, setOpen, reRender } = props;
+    const { open, setOpen } = props;
     const handleClose = () => setOpen(false);
-    const { state: { userId } } = useGlobalContext();
+    const { state: { userId, socket } } = useGlobalContext();
     const formRef = useRef();
     console.log({ userId })
     const validationSchema = yup.object({
@@ -51,7 +53,8 @@ export const AddCarDialog = (props) => {
             "userId": userId
         }
         axios.post("/cars/save", payload).then(res => {
-            reRender();
+            socket.emit('savePart', payload)
+            toast(res.data.message);
             setOpen(false);
         })
     }
