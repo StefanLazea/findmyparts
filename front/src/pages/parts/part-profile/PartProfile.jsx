@@ -9,7 +9,7 @@ import { PageContainer } from 'components/page-container/PageContainer'
 import { PartOwnerCard } from '../components/part-owner-card/PartOwnerCard';
 import { PartsDetailsView } from '../components/part-details-view/PartsDetailsView'
 import { EditPartDialog } from '../components/edit-part/EditPartDialog';
-import { useGlobalContext } from '../../../global-context';
+import { useGlobalContext } from 'global-context';
 
 import _ from 'lodash'
 import styles from './PartProfile.module.scss'

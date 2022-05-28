@@ -17,6 +17,7 @@ const bindWebSocket = (socket) => {
     })
     socket.on('updatePart', async (partId, userId = '') => {
         console.log('am updatat piesa ', partId)
+        console.log("user id-ul", userId)
         const partsList = JSON.parse(JSON.stringify(await PartsService.findQuery(userId)));
         console.log(partsList)
         socket.emit('refreshProfilePage', partsList)

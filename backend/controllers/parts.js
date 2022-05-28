@@ -150,7 +150,7 @@ const updatePart = async (req, res) => {
     const user = await UsersService.findUserWithParts(req.body.userId);
     const foundPart = await PartsService.findUserPartById({ user, partId });
     let foundPartJSON = JSON.parse(JSON.stringify(foundPart));
-
+    console.log(foundPartJSON)
     if (_.isEmpty(foundPartJSON)) {
         return res.status(404).send({ message: "Part not found" });
     }

@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "baseUrl": "src",
-        "alias": {
+        "paths": {
             "components/*": [
                 "src/components/*"
             ],

@@ -4,14 +4,13 @@ import { SummaryCard } from '../summary-card/SummaryCard';
 import { useGlobalContext } from 'global-context';
 import { Grid } from '@mui/material';
 import _ from 'lodash'
-
-import styles from './PartsDetailsView.module.scss'
 import axios from 'axios';
 
-export const PartsDetailsView = ({ partId, ...props }) => {
+import styles from './PartsDetailsView.module.scss'
+
+export const PartsDetailsView = ({ partId }) => {
     const { state: { userId, socket } } = useGlobalContext();
     const [details, setDetails] = useState([]);
-
 
     const getPartsSummary = () => {
         axios.get(`/stocks/details/user/${userId}/part/${partId}`).then(res => {
@@ -41,16 +40,14 @@ export const PartsDetailsView = ({ partId, ...props }) => {
         getPartsSummary();
     }, [])
 
-    // useEffect(() => {
-    //     console.log('refresh')
-    //     const handler = (parts) => {
-    //         console.log('client side am primit', parts)
-    //         // setDataList(parts)
-    //         getPartsSummary()
-    //     }
-    //     socket.on('refreshProfilePage', handler)
-    //     return () => socket.off('refreshProfilePage', handler)
-    // }, [])
+    useEffect(() => {
+        const handler = (parts) => {
+            // console.log('client side am primit', parts)
+            getPartsSummary()
+        }
+        socket.on('refreshProfilePage', handler)
+        return () => socket.off('refreshProfilePage', handler)
+    }, [])
 
     return (
         <div className={styles.summariesGrid}>
