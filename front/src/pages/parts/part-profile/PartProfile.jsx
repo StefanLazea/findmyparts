@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
+
 import axios from 'axios';
+import _ from 'lodash'
+
+import { useGlobalContext } from 'global-context';
 
 import { Grid, Divider, IconButton } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
 
 import { PageContainer } from 'components/page-container/PageContainer'
 import { PartOwnerCard } from '../components/part-owner-card/PartOwnerCard';
 import { PartsDetailsView } from '../components/part-details-view/PartsDetailsView'
 import { EditPartDialog } from '../components/edit-part/EditPartDialog';
-import { useGlobalContext } from 'global-context';
+import EditIcon from '@mui/icons-material/Edit';
 
-import _ from 'lodash'
 import styles from './PartProfile.module.scss'
 
 export const PartProfile = () => {

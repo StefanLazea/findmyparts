@@ -1,21 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 
-import { IconButton } from '@mui/material';
-import { CarRepair, DocumentScanner, EditRoad, Add } from '@mui/icons-material';
 import axios from "axios"
 
+import { IconButton } from '@mui/material';
+import { CarRepair, DocumentScanner, EditRoad, Add } from '@mui/icons-material';
+import EditIcon from '@mui/icons-material/Edit';
+
 import CustomStepper from 'components/stepper/Stepper';
-import styles from './CarProfile.module.scss'
 import { AddDocumentDialog } from '../components/add-document-dialog/AddDocumentDialog';
 import { CarDetails } from '../components/car-details-editable/CarDetails'
 import { PageContainer } from 'components/page-container/PageContainer'
 
-export const CarProfile = (props) => {
+import styles from './CarProfile.module.scss'
+
+export const CarProfile = ({ ...props }) => {
+    console.log(props)
     const [step, setStep] = useState(-1);
     const [_, setDocuments] = useState({});
     const [isModalOpen, setModalOpen] = useState(false);
     const [triggerRender, setTriggerRender] = useState(false);
+    const [editMode, setEditMode] = useState(false)
     const { state } = useLocation();
 
     const stepsConfig = [
@@ -52,10 +57,19 @@ export const CarProfile = (props) => {
         <PageContainer>
             <div className={styles.header}>
                 <span className={styles.title}>Masina ta, {state.selectedCar?.numberPlate}</span>
+                <IconButton
+                    edge="start"
+                    color="inherit"
+                    onClick={() => { }}
+                    aria-label="close"
+                    onClick={() => setEditMode(prev => !prev)}
+                >
+                    <EditIcon />
+                </IconButton>
             </div>
 
 
-            <CarDetails carDetails={state} />
+            <CarDetails selectedCar={state.selectedCar} editMode={editMode} setEditMode={setEditMode} />
             <div className={styles.carProfileStepper}>
                 <IconButton color="primary" aria-label="grid view" onClick={() => setModalOpen(true)}><Add /></IconButton>
                 <div className={styles.stepContainer}>
