@@ -5,15 +5,18 @@ import { Grid, MenuItem, TextField, Button } from '@mui/material';
 import _ from "lodash"
 import { toast } from 'react-toastify';
 import * as yup from 'yup';
+import axios from 'axios';
 import { Formik, Form } from 'formik';
 
-import styles from './CarDetails.module.scss'
 import { BACKEND_PROPERTY_VALUE } from 'constants/backend-accessors'
-import axios from 'axios';
+import { LABELS } from 'constants/labels'
+import { useGlobalContext } from "global-context"
+
+import styles from './CarDetails.module.scss'
 
 
 export const CarDetails = ({ selectedCar, ...props }) => {
-    console.log(selectedCar)
+    const { state: { userId, socket } } = useGlobalContext();
     const [disableFields, setDisableFields] = useState(false);
     const formRef = useRef();
 
@@ -23,6 +26,7 @@ export const CarDetails = ({ selectedCar, ...props }) => {
 
     const updateCar = (values) => {
         axios.put(`/cars/${selectedCar.id}`, values).then(res => {
+            socket.emit('updateCar', selectedCar.id)
             console.log(res)
         })
     }
@@ -36,7 +40,7 @@ export const CarDetails = ({ selectedCar, ...props }) => {
                 model: selectedCar.model,
                 type: selectedCar.type,
                 VIN: selectedCar.VIN,
-                // fuel: selectedCar.brand,
+                fuel: 'benzina',
                 isHistoric: selectedCar.isEco,
                 isElectric: selectedCar.isHistoric
             }}
@@ -92,8 +96,8 @@ export const CarDetails = ({ selectedCar, ...props }) => {
                                 </Grid>
                                 <Grid item xs={12} sm={8} md={4} classes={{ item: styles.gridItem }}>
                                     <TextField
-                                        value={"test"}
-                                        onChange={(e) => { }}
+                                        value={values.type}
+                                        onChange={(e) => setFieldValue('type', e.target.value)}
                                         select // tell TextField to render select
                                         label="Caroserie"
                                         disabled={disableFields}
@@ -108,26 +112,30 @@ export const CarDetails = ({ selectedCar, ...props }) => {
                                 </Grid>
                                 <Grid item xs={12} sm={8} md={4} classes={{ item: styles.gridItem }}>
                                     <TextField
-                                        value={"test"}
-                                        onChange={(e) => { }}
+                                        key="fuel"
+                                        value={values.fuel}
+                                        onChange={(e) => setFieldValue('fuel', e.target.value)}
                                         select // tell TextField to render select
                                         label="Combustibil"
                                         disabled={disableFields}
                                         classes={{ root: styles.formControl }}
                                     >
-                                        <MenuItem key={1} value="test">
-                                            Test 1
-                                        </MenuItem>
-                                        <MenuItem key={2} value="test2">
-                                            Test 2
-                                        </MenuItem>
+                                        {BACKEND_PROPERTY_VALUE.FUEL_VARIANTS.map((item, index) =>
+                                            <MenuItem key={index} value={item}>
+                                                {item}
+                                            </MenuItem>
+                                        )}
                                     </TextField>
+
+
                                 </Grid>
                                 {
                                     !disableFields &&
                                     <Grid item xs={12} sm={8} md={4} classes={{ item: styles.gridItem }}>
-                                        <Button variant="contained" component="span" onClick={() => { }}>
-                                            Send to detect
+                                        <Button variant="contained" component="span" onClick={() => {
+                                            formRef.current.submitForm()
+                                        }}>
+                                            {LABELS.update}
                                         </Button>
                                     </Grid>
                                 }

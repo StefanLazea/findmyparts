@@ -1,5 +1,6 @@
 const LABELS = {
-    home: 'Home'
+    home: 'Home',
+    update: "Update"
 }
 
 export { LABELS };
