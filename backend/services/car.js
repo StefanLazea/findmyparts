@@ -3,10 +3,10 @@ const Documents = require('../models').Documents;
 
 const { BACKEND_CONSTANTS } = require('../resources/constants');
 
-const findCarById = async (partId) => {
+const findCarById = async (carId) => {
     let carFound;
     await Cars.findOne({
-        where: { id: partId }
+        where: { id: carId }
     }).then((part) => carFound = part);
 
     return carFound;

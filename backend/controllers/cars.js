@@ -44,6 +44,23 @@ const saveCar = async (req, res) => {
     return res.status(400).send({ message: "Car is already in" })
 };
 
+const updateCar = async (req, res) => {
+    const car = req.body;
+    try {
+        await Cars.update(
+            car,
+            {
+                where:
+                    { id: req.params.carId }
+            }
+        );
+
+        return res.status(200).send({ message: "Car details updated successfully!" });
+    } catch (err) {
+        return res.status(500).send({ message: "Something went wrong" });
+    }
+}
+
 const deleteCar = async (req, res) => {
     const paramId = req.params.carId;
     console.log(paramId)
@@ -71,6 +88,7 @@ const getCarById = async (req, res) => {
 module.exports = {
     getAllCars,
     saveCar,
+    updateCar,
     getCarBrands,
     deleteCar,
     getCarById

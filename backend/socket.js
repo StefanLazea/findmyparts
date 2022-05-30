@@ -1,4 +1,5 @@
 const PartsService = require('./services/part');
+const CarsService = require('./services/car')
 
 const bindWebSocket = (socket) => {
     socket.on('parts', () => {
@@ -21,6 +22,13 @@ const bindWebSocket = (socket) => {
         const partsList = JSON.parse(JSON.stringify(await PartsService.findQuery(userId)));
         console.log(partsList)
         socket.emit('refreshProfilePage', partsList)
+    })
+
+    socket.on('updateCar', async (carId) => {
+        console.log('am primit ', carId)
+        const partsList = JSON.parse(JSON.stringify(await CarsService.findCarById(carId)));
+        // console.log(partsList)
+        // socket.emit('partsListUpdate', partsList)
     })
 }
 module.exports = {

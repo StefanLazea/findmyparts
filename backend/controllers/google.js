@@ -6,28 +6,27 @@ const { CONSTANTS, BACKEND_CONSTANTS } = require('../resources/constants');
 const REGEX_PRICE_LEI = /[\d|,|.|]{2,10} (lei)/g;
 //todo: refactor
 const transformDateToTimestamp = (str) => {
-    const splittedDate = str.split('/');
+    const splittedDate = str.split('/').length === 1 ? str.split('-') : str.split('/');
     const shortDateFormat = [splittedDate[1], splittedDate[0], splittedDate[2]].join('/')
-    console.log(str.split("/"))
-    return new Date(shortDateFormat).getTime();
+    const transformDate = new Date(shortDateFormat).getTime()
+    return transformDate;
 }
-
 //TODO test and refactor
 const getFormattedResponseRCA = (text) => {
     const description = text[0]?.description.toLowerCase();
-    console.log(description)
     //for start data
     const fromDateIndexOf = description.indexOf(CONSTANTS.PRE_DATE_IDENTIFIER)
     const fromDateBeginIndex = fromDateIndexOf + CONSTANTS.PRE_DATE_IDENTIFIER.length;
     const fromDateEndIndex = fromDateIndexOf + CONSTANTS.PRE_DATE_IDENTIFIER.length + CONSTANTS.DATE_FORMAT_LENGTH;
 
     //for the end data
-    const endDateIndexOf = description.indexOf(CONSTANTS.POST_DATE_IDENTIFIER)
+    const endDateIndexOf = description.indexOf(CONSTANTS.POST_DATE_IDENTIFIER) === -1 ? description.indexOf(CONSTANTS.POST_DATE_IDENTIFIER_RO) : description.indexOf(CONSTANTS.POST_DATE_IDENTIFIER)
     const endDateBeginIndex = endDateIndexOf + CONSTANTS.POST_DATE_IDENTIFIER.length;
     const endDateEndIndex = endDateIndexOf + CONSTANTS.POST_DATE_IDENTIFIER.length + CONSTANTS.DATE_FORMAT_LENGTH;
 
     const fromDate = description.substring(fromDateBeginIndex, fromDateEndIndex)
     const endDate = description.substring(endDateBeginIndex, endDateEndIndex)
+    console.log({ fromDate, endDate })
 
     const uniqueDetectedPrice = [...new Set(description.match(REGEX_PRICE_LEI))];
     const price = uniqueDetectedPrice[0].toLowerCase().split(" ")[0];
@@ -44,7 +43,6 @@ const getFormattedResponseRCA = (text) => {
 const detectImage = async (req, res) => {
     // const filename = "/Users/stefan/Documents/projects/findmyparts/backend/controllers/wakeupcat.jpg";
     const client = new vision.ImageAnnotatorClient({ keyFilename: GOOGLE_KEY_JSON });
-    console.log(req.files)
     const buf = req.files?.photo.data;
 
     if (_.isEmpty(buf)) {
@@ -56,7 +54,7 @@ const detectImage = async (req, res) => {
         },
     };
     const [result] = await client.textDetection(request);
-
+    console.log(result)
     if (result) {
         const text = result.textAnnotations;
         const docType = req.body.documentType;
@@ -67,7 +65,7 @@ const detectImage = async (req, res) => {
             try {
                 formattedResponse = getFormattedResponseRCA(text);
             } catch (err) {
-                return res.status(500).send({ message: 'We encountered a problem. Try again later.' })
+                return res.status(500).send({ message: 'We encountered a problem. Try again later.', err })
             }
         }
         return res.status(200).send(formattedResponse)
