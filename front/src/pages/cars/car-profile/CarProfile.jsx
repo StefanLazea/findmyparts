@@ -24,9 +24,9 @@ export const CarProfile = ({ ...props }) => {
     const { state } = useLocation();
 
     const stepsConfig = [
-        { label: 'ITP', icon: <CarRepair /> },
-        { label: 'RCA', icon: <DocumentScanner /> },
-        { label: 'Rovigneta', icon: <EditRoad /> }];
+        { label: 'ITP', icon: <CarRepair />, expired: true },
+        { label: 'RCA', icon: <DocumentScanner />, expired: false },
+        { label: 'Rovigneta', icon: <EditRoad />, expired: false }];
 
 
     useEffect(() => {
