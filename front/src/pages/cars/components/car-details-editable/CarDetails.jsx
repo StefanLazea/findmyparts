@@ -9,6 +9,7 @@ import { Formik, Form } from 'formik';
 
 import styles from './CarDetails.module.scss'
 import { BACKEND_PROPERTY_VALUE } from 'constants/backend-accessors'
+import axios from 'axios';
 
 
 export const CarDetails = ({ selectedCar, ...props }) => {
@@ -20,8 +21,10 @@ export const CarDetails = ({ selectedCar, ...props }) => {
         setDisableFields(props.editMode)
     }, [props.editMode])
 
-    const updateCar = () => {
-
+    const updateCar = (values) => {
+        axios.put(`/cars/${selectedCar.id}`, values).then(res => {
+            console.log(res)
+        })
     }
     return (
 
