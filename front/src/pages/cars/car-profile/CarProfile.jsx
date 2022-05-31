@@ -6,6 +6,7 @@ import axios from "axios"
 import { IconButton } from '@mui/material';
 import { CarRepair, DocumentScanner, EditRoad, Add } from '@mui/icons-material';
 import EditIcon from '@mui/icons-material/Edit';
+import { useGlobalContext } from "global-context"
 
 import CustomStepper from 'components/stepper/Stepper';
 import { AddDocumentDialog } from '../components/add-document-dialog/AddDocumentDialog';
@@ -15,19 +16,30 @@ import { PageContainer } from 'components/page-container/PageContainer'
 import styles from './CarProfile.module.scss'
 
 export const CarProfile = ({ ...props }) => {
+    const { state } = useLocation();
+    const { state: { userId, socket } } = useGlobalContext();
+
     console.log(props)
     const [step, setStep] = useState(-1);
     const [_, setDocuments] = useState({});
     const [isModalOpen, setModalOpen] = useState(false);
     const [triggerRender, setTriggerRender] = useState(false);
     const [editMode, setEditMode] = useState(false)
-    const { state } = useLocation();
+    const [selectedCar, setSelectedCar] = useState(state?.selectedCar);
 
     const stepsConfig = [
         { label: 'ITP', icon: <CarRepair />, expired: true },
         { label: 'RCA', icon: <DocumentScanner />, expired: false },
         { label: 'Rovigneta', icon: <EditRoad />, expired: false }];
 
+    useEffect(() => {
+        const handler = (car) => {
+            console.log('client side am primit', car)
+            setSelectedCar(car)
+        }
+        socket.on('carUpdated', handler)
+
+    }, [socket])
 
     useEffect(() => {
         axios.get(`/documents/car/${state?.selectedCar?.id}`).then((res) => {
@@ -51,12 +63,21 @@ export const CarProfile = ({ ...props }) => {
         return () => setStep(-1);
 
     }, [triggerRender]);
-    console.log(state)
 
+    useEffect(() => {
+        getCarDetails();
+    }, [state?.selectedCar?.id])
+
+    const getCarDetails = () => {
+        axios.get(`/cars/${state?.selectedCar?.id}`).then((res) => {
+            console.log(res)
+            setSelectedCar(res.data)
+        })
+    }
     return (
         <PageContainer>
             <div className={styles.header}>
-                <span className={styles.title}>Masina ta, {state.selectedCar?.numberPlate}</span>
+                <span className={styles.title}>Masina ta, {selectedCar?.numberPlate}</span>
                 <IconButton
                     edge="start"
                     color="inherit"
@@ -69,7 +90,7 @@ export const CarProfile = ({ ...props }) => {
             </div>
 
 
-            <CarDetails selectedCar={state.selectedCar} editMode={editMode} setEditMode={setEditMode} />
+            <CarDetails carData={selectedCar} editMode={editMode} setEditMode={setEditMode} />
             <div className={styles.carProfileStepper}>
                 <IconButton color="primary" aria-label="grid view" onClick={() => setModalOpen(true)}><Add /></IconButton>
                 <div className={styles.stepContainer}>
@@ -83,6 +104,7 @@ export const CarProfile = ({ ...props }) => {
                     setOpen={setModalOpen}
                     reRender={() => setTriggerRender(prev => !prev)}
                     carId={state?.selectedCar?.id}
+
                 />}
 
         </PageContainer>
