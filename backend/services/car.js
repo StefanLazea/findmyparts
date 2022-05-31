@@ -3,6 +3,13 @@ const Documents = require('../models').Documents;
 
 const { BACKEND_CONSTANTS } = require('../resources/constants');
 
+const findAll = async () => {
+    return await Cars.findAll({
+        include: [
+            { model: Documents }
+        ],
+    });
+}
 const findCarById = async (carId) => {
     let carFound;
     await Cars.findOne({
@@ -49,6 +56,7 @@ const getCarFormattedDetails = (car) => {
 }
 
 module.exports = {
+    findAll,
     findCarById,
     findCarByVIN,
     getCarsFormattedResponse,

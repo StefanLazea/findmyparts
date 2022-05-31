@@ -53,7 +53,7 @@ export const AddCarDialog = (props) => {
             "userId": userId
         }
         axios.post("/cars/save", payload).then(res => {
-            socket.emit('savePart', payload)
+            socket.emit('saveCar', payload)
             toast(res.data.message);
             setOpen(false);
         })
@@ -111,20 +111,20 @@ export const AddCarDialog = (props) => {
                             />
                             <TextField
                                 autoFocus
-                                id="model"
-                                name="model"
-                                label="model"
-                                value={values.model}
+                                id="brand"
+                                name="brand"
+                                label="brand"
+                                value={values.brand}
                                 onChange={handleChange}
                                 variant="standard"
                                 fullWidth
                             />
                             <TextField
                                 autoFocus
-                                id="brand"
-                                name="brand"
-                                label="brand"
-                                value={values.brand}
+                                id="model"
+                                name="model"
+                                label="model"
+                                value={values.model}
                                 onChange={handleChange}
                                 variant="standard"
                                 fullWidth

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { GoogleLogin } from 'react-google-login';
 import { GoogleLogout } from 'react-google-login';
 
@@ -12,7 +12,6 @@ import _ from 'lodash';
 import './Login.scss';
 export const Login = (props) => {
     const { state: { userId }, dispatch } = useGlobalContext();
-    useEffect(() => { console.log(userId) }, [userId])
     const handleLogin = (response) => {
         axios.post(`/auth/google`, {
 

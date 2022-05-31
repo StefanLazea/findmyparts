@@ -24,11 +24,21 @@ const bindWebSocket = (socket) => {
         socket.emit('refreshProfilePage', partsList)
     })
 
+    //cars 
+    socket.on('saveCar', async (car) => {
+        console.log('am primit ', car)
+        const carsList = JSON.parse(JSON.stringify(await CarsService.findAll()));
+        socket.emit('carsListUpdate', carsList)
+    })
     socket.on('updateCar', async (carId) => {
         console.log('am primit ', carId)
         const updatedCar = JSON.parse(JSON.stringify(await CarsService.findCarById(carId)));
-        console.log(updatedCar)
         socket.emit('carUpdated', updatedCar)
+    })
+    socket.on('deleteCar', async (carId) => {
+        console.log('am primit ', carId)
+        const carsList = JSON.parse(JSON.stringify(await CarsService.findAll()));
+        socket.emit('carsListUpdate', carsList)
     })
 }
 module.exports = {

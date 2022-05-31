@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Route,
   Routes,
@@ -10,7 +10,6 @@ import { toast } from 'react-toastify';
 
 import { Home } from './pages/home/Home';
 import { Parts } from './pages/parts/Parts'
-import { FindPart } from './pages/parts/find-part/FindPart'
 import { Cars } from './pages/cars/Cars';
 import { Register } from './pages/auth/Register';
 import { Login } from './pages/auth/Login';
@@ -58,7 +57,7 @@ function App() {
       setIsAuth(false)
     }
   }
-
+  console.log(isAuth)
   return (
     <GlobalContextProvide>
       <ThemeProvider theme={darkTheme}>
@@ -73,12 +72,10 @@ function App() {
             <Route path="/home" exact element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            {/* TBD is this remains like this */}
             <Route path="/cars" element={<Cars />} />
             <Route path="/car-profile" element={<CarProfile />} />
 
             <Route path="/parts" element={<Parts />} />
-            <Route path="/find-part" element={<FindPart />} />
             <Route path="/part-profile" element={<PartProfile />} />
 
             {/* TODO: private routes */}

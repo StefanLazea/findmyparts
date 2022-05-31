@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
     Link
 } from 'react-router-dom';
+
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -16,7 +17,6 @@ import MenuItem from '@mui/material/MenuItem';
 import './NavigationBar.scss'
 const pages = [
     { name: 'Piese', link: '/parts' },
-    { name: 'Cauta', link: '/find-part' },
     { name: 'Masini', link: '/cars' },
     { name: 'Acasa', link: '/home' },
     { name: 'Login', link: '/login' },
@@ -30,6 +30,8 @@ export const NavigationBar = (props) => {
     };
 
     const handleCloseNavMenu = () => {
+        localStorage.removeItem('token')
+        // props.triggerLogOut();
         setAnchorElNav(null);
     };
 
@@ -70,7 +72,7 @@ export const NavigationBar = (props) => {
                                 horizontal: 'left',
                             }}
                             open={Boolean(anchorElNav)}
-                            onClose={handleCloseNavMenu}
+                            onClose={() => handleCloseNavMenu()}
                             sx={{
                                 display: { xs: 'block', md: 'none' },
                             }}

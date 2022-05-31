@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
+import { useGlobalContext } from "global-context"
 
 import axios from "axios"
 
 import { IconButton } from '@mui/material';
 import { CarRepair, DocumentScanner, EditRoad, Add } from '@mui/icons-material';
 import EditIcon from '@mui/icons-material/Edit';
-import { useGlobalContext } from "global-context"
 
 import CustomStepper from 'components/stepper/Stepper';
 import { AddDocumentDialog } from '../components/add-document-dialog/AddDocumentDialog';
@@ -17,7 +17,7 @@ import styles from './CarProfile.module.scss'
 
 export const CarProfile = ({ ...props }) => {
     const { state } = useLocation();
-    const { state: { userId, socket } } = useGlobalContext();
+    const { state: { socket } } = useGlobalContext();
 
     console.log(props)
     const [step, setStep] = useState(-1);
@@ -28,7 +28,7 @@ export const CarProfile = ({ ...props }) => {
     const [selectedCar, setSelectedCar] = useState(state?.selectedCar);
 
     const stepsConfig = [
-        { label: 'ITP', icon: <CarRepair />, expired: true },
+        { label: 'ITP', icon: <CarRepair />, expired: true, tooltipData: { expirationData: '27/10/2022', startDate: '26/10/2021' } },
         { label: 'RCA', icon: <DocumentScanner />, expired: false },
         { label: 'Rovigneta', icon: <EditRoad />, expired: false }];
 

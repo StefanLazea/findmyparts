@@ -1,22 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
+import { useGlobalContext } from "global-context"
+
 import axios from 'axios';
 import { toast } from 'react-toastify'
+
 import { Grid, IconButton } from '@mui/material';
 import { Add } from '@mui/icons-material';
 
 import { CustomCard } from './components/custom-card/CustomCard';
 import { AddCarDialog } from './components/add-car-dialog/AddCarDialog';
 import { PageContainer } from 'components/page-container/PageContainer'
+
 import "./Cars.scss";
 
 export const Cars = (props) => {
     const navigate = useNavigate();
+    const { state: { userId, socket } } = useGlobalContext();
     const [cars, setCars] = useState([])
     const [isModalOpen, setModalOpen] = useState(false);
-    const reRender = () => {
-        getCars();
-    }
+
     const getCars = () => {
         axios.get(`/cars`).then(response => {
             setCars(response.data)
@@ -33,12 +36,21 @@ export const Cars = (props) => {
                 draggable: true,
                 progress: undefined,
             });
-            getCars();
+            socket.emit('deleteCar', id)
         })
     }
     useEffect(() => {
         getCars();
     }, [])
+
+    useEffect(() => {
+        const handler = (_cars) => {
+            console.log('client side am primit', _cars)
+            setCars(_cars)
+        }
+        socket.on('carsListUpdate', handler)
+
+    }, [socket])
 
     return (
 
@@ -62,7 +74,7 @@ export const Cars = (props) => {
                     </Grid >
                 )}
             </Grid>
-            {isModalOpen && <AddCarDialog open={isModalOpen} setOpen={setModalOpen} reRender={reRender} />}
+            {isModalOpen && <AddCarDialog open={isModalOpen} setOpen={setModalOpen} />}
 
         </PageContainer>
     );

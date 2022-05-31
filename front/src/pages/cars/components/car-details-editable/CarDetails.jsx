@@ -1,19 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
 
+import { useGlobalContext } from "global-context"
+
 import { Grid, MenuItem, TextField, Button } from '@mui/material';
+import CarIcon from 'assets/icons/CarIcon'
 
 import _ from "lodash"
-import { toast } from 'react-toastify';
-import * as yup from 'yup';
 import axios from 'axios';
 import { Formik, Form } from 'formik';
 
 import { BACKEND_PROPERTY_VALUE } from 'constants/backend-accessors'
 import { LABELS } from 'constants/labels'
-import { useGlobalContext } from "global-context"
-
 import styles from './CarDetails.module.scss'
-
 
 export const CarDetails = ({ carData, ...props }) => {
     const { state: { socket } } = useGlobalContext();
@@ -54,12 +52,13 @@ export const CarDetails = ({ carData, ...props }) => {
                 <Form>
                     <Grid container spacing={{ xs: 2, sm: 3, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
                         <Grid item xs={4} sm={4} md={4} className={styles.imageElement}>
-                            <img
+                            {/* <img
                                 src={_.get(values, "carData.image", "https://via.placeholder.com/300")}
                                 alt={"to update"}
                                 className={styles.img}
                                 loading="lazy"
-                            />
+                            /> */}
+                            <CarIcon />
                         </Grid>
                         <Grid item xs={4} sm={4} md={8}>
                             <Grid container spacing={{ xs: 2, sm: 2, md: 3 }} columns={{ xs: 12, sm: 4, md: 12 }} align="center" justify="center" alignItems="center" >

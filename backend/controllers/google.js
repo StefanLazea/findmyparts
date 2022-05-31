@@ -7,6 +7,7 @@ const REGEX_PRICE_LEI = /[\d|,|.|]{2,10} (lei)/g;
 //todo: refactor
 const transformDateToTimestamp = (str) => {
     const splittedDate = str.split('/').length === 1 ? str.split('-') : str.split('/');
+    //TODO we can have . _ and /
     const shortDateFormat = [splittedDate[1], splittedDate[0], splittedDate[2]].join('/')
     const transformDate = new Date(shortDateFormat).getTime()
     return transformDate;
@@ -39,6 +40,27 @@ const getFormattedResponseRCA = (text) => {
         currency: currency
     };
 }
+const getFormattedResponseITP = (text) => {
+    const visionTotalResult = text[0]?.description;
+    const description = visionTotalResult.split('\n').join(' ');
+
+    console.log(description.split('\n').join(' '))
+    const tehnicalWorkIndex = description.indexOf('inspecții tehnice') + 'inspecții tehnice'.length;
+    const endWorkIndex = tehnicalWorkIndex + CONSTANTS.DATE_FORMAT_LENGTH;
+
+    console.log('Bingo', description[tehnicalWorkIndex])
+    const expDateStr = description.substring(tehnicalWorkIndex, endWorkIndex)
+    const expirationDate = transformDateToTimestamp(expDateStr.trim())
+    console.log({ description, tehnicalWorkIndex, endWorkIndex, expDate, expirationDate })
+    // const expirationData = description.split()
+
+    return {
+        fromDate: '',
+        expirationDate: '',
+        price: '',
+        currency: ''
+    };
+}
 
 const detectImage = async (req, res) => {
     // const filename = "/Users/stefan/Documents/projects/findmyparts/backend/controllers/wakeupcat.jpg";
@@ -61,13 +83,29 @@ const detectImage = async (req, res) => {
         let formattedResponse = {};
 
         //TODO, format date to correct international date -> pass it as timestamp to FE
-        if (docType === BACKEND_CONSTANTS.DOCUMENTS.RCA) {
-            try {
-                formattedResponse = getFormattedResponseRCA(text);
-            } catch (err) {
-                return res.status(500).send({ message: 'We encountered a problem. Try again later.', err })
+        // if (docType === BACKEND_CONSTANTS.DOCUMENTS.RCA) {
+        //     try {
+        //         formattedResponse = getFormattedResponseRCA(text);
+        //     } catch (err) {
+        //         return res.status(500).send({ message: 'We encountered a problem. Try again later.', err })
+        //     }
+        // }
+
+        try {
+            switch (docType) {
+                case BACKEND_CONSTANTS.DOCUMENTS.RCA:
+                    formattedResponse = getFormattedResponseRCA(text);
+                    break;
+                case BACKEND_CONSTANTS.DOCUMENTS.ITP:
+                    formattedResponse = getFormattedResponseITP(text);
+                    break;
+                default:
+                    break;
             }
+        } catch (err) {
+            return res.status(500).send({ message: 'We encountered a problem. Try again later.', err })
         }
+
         return res.status(200).send(formattedResponse)
 
     }

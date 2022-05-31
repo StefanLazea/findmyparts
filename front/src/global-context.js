@@ -11,11 +11,16 @@ const initialState = {
 }
 const ACTIONS = {
     ADD_USER_ID: 'addUserId',
+    REMOVE_USER_ID: 'removeUserId'
 }
 
 //todo add a actions.js file into a global-context directory
 export const addUserId = (userId) => ({
     type: ACTIONS.ADD_USER_ID,
+    userId
+})
+export const removeUserId = (userId) => ({
+    type: ACTIONS.REMOVE_USER_ID,
     userId
 })
 
@@ -26,6 +31,13 @@ function storeReducer(state = initialState, action) {
             return {
                 ...state,
                 userId: action.userId,
+            };
+        }
+        case ACTIONS.REMOVE_USER_ID: {
+            localStorage.removeItem('userId');
+            return {
+                ...state,
+                userId: 0,
             };
         }
         default: {
