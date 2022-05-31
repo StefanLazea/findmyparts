@@ -1,7 +1,4 @@
 import React from 'react';
-export const Register = (props) => {
-    return (
-        <div>Register</div>
-    );
-}
-
+export const Register = () => {
+    return <div>Register</div>;
+};

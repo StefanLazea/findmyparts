@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from 'react';
 
 import { useGlobalContext } from 'global-context';
 
@@ -9,26 +9,29 @@ import {
     DialogActions,
     DialogContent,
     DialogContentText,
-    DialogTitle,
-} from "@mui/material"
+    DialogTitle
+} from '@mui/material';
 
 // import * as yup from 'yup';
 import { Formik, Form } from 'formik';
-import _ from 'lodash'
-import axios from "axios";
-
+import _ from 'lodash';
+import axios from 'axios';
 
 export const EditPartDialog = (props) => {
     const { part, open, setOpen } = props;
-    const { state: { userId, socket } } = useGlobalContext();
+    const {
+        state: { userId, socket }
+    } = useGlobalContext();
     const formRef = useRef();
     const [selectedPart, setSelectedPart] = useState({});
-    console.log({ part })
+    console.log({ part });
     useEffect(() => {
         if (!_.isEmpty(part)) {
-            const userStock = part.stocks.filter(item => item.userId === userId);
-            console.log(userStock)
-            setSelectedPart(prev => {
+            const userStock = part.stocks.filter(
+                (item) => item.userId === userId
+            );
+            console.log(userStock);
+            setSelectedPart((prev) => {
                 return {
                     ...prev,
                     ...{
@@ -38,18 +41,17 @@ export const EditPartDialog = (props) => {
                         quantity: _.get(userStock, '[0].quantity', 0),
                         price: _.get(userStock, '[0].price', 0)
                     }
-                }
-            })
+                };
+            });
             console.log({
                 name: part.name,
                 code: part.code,
                 id: part.id,
                 quantity: _.get(userStock, '[0].quantity', 0),
                 price: _.get(userStock, '[0].price', 0)
-            })
+            });
         }
-
-    }, [part])
+    }, [part]);
 
     const handleClose = () => setOpen(false);
     const savePart = (values) => {
@@ -58,25 +60,25 @@ export const EditPartDialog = (props) => {
             name: values.name,
             price: values.price,
             quantity: values.quantity,
-            photo: "",
+            photo: '',
             userId: userId
-
-        }
-        axios.put(`/parts/${part.id}`, payload).then(res => {
+        };
+        axios.put(`/parts/${part.id}`, payload).then(() => {
             setOpen(false);
             if (props.oneUserDisplay) {
-                socket.emit("updatePart", part.id, userId);
+                socket.emit('updatePart', part.id, userId);
             } else {
-                socket.emit("updatePart", part.id);
+                socket.emit('updatePart', part.id);
             }
-        })
-    }
+        });
+    };
     return (
         <Dialog open={open} onClose={handleClose}>
             <DialogTitle>Editare piesa</DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    Avem nevoie de urmatoarele detalii pentru a modifica piesa pe care o ai.
+                    Avem nevoie de urmatoarele detalii pentru a modifica piesa
+                    pe care o ai.
                 </DialogContentText>
                 <Formik
                     innerRef={formRef}
@@ -85,15 +87,14 @@ export const EditPartDialog = (props) => {
                         name: selectedPart.name,
                         price: selectedPart.price,
                         quantity: selectedPart.quantity,
-                        photo: "",
+                        photo: '',
                         userId: userId
                     }}
                     // validationSchema={validationSchema}
-                    onSubmit={values => {
+                    onSubmit={(values) => {
                         savePart(values);
-                    }}
-                >
-                    {({ values, errors, handleChange, setFieldValue }) => (
+                    }}>
+                    {({ values, errors, handleChange }) => (
                         <Form>
                             <TextField
                                 autoFocus
@@ -147,9 +148,10 @@ export const EditPartDialog = (props) => {
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose}>Anulare</Button>
-                <Button onClick={() => formRef.current.submitForm()}>Salveaza</Button>
-
+                <Button onClick={() => formRef.current.submitForm()}>
+                    Salveaza
+                </Button>
             </DialogActions>
         </Dialog>
     );
-}
+};

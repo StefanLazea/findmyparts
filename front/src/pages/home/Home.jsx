@@ -1,43 +1,41 @@
-import React, { useEffect } from 'react';
-import { addUserId, useGlobalContext } from "../../global-context"
-import { ResponsivePie } from '@nivo/pie'
+import React from 'react';
+// import { addUserId, useGlobalContext } from '../../global-context';
+import { ResponsivePie } from '@nivo/pie';
 
-import styles from './Home.module.scss'
-export const Home = (props) => {
-    const { state: { socket, userId } } = useGlobalContext();
-
+import styles from './Home.module.scss';
+export const Home = () => {
     const data = [
         {
-            "id": "php",
-            "label": "php",
-            "value": 46,
-            "color": "hsl(73, 70%, 50%)"
+            id: 'php',
+            label: 'php',
+            value: 46,
+            color: 'hsl(73, 70%, 50%)'
         },
         {
-            "id": "c",
-            "label": "c",
-            "value": 252,
-            "color": "hsl(99, 70%, 50%)"
+            id: 'c',
+            label: 'c',
+            value: 252,
+            color: 'hsl(99, 70%, 50%)'
         },
         {
-            "id": "javascript",
-            "label": "javascript",
-            "value": 563,
-            "color": "hsl(65, 70%, 50%)"
+            id: 'javascript',
+            label: 'javascript',
+            value: 563,
+            color: 'hsl(65, 70%, 50%)'
         },
         {
-            "id": "go",
-            "label": "go",
-            "value": 7,
-            "color": "hsl(100, 70%, 50%)"
+            id: 'go',
+            label: 'go',
+            value: 7,
+            color: 'hsl(100, 70%, 50%)'
         },
         {
-            "id": "ruby",
-            "label": "ruby",
-            "value": 133,
-            "color": "hsl(286, 70%, 50%)"
+            id: 'ruby',
+            label: 'ruby',
+            value: 133,
+            color: 'hsl(286, 70%, 50%)'
         }
-    ]
+    ];
 
     return (
         <div className="home-page">
@@ -53,12 +51,7 @@ export const Home = (props) => {
                     borderWidth={1}
                     borderColor={{
                         from: 'color',
-                        modifiers: [
-                            [
-                                'darker',
-                                0.2
-                            ]
-                        ]
+                        modifiers: [['darker', 0.2]]
                     }}
                     arcLinkLabelsSkipAngle={10}
                     arcLinkLabelsTextColor="#333333"
@@ -67,12 +60,7 @@ export const Home = (props) => {
                     arcLabelsSkipAngle={10}
                     arcLabelsTextColor={{
                         from: 'color',
-                        modifiers: [
-                            [
-                                'darker',
-                                2
-                            ]
-                        ]
+                        modifiers: [['darker', 2]]
                     }}
                     defs={[
                         {
@@ -173,5 +161,4 @@ export const Home = (props) => {
             </div>
         </div>
     );
-}
-
+};

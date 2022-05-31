@@ -8,25 +8,45 @@ import AddIcon from '@mui/icons-material/Add';
 import Container from '@mui/material/Container';
 
 import { AddPartDialog } from './components/add-part/AddPartDialog';
-import { TableView } from './components/table-view/TableView'
+import { TableView } from './components/table-view/TableView';
 
 import './Parts.scss';
 
-export const Parts = (props) => {
+export const Parts = () => {
     const [openModal, setOpenAddModal] = useState(false);
-    const [showAllParts, setShowAllParts] = useState(true)
+    const [showAllParts, setShowAllParts] = useState(true);
     return (
         <Container maxWidth="lg">
-            <div className='header-buttons'>
-                <IconButton color="primary" aria-label="grid view" onClick={() => setOpenAddModal(true)}><AddIcon /></IconButton>
+            <div className="header-buttons">
+                <IconButton
+                    color="primary"
+                    aria-label="grid view"
+                    onClick={() => setOpenAddModal(true)}>
+                    <AddIcon />
+                </IconButton>
                 <div className="switch-button">
-                    <IconButton color="primary" aria-label="grid view" onClick={() => setShowAllParts(true)}><GroupIcon sx={{ color: showAllParts ? '#2C8C99' : '#00000' }} /></IconButton>
-                    <IconButton color="primary" aria-label="grid view" onClick={() => setShowAllParts(false)}><PersonIcon sx={{ color: !showAllParts ? '#2C8C99' : '#00000' }} /></IconButton>
+                    <IconButton
+                        color="primary"
+                        aria-label="grid view"
+                        onClick={() => setShowAllParts(true)}>
+                        <GroupIcon
+                            sx={{ color: showAllParts ? '#2C8C99' : '#00000' }}
+                        />
+                    </IconButton>
+                    <IconButton
+                        color="primary"
+                        aria-label="grid view"
+                        onClick={() => setShowAllParts(false)}>
+                        <PersonIcon
+                            sx={{ color: !showAllParts ? '#2C8C99' : '#00000' }}
+                        />
+                    </IconButton>
                 </div>
             </div>
             <TableView showAllParts={showAllParts} />
-            {openModal && <AddPartDialog open={openModal} setOpen={setOpenAddModal} />}
+            {openModal && (
+                <AddPartDialog open={openModal} setOpen={setOpenAddModal} />
+            )}
         </Container>
     );
-}
-
+};

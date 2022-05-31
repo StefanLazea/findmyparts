@@ -1,65 +1,74 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-import { useGlobalContext } from "global-context"
+import { useGlobalContext } from 'global-context';
 
 import axios from 'axios';
-import { toast } from 'react-toastify'
+import { toast } from 'react-toastify';
 
 import { Grid, IconButton } from '@mui/material';
 import { Add } from '@mui/icons-material';
 
 import { CustomCard } from './components/custom-card/CustomCard';
 import { AddCarDialog } from './components/add-car-dialog/AddCarDialog';
-import { PageContainer } from 'components/page-container/PageContainer'
+import { PageContainer } from 'components/page-container/PageContainer';
 
-import "./Cars.scss";
+import './Cars.scss';
 
-export const Cars = (props) => {
+export const Cars = () => {
     const navigate = useNavigate();
-    const { state: { userId, socket } } = useGlobalContext();
-    const [cars, setCars] = useState([])
+    const {
+        state: { socket }
+    } = useGlobalContext();
+    const [cars, setCars] = useState([]);
     const [isModalOpen, setModalOpen] = useState(false);
 
     const getCars = () => {
-        axios.get(`/cars`).then(response => {
-            setCars(response.data)
-        })
-    }
+        axios.get(`/cars`).then((response) => {
+            setCars(response.data);
+        });
+    };
     const deleteCar = (id) => {
-        axios.delete(`/cars/${id}`).then(res => {
-            toast.success("Car deleted with success", {
-                position: "top-right",
+        axios.delete(`/cars/${id}`).then(() => {
+            toast.success('Car deleted with success', {
+                position: 'top-right',
                 autoClose: 5000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,
-                progress: undefined,
+                progress: undefined
             });
-            socket.emit('deleteCar', id)
-        })
-    }
+            socket.emit('deleteCar', id);
+        });
+    };
     useEffect(() => {
         getCars();
-    }, [])
+    }, []);
 
     useEffect(() => {
         const handler = (_cars) => {
-            console.log('client side am primit', _cars)
-            setCars(_cars)
-        }
-        socket.on('carsListUpdate', handler)
-
-    }, [socket])
+            console.log('client side am primit', _cars);
+            setCars(_cars);
+        };
+        socket.on('carsListUpdate', handler);
+    }, [socket]);
 
     return (
-
         <PageContainer>
             {/* todo spacing right incorrect */}
-            <IconButton color="primary" aria-label="grid view" onClick={() => setModalOpen(true)}><Add /></IconButton>
+            <IconButton
+                color="primary"
+                aria-label="grid view"
+                onClick={() => setModalOpen(true)}>
+                <Add />
+            </IconButton>
 
-            <Grid container rowSpacing={4} spacing={{ xs: 1, sm: 3, md: 6 }} columns={{ xs: 1, sm: 8, md: 12 }}>
-                {cars.map((car, index) =>
+            <Grid
+                container
+                rowSpacing={4}
+                spacing={{ xs: 1, sm: 3, md: 6 }}
+                columns={{ xs: 1, sm: 8, md: 12 }}>
+                {cars.map((car, index) => (
                     <Grid item xs={1} sm={4} md={4} key={index}>
                         <CustomCard
                             md={12}
@@ -67,16 +76,17 @@ export const Cars = (props) => {
                             carData={car}
                             onDelete={(id) => deleteCar(id)}
                             onClick={() =>
-                                navigate("/car-profile", {
+                                navigate('/car-profile', {
                                     state: { selectedCar: car }
                                 })
-                            } />
-                    </Grid >
-                )}
+                            }
+                        />
+                    </Grid>
+                ))}
             </Grid>
-            {isModalOpen && <AddCarDialog open={isModalOpen} setOpen={setModalOpen} />}
-
+            {isModalOpen && (
+                <AddCarDialog open={isModalOpen} setOpen={setModalOpen} />
+            )}
         </PageContainer>
     );
-}
-
+};

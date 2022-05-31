@@ -1,10 +1,10 @@
-import React, { useRef } from "react";
+import React, { useRef } from 'react';
 import { useGlobalContext } from 'global-context';
 
 import { toast } from 'react-toastify';
 // import * as yup from 'yup';
 import { Formik, Form } from 'formik';
-import axios from "axios";
+import axios from 'axios';
 
 import {
     Dialog,
@@ -14,25 +14,16 @@ import {
     DialogTitle,
     Button,
     TextField
-} from "@mui/material"
+} from '@mui/material';
 
 export const AddPartDialog = (props) => {
     const { open, setOpen } = props;
-    const { state: { userId, socket } } = useGlobalContext();
+    const {
+        state: { userId, socket }
+    } = useGlobalContext();
 
     const handleClose = () => setOpen(false);
     const formRef = useRef();
-    // const validationSchema = yup.object({
-    //     vin: yup
-    //         .string()
-    //         .min(4, 'seria de caroserie este prea scurta')
-    //         .required('vin-ul trebuie introdus'),
-    //     numberPlate: yup
-    //         .string()
-    //         .min(7, 'Nu este un numar corect')
-    //         .required('Numarul trebuie introdus'),
-
-    // });
 
     const savePart = (values) => {
         const payload = {
@@ -40,40 +31,39 @@ export const AddPartDialog = (props) => {
             name: values.name,
             price: values.price,
             quantity: values.quantity,
-            photo: "",
+            photo: '',
             userId: userId
-
-        }
-        axios.post("/parts", payload).then(res => {
+        };
+        axios.post('/parts', payload).then((res) => {
             toast(res.data.message);
-            socket.emit("savePart", payload);
-            setOpen(false)
-        })
-    }
+            socket.emit('savePart', payload);
+            setOpen(false);
+        });
+    };
     return (
         <Dialog open={open} onClose={handleClose}>
             <DialogTitle>Adaugare piesa</DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    Avem nevoie de urmatoarele detalii pentru a retine piesa pe care o ai.
+                    Avem nevoie de urmatoarele detalii pentru a retine piesa pe
+                    care o ai.
                 </DialogContentText>
                 <Formik
                     innerRef={formRef}
                     initialValues={{
-                        code: "",
-                        name: "",
+                        code: '',
+                        name: '',
                         price: 0,
                         quantity: 0,
-                        photo: "",
+                        photo: '',
                         userId: userId
                     }}
                     // validationSchema={validationSchema}
-                    onSubmit={values => {
+                    onSubmit={(values) => {
                         // same shape as initial values
                         savePart(values);
-                    }}
-                >
-                    {({ values, errors, handleChange, setFieldValue }) => (
+                    }}>
+                    {({ values, errors, handleChange }) => (
                         <Form>
                             <TextField
                                 autoFocus
@@ -127,9 +117,10 @@ export const AddPartDialog = (props) => {
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose}>Anulare</Button>
-                <Button onClick={() => formRef.current.submitForm()}>Salveaza</Button>
-
+                <Button onClick={() => formRef.current.submitForm()}>
+                    Salveaza
+                </Button>
             </DialogActions>
         </Dialog>
     );
-}
+};

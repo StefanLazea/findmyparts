@@ -1,10 +1,10 @@
-import React, { useRef } from "react";
-import { useGlobalContext } from "global-context"
+import React, { useRef } from 'react';
+import { useGlobalContext } from 'global-context';
 
 import { toast } from 'react-toastify';
 import * as yup from 'yup';
 import { Formik, Form } from 'formik';
-import axios from "axios";
+import axios from 'axios';
 
 import {
     Dialog,
@@ -18,16 +18,18 @@ import {
     Button,
     TextField,
     MenuItem
-} from "@mui/material"
+} from '@mui/material';
 
-import { BODY_STYLE_VARIANTS, FUEL_VARIANTS } from '../mock.js'
+import { BODY_STYLE_VARIANTS, FUEL_VARIANTS } from '../mock.js';
 
 export const AddCarDialog = (props) => {
     const { open, setOpen } = props;
     const handleClose = () => setOpen(false);
-    const { state: { userId, socket } } = useGlobalContext();
+    const {
+        state: { userId, socket }
+    } = useGlobalContext();
     const formRef = useRef();
-    console.log({ userId })
+    console.log({ userId });
     const validationSchema = yup.object({
         vin: yup
             .string()
@@ -36,34 +38,34 @@ export const AddCarDialog = (props) => {
         numberPlate: yup
             .string()
             .min(7, 'Nu este un numar corect')
-            .required('Numarul trebuie introdus'),
-
+            .required('Numarul trebuie introdus')
     });
 
     const saveCar = (values) => {
         const payload = {
-            "VIN": values.vin,
-            "numberPlate": values.numberPlate,
-            "model": values.model,
-            "brand": values.brand,
-            "type": values.type,
-            "isEco": false,
-            "isElectric": values.isElectric,
-            "isHistoric": values.isHistoric,
-            "userId": userId
-        }
-        axios.post("/cars/save", payload).then(res => {
-            socket.emit('saveCar', payload)
+            VIN: values.vin,
+            numberPlate: values.numberPlate,
+            model: values.model,
+            brand: values.brand,
+            type: values.type,
+            isEco: false,
+            isElectric: values.isElectric,
+            isHistoric: values.isHistoric,
+            userId: userId
+        };
+        axios.post('/cars/save', payload).then((res) => {
+            socket.emit('saveCar', payload);
             toast(res.data.message);
             setOpen(false);
-        })
-    }
+        });
+    };
     return (
         <Dialog open={open} onClose={handleClose}>
             <DialogTitle>Adaugare masina</DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    Avem nevoie de urmatoarele detalii pentru a retine masina ta.
+                    Avem nevoie de urmatoarele detalii pentru a retine masina
+                    ta.
                 </DialogContentText>
                 <Formik
                     innerRef={formRef}
@@ -78,11 +80,10 @@ export const AddCarDialog = (props) => {
                         isElectric: false
                     }}
                     validationSchema={validationSchema}
-                    onSubmit={values => {
+                    onSubmit={(values) => {
                         // same shape as initial values
                         saveCar(values);
-                    }}
-                >
+                    }}>
                     {({ values, errors, handleChange, setFieldValue }) => (
                         <Form>
                             <TextField
@@ -137,13 +138,12 @@ export const AddCarDialog = (props) => {
                                 variant="standard"
                                 value={values.type}
                                 onChange={handleChange}
-                                fullWidth
-                            >
-                                {BODY_STYLE_VARIANTS.map((item, index) =>
+                                fullWidth>
+                                {BODY_STYLE_VARIANTS.map((item, index) => (
                                     <MenuItem key={index} value={item}>
                                         {item}
                                     </MenuItem>
-                                )}
+                                ))}
                             </TextField>
                             <TextField
                                 select // tell TextField to render select
@@ -153,36 +153,42 @@ export const AddCarDialog = (props) => {
                                 variant="standard"
                                 value={values.fuel}
                                 onChange={handleChange}
-                                fullWidth
-                            >
-                                {FUEL_VARIANTS.map((item, index) =>
+                                fullWidth>
+                                {FUEL_VARIANTS.map((item, index) => (
                                     <MenuItem key={index} value={item}>
                                         {item}
                                     </MenuItem>
-                                )}
-
-
+                                ))}
                             </TextField>
                             <FormGroup>
                                 <FormControlLabel
                                     control={
                                         <Checkbox
                                             name="isHistoric"
-                                            onChange={(e) => setFieldValue(e.target.name, e.target.checked)}
-
-                                        />}
+                                            onChange={(e) =>
+                                                setFieldValue(
+                                                    e.target.name,
+                                                    e.target.checked
+                                                )
+                                            }
+                                        />
+                                    }
                                     label="Vehicul istoric"
                                 />
                                 <FormControlLabel
                                     control={
                                         <Checkbox
                                             name="isElectric"
-                                            onChange={(e) => setFieldValue(e.target.name, e.target.checked)}
-
+                                            onChange={(e) =>
+                                                setFieldValue(
+                                                    e.target.name,
+                                                    e.target.checked
+                                                )
+                                            }
                                         />
                                     }
-
-                                    label="Vehicul electric" />
+                                    label="Vehicul electric"
+                                />
                             </FormGroup>
                         </Form>
                     )}
@@ -190,9 +196,10 @@ export const AddCarDialog = (props) => {
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose}>Anulare</Button>
-                <Button onClick={() => formRef.current.submitForm()}>Salveaza</Button>
-
+                <Button onClick={() => formRef.current.submitForm()}>
+                    Salveaza
+                </Button>
             </DialogActions>
         </Dialog>
     );
-}
+};
