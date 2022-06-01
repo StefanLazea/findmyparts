@@ -1,6 +1,5 @@
+/* eslint-disable prettier/prettier */
 import React, { useState, useRef } from 'react';
-
-import { useGoogleApi } from 'react-gapi';
 
 import _ from 'lodash';
 import axios from 'axios';
@@ -26,6 +25,7 @@ import { DetectionDataResult } from './DetectionDataResult';
 import { BACKEND_PROPERTY_VALUE } from 'constants/backend-accessors';
 import { LABELS } from 'constants/labels';
 import styles from './AddDocumentDialog.module.scss';
+import { useEffect } from 'react';
 
 export const AddDocumentDialog = (props) => {
     //todo add carId/userId to context or redux
@@ -37,13 +37,6 @@ export const AddDocumentDialog = (props) => {
     const [uploadedFile, setUploadFile] = useState('');
     const [type, setType] = useState(BACKEND_PROPERTY_VALUE.RCA);
     const [detectionResult, setDetectionResult] = useState({});
-
-    const gapi = useGoogleApi({
-        discoveryDocs: [
-            'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'
-        ],
-        scopes: ['https://www.googleapis.com/auth/calendar.events']
-    });
 
     const handleUpload = () => {
         inputRef.current?.click();
@@ -90,69 +83,28 @@ export const AddDocumentDialog = (props) => {
         setUploadFile(fileUploaded);
     };
 
-    const addEventToCalendar = async () => {
-        console.log('here');
-        const request = {
-            calendarId: 'primary',
-            timeMin: new Date().toISOString(),
-            showDeleted: false,
-            singleEvents: true,
-            maxResults: 10,
-            orderBy: 'startTime'
-        };
-        console.log(gapi.client.calendar.events);
-        const resp = await gapi.client.calendar.events.list(request);
-        console.log(resp);
-        const googleEvent = {
-            summary: 'Aveti de reinoit polita RCA',
-            start: {
-                dateTime: '2022-06-01T16:10:00',
-                timeZone: 'Etc/GMT+03:00'
-            },
-            end: {
-                dateTime: '2022-06-01T17:00:00',
-                timeZone: 'Etc/GMT+03:00'
-            },
-            reminders: {
-                useDefault: false,
-                overrides: [
-                    { method: 'email', minutes: 24 * 60 },
-                    { method: 'email', minutes: 24 * 60 * 7 },
-                    { method: 'email', minutes: 10 },
-                    { method: 'popup', minutes: 10 }
-                ]
-            }
-        };
-        const createEvent = await gapi.client.calendar.events.insert({
-            calendarId: 'primary',
-            resource: googleEvent
-        });
-        console.i;
-        if (!_.isNil(createEvent) && _.get(createEvent, 'status') === 200) {
-            toast.success('Ati adaugat un eveniment nou!', {
+    const triggerToastDisplay = () =>
+        toast.info(
+            `Alege un tip de document, incarca-l si apasa pe detectarea textului.
+         La final, verifica corectitudinea datelor si salveaza datele. Se va seta
+         automat in calendarul tau Google un nou eveniment.`,
+            {
                 position: 'top-right',
-                autoClose: 5000,
+                autoClose: 8000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,
                 progress: undefined
-            });
-        }
-        console.log(createEvent);
-    };
+            }
+        );
+
+    useEffect(() => {
+        triggerToastDisplay();
+    }, []);
+
     const DialogFooterComponent = () => (
         <DialogActions>
-            <Fab
-                variant="extended"
-                size="medium"
-                color="secondary"
-                aria-label="add"
-                disabled={_.isEmpty(detectionResult)}
-                onClick={addEventToCalendar}>
-                <NavigationIcon sx={{ mr: 1 }} />
-                {LABELS.addToCalendar}
-            </Fab>
             <Fab
                 variant="extended"
                 size="medium"
@@ -181,6 +133,9 @@ export const AddDocumentDialog = (props) => {
             description={
                 'Adauga documentul tau. Incepe experienta prin alegerea tipului'
             }
+            onClickInfo={() => {
+                triggerToastDisplay();
+            }}
             footerActions={<DialogFooterComponent />}>
             <Grid
                 container
