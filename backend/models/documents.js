@@ -9,5 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     // fromDate: DataTypes.DATE,
     expirationDate: DataTypes.DATE,
     price: DataTypes.STRING,
+    // TODO
+    // eventLink: DataTypes.STRING,
   });
 };

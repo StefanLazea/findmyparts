@@ -4,7 +4,7 @@ import { useGlobalContext } from 'global-context';
 
 import axios from 'axios';
 
-import { IconButton } from '@mui/material';
+import { IconButton, Tooltip } from '@mui/material';
 import { CarRepair, DocumentScanner, EditRoad, Add } from '@mui/icons-material';
 import EditIcon from '@mui/icons-material/Edit';
 
@@ -14,6 +14,7 @@ import { CarDetails } from '../components/car-details-editable/CarDetails';
 import { PageContainer } from 'components/page-container/PageContainer';
 
 import styles from './CarProfile.module.scss';
+import { DocumentDetailDialog } from '../components/document-detail-dialog/DocumentDetailDialog';
 
 export const CarProfile = ({ ...props }) => {
     const { state } = useLocation();
@@ -28,7 +29,7 @@ export const CarProfile = ({ ...props }) => {
     const [triggerRender, setTriggerRender] = useState(false);
     const [editMode, setEditMode] = useState(false);
     const [selectedCar, setSelectedCar] = useState(state?.selectedCar);
-
+    const [openDocDialog, setDocDialogOpen] = useState(false);
     const stepsConfig = [
         {
             label: 'ITP',
@@ -36,11 +37,30 @@ export const CarProfile = ({ ...props }) => {
             expired: true,
             tooltipData: {
                 expirationData: '27/10/2022',
-                startDate: '26/10/2021'
+                startDate: '26/10/2021',
+                eventLink: 'https://calendar.google.com'
             }
         },
-        { label: 'RCA', icon: <DocumentScanner />, expired: false },
-        { label: 'Rovigneta', icon: <EditRoad />, expired: false }
+        {
+            label: 'RCA',
+            icon: <DocumentScanner />,
+            expired: false,
+            tooltipData: {
+                expirationData: '27/10/2022',
+                startDate: '26/10/2021',
+                eventLink: 'https://calendar.google.com'
+            }
+        },
+        {
+            label: 'Rovigneta',
+            icon: <EditRoad />,
+            expired: false,
+            tooltipData: {
+                expirationData: '27/10/2022',
+                startDate: '26/10/2021',
+                eventLink: 'https://calendar.google.com'
+            }
+        }
     ];
 
     useEffect(() => {
@@ -100,9 +120,12 @@ export const CarProfile = ({ ...props }) => {
     return (
         <PageContainer>
             <div className={styles.header}>
-                <span className={styles.title}>
-                    Masina ta, {selectedCar?.numberPlate}
-                </span>
+                <Tooltip title={'HENLO'}>
+                    <span className={styles.title}>
+                        Masina ta, {selectedCar?.numberPlate}
+                    </span>
+                </Tooltip>
+
                 <IconButton
                     edge="start"
                     color="inherit"
@@ -128,7 +151,11 @@ export const CarProfile = ({ ...props }) => {
                     <CustomStepper
                         currentStep={step}
                         steps={stepsConfig}
-                        onStepClick={(item) => console.log(item)}
+                        displayTooltip={true}
+                        tooltipHeader={'HELLLO'}
+                        onStepClick={(item) =>
+                            setDocDialogOpen((prev) => !prev)
+                        }
                     />
                 </div>
             </div>
@@ -140,6 +167,12 @@ export const CarProfile = ({ ...props }) => {
                     reRender={() => setTriggerRender((prev) => !prev)}
                     carId={state?.selectedCar?.id}
                     car={state?.selectedCar}
+                />
+            )}
+            {openDocDialog && (
+                <DocumentDetailDialog
+                    open={openDocDialog}
+                    setOpen={setDocDialogOpen}
                 />
             )}
         </PageContainer>

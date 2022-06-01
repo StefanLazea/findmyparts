@@ -2,7 +2,6 @@ import * as React from 'react';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
-import { Tooltip } from '@mui/material';
 
 import { ColorlibStepIcon, ColorlibConnector } from './ColorlibStepIcon.jsx';
 
@@ -10,10 +9,7 @@ const CustomStepper = ({
     currentStep = 0,
     steps = [],
     onStepClick = () => {},
-    stepperWidth = '600px',
-    // tooltip = false,
-    tooltipHeader = 'N/a',
-    ...props
+    stepperWidth = '600px'
 }) => {
     console.log({ steps });
     const StepLabelItem = ({ item }) => {
@@ -29,13 +25,6 @@ const CustomStepper = ({
         );
     };
     const _getStepItem = (item) => {
-        if (props.tooltip) {
-            return (
-                <Tooltip title={tooltipHeader}>
-                    <StepLabelItem item={item} />
-                </Tooltip>
-            );
-        }
         return <StepLabelItem item={item} />;
     };
     return (
