@@ -12,7 +12,7 @@ import {
 import _ from 'lodash';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-
+import DocumentIcon from 'assets/icons/DocumentIcon';
 import { ScreenDialog } from 'components/screen-dialog/ScreenDialog.jsx';
 import { DetectionDataResult } from './DetectionDataResult';
 
@@ -29,7 +29,7 @@ export const AddDocumentDialog = (props) => {
     const [uploadedFile, setUploadFile] = useState('');
     const [type, setType] = useState(BACKEND_PROPERTY_VALUE.RCA);
     const [detectionResult, setDetectionResult] = useState({});
-
+    console.log(imgSrc);
     const handleUpload = () => {
         inputRef.current?.click();
     };
@@ -177,12 +177,15 @@ export const AddDocumentDialog = (props) => {
                             sm={4}
                             md={8}
                             className={styles.imageContainer}>
-                            <img
+                            <div style={{ height: '300px', width: '300px' }}>
+                                <DocumentIcon />
+                            </div>
+                            {/* <img
                                 src={imgSrc}
                                 alt={'to update'}
                                 className={styles.img}
                                 loading="lazy"
-                            />
+                            /> */}
                         </Grid>
                     </Grid>
                 </Grid>
