@@ -25,7 +25,7 @@ export const AddDocumentDialog = (props) => {
     const handleClose = () => setOpen(false);
     const formRef = useRef();
     const inputRef = useRef();
-    const [imgSrc, setImgSrc] = useState('https://via.placeholder.com/300');
+    const [imgSrc, setImgSrc] = useState('');
     const [uploadedFile, setUploadFile] = useState('');
     const [type, setType] = useState(BACKEND_PROPERTY_VALUE.RCA);
     const [detectionResult, setDetectionResult] = useState({});
@@ -37,7 +37,7 @@ export const AddDocumentDialog = (props) => {
     const sendToDetect = () => {
         const formData = new FormData();
         formData.append('photo', uploadedFile);
-        formData.append('documentType', 'RCA');
+        formData.append('documentType', type);
 
         axios
             .post('/google/detect-image', formData)
@@ -177,15 +177,19 @@ export const AddDocumentDialog = (props) => {
                             sm={4}
                             md={8}
                             className={styles.imageContainer}>
-                            <div style={{ height: '300px', width: '300px' }}>
-                                <DocumentIcon />
-                            </div>
-                            {/* <img
-                                src={imgSrc}
-                                alt={'to update'}
-                                className={styles.img}
-                                loading="lazy"
-                            /> */}
+                            {imgSrc !== '' ? (
+                                <img
+                                    src={imgSrc}
+                                    alt={'to update'}
+                                    className={styles.img}
+                                    loading="lazy"
+                                />
+                            ) : (
+                                <div
+                                    style={{ height: '300px', width: '300px' }}>
+                                    <DocumentIcon />
+                                </div>
+                            )}
                         </Grid>
                     </Grid>
                 </Grid>
