@@ -29,7 +29,7 @@ import { useEffect } from 'react';
 
 export const AddDocumentDialog = (props) => {
     //todo add carId/userId to context or redux
-    const { open, setOpen, carId, reRender } = props;
+    const { open, setOpen, carId, car, reRender } = props;
     const handleClose = () => setOpen(false);
     const formRef = useRef();
     const inputRef = useRef();
@@ -255,6 +255,7 @@ export const AddDocumentDialog = (props) => {
                         detectionData={detectionResult}
                         formRef={formRef}
                         carId={carId}
+                        car={car}
                         reRender={reRender}
                         closeScreen={handleClose}
                     />

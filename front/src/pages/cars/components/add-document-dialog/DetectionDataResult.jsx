@@ -18,7 +18,7 @@ import moment from 'moment';
 const ONE_DAY = 86400000;
 
 export const DetectionDataResult = (props) => {
-    const { type, carId, detectionData, formRef, reRender, closeScreen } =
+    const { type, carId, car, detectionData, formRef, reRender, closeScreen } =
         props;
 
     const gapi = useGoogleApi({
@@ -42,7 +42,7 @@ export const DetectionDataResult = (props) => {
         const resp = await gapi.client.calendar.events.list(request);
         console.log(resp);
         const googleEvent = {
-            summary: 'Aveti de reinoit polita RCA',
+            summary: `gasestePiesa.online: ${car.numberPlate} Aveti de reinnoit ${type}`,
             start: {
                 dateTime: moment(expDate).format(),
                 timeZone: 'Etc/GMT+03:00'

@@ -139,6 +139,7 @@ export const CarProfile = ({ ...props }) => {
                     setOpen={setModalOpen}
                     reRender={() => setTriggerRender((prev) => !prev)}
                     carId={state?.selectedCar?.id}
+                    car={state?.selectedCar}
                 />
             )}
         </PageContainer>
