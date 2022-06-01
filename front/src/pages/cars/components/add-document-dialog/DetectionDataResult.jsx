@@ -95,6 +95,7 @@ export const DetectionDataResult = (props) => {
                                 <DatePicker
                                     label="Data expirare"
                                     value={values.expirationDate}
+                                    format="dd/MM/yyyy"
                                     disabled={_.isEmpty(detectionData)}
                                     onChange={(newValue) => {
                                         setFieldValue(

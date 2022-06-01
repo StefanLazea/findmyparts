@@ -12,6 +12,7 @@ import { Login } from './pages/auth/Login';
 import { CarProfile } from './pages/cars/car-profile/CarProfile';
 import { PartProfile } from './pages/parts/part-profile/PartProfile';
 import { NavigationBar } from './components/navigation-bar/NavigationBar';
+import { GoogleApiProvider } from 'react-gapi';
 
 import { GlobalContextProvide } from './global-context';
 
@@ -63,19 +64,28 @@ function App() {
                     {!isAuth && <Navigate to="/login" />}
 
                     {/* DO NOT USE component like bellow in a Switch statement */}
-                    <Routes>
-                        {/* non private routes */}
-                        <Route path="/home" exact element={<Home />} />
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/register" element={<Register />} />
-                        <Route path="/cars" element={<Cars />} />
-                        <Route path="/car-profile" element={<CarProfile />} />
+                    <GoogleApiProvider
+                        clientId={process.env.REACT_APP_GOOGLE_ID}>
+                        <Routes>
+                            {/* non private routes */}
+                            <Route path="/home" exact element={<Home />} />
+                            <Route path="/login" element={<Login />} />
+                            <Route path="/register" element={<Register />} />
+                            <Route path="/cars" element={<Cars />} />
+                            <Route
+                                path="/car-profile"
+                                element={<CarProfile />}
+                            />
 
-                        <Route path="/parts" element={<Parts />} />
-                        <Route path="/part-profile" element={<PartProfile />} />
+                            <Route path="/parts" element={<Parts />} />
+                            <Route
+                                path="/part-profile"
+                                element={<PartProfile />}
+                            />
 
-                        {/* TODO: private routes */}
-                    </Routes>
+                            {/* TODO: private routes */}
+                        </Routes>
+                    </GoogleApiProvider>
                 </div>
             </ThemeProvider>
         </GlobalContextProvide>
