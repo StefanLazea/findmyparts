@@ -15,6 +15,7 @@ import { PageContainer } from 'components/page-container/PageContainer';
 
 import styles from './CarProfile.module.scss';
 import { DocumentDetailDialog } from '../components/document-detail-dialog/DocumentDetailDialog';
+import _ from 'lodash';
 
 export const CarProfile = ({ ...props }) => {
     const { state } = useLocation();
@@ -29,6 +30,7 @@ export const CarProfile = ({ ...props }) => {
     const [triggerRender, setTriggerRender] = useState(false);
     const [editMode, setEditMode] = useState(false);
     const [selectedCar, setSelectedCar] = useState(state?.selectedCar);
+    const [clickedDocument, setClickedDocument] = useState({});
     const [openDocDialog, setDocDialogOpen] = useState(false);
     const stepsConfig = [
         {
@@ -117,6 +119,18 @@ export const CarProfile = ({ ...props }) => {
             setSelectedCar(res.data);
         });
     };
+    const TooltipCustom = () => {
+        return (
+            <div>
+                <IconButton edge="start" color="inherit" aria-label="close">
+                    <EditIcon />
+                </IconButton>
+                <IconButton edge="start" color="inherit" aria-label="close">
+                    <EditIcon />
+                </IconButton>
+            </div>
+        );
+    };
     return (
         <PageContainer>
             <div className={styles.header}>
@@ -141,21 +155,25 @@ export const CarProfile = ({ ...props }) => {
                 setEditMode={setEditMode}
             />
             <div className={styles.carProfileStepper}>
-                <IconButton
-                    color="primary"
-                    aria-label="grid view"
-                    onClick={() => setModalOpen(true)}>
-                    <Add />
-                </IconButton>
+                <div className={styles.addButton}>
+                    <IconButton
+                        color="primary"
+                        aria-label="grid view"
+                        onClick={() => setModalOpen(true)}>
+                        <Add />
+                    </IconButton>
+                </div>
+
                 <div className={styles.stepContainer}>
                     <CustomStepper
                         currentStep={step}
                         steps={stepsConfig}
                         displayTooltip={true}
                         tooltipHeader={'HELLLO'}
-                        onStepClick={(item) =>
-                            setDocDialogOpen((prev) => !prev)
-                        }
+                        onStepClick={(item) => {
+                            setClickedDocument(item);
+                            setDocDialogOpen(true);
+                        }}
                     />
                 </div>
             </div>
@@ -169,8 +187,9 @@ export const CarProfile = ({ ...props }) => {
                     car={state?.selectedCar}
                 />
             )}
-            {openDocDialog && (
+            {!_.isEmpty(clickedDocument) && (
                 <DocumentDetailDialog
+                    documentDetail={clickedDocument}
                     open={openDocDialog}
                     setOpen={setDocDialogOpen}
                 />
