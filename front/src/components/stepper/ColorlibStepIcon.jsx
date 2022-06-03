@@ -64,6 +64,7 @@ export const ColorlibStepIcon = (props) => {
                 active,
                 expired
             }}
+            onClick={props.onClick}
             className={className}>
             {completed && props.showCheck ? <Check /> : props.icon}
         </ColorlibStepIconRoot>

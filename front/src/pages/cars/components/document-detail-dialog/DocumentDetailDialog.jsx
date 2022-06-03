@@ -1,13 +1,13 @@
 import React from 'react';
+import moment from 'moment';
 import {
     DialogTitle,
     Dialog,
-    Fab,
     DialogContent,
     DialogActions,
-    Button
+    Button,
+    Typography
 } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
 
 export const DocumentDetailDialog = ({ documentDetail, open, setOpen }) => {
     console.log('DIALOG', documentDetail);
@@ -16,10 +16,15 @@ export const DocumentDetailDialog = ({ documentDetail, open, setOpen }) => {
             <DialogTitle>
                 Detalii legate despre {documentDetail.label}
             </DialogTitle>
-            <DialogContent></DialogContent>
+            <DialogContent>
+                <Typography variant="h5" component="h5">
+                    Documentul expira la data{' '}
+                    {moment(documentDetail.documentData.expirationData).format(
+                        'DD-MM-YYYY'
+                    )}
+                </Typography>
+            </DialogContent>
             <DialogActions>
-                <Button onClick={() => {}}>Stergere</Button>
-
                 <Button onClick={() => {}}>Anulare</Button>
                 <Button onClick={() => {}}>Salveaza</Button>
             </DialogActions>
