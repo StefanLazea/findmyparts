@@ -28,7 +28,6 @@ export const CarDetails = ({ carData, ...props }) => {
         axios.put(`/cars/${carData.id}`, values).then((res) => {
             socket.emit('updateCar', carData.id);
             setDisableFields(true);
-            console.log(res);
         });
     };
     return (
@@ -46,7 +45,6 @@ export const CarDetails = ({ carData, ...props }) => {
             }}
             // validationSchema={validationSchema}
             onSubmit={(values) => {
-                console.log('BINGO', values);
                 updateCar(values);
             }}>
             {({ values, handleChange, setFieldValue }) => (
@@ -60,6 +58,9 @@ export const CarDetails = ({ carData, ...props }) => {
                             xs={4}
                             sm={4}
                             md={4}
+                            align="center"
+                            justify="center"
+                            alignItems="center"
                             className={styles.imageElement}>
                             {/* <img
                                 src={_.get(values, "carData.image", "https://via.placeholder.com/300")}

@@ -1,8 +1,11 @@
 import * as React from 'react';
+import _ from 'lodash';
+
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
-
+import { Tooltip } from '@mui/material';
+import { CustomTooltipMessage } from '../tooltip-message/CustomTooltipMessage';
 import { ColorlibStepIcon, ColorlibConnector } from './ColorlibStepIcon.jsx';
 
 const CustomStepper = ({
@@ -11,12 +14,16 @@ const CustomStepper = ({
     onStepClick = () => {},
     stepperWidth = '600px'
 }) => {
-    console.log({ steps });
     const StepLabelItem = ({ item }) => {
         return (
             <StepLabel
                 StepIconComponent={(props) => {
-                    const stepLabelProps = { ...props, icon: item.icon };
+                    const stepLabelProps = {
+                        ...props,
+                        icon: item.icon,
+                        //if item is expired and data comes from backedn
+                        expired: item.expired && item.exists
+                    };
                     return <ColorlibStepIcon {...stepLabelProps} />;
                 }}
                 onClick={() => onStepClick(item)}>
@@ -24,9 +31,7 @@ const CustomStepper = ({
             </StepLabel>
         );
     };
-    const _getStepItem = (item) => {
-        return <StepLabelItem item={item} />;
-    };
+
     return (
         <Stepper
             sx={{ width: stepperWidth }}
@@ -34,7 +39,13 @@ const CustomStepper = ({
             activeStep={currentStep}
             connector={<ColorlibConnector />}>
             {steps.map((item) => (
-                <Step key={item.label}>{_getStepItem(item)}</Step>
+                <Tooltip
+                    title={<CustomTooltipMessage item={item} />}
+                    key={item.label}>
+                    <Step key={item.label}>
+                        <StepLabelItem item={item} />
+                    </Step>
+                </Tooltip>
             ))}
         </Stepper>
     );

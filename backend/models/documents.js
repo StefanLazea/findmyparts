@@ -6,10 +6,10 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
     },
     name: DataTypes.STRING,
-    // fromDate: DataTypes.DATE,
+    fromDate: DataTypes.DATE,
     expirationDate: DataTypes.DATE,
     price: DataTypes.STRING,
     // TODO
-    // eventLink: DataTypes.STRING,
+    eventLink: DataTypes.STRING,
   });
 };

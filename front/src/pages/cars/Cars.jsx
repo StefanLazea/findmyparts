@@ -5,7 +5,7 @@ import { useGlobalContext } from 'global-context';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-import { Grid, IconButton } from '@mui/material';
+import { Grid, IconButton, Tooltip } from '@mui/material';
 import { Add } from '@mui/icons-material';
 
 import { CustomCard } from './components/custom-card/CustomCard';
@@ -56,13 +56,14 @@ export const Cars = () => {
     return (
         <PageContainer>
             {/* todo spacing right incorrect */}
-            <IconButton
-                color="primary"
-                aria-label="grid view"
-                onClick={() => setModalOpen(true)}>
-                <Add />
-            </IconButton>
-
+            <Tooltip title="Adauga o masina">
+                <IconButton
+                    color="primary"
+                    aria-label="grid view"
+                    onClick={() => setModalOpen(true)}>
+                    <Add />
+                </IconButton>
+            </Tooltip>
             <Grid
                 container
                 rowSpacing={4}

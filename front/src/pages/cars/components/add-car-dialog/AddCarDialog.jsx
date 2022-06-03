@@ -21,6 +21,7 @@ import {
 } from '@mui/material';
 
 import { BODY_STYLE_VARIANTS, FUEL_VARIANTS } from '../mock.js';
+import styles from './AddCarDialog.module.scss';
 
 export const AddCarDialog = (props) => {
     const { open, setOpen } = props;
@@ -194,7 +195,7 @@ export const AddCarDialog = (props) => {
                     )}
                 </Formik>
             </DialogContent>
-            <DialogActions>
+            <DialogActions classes={{ root: styles.actionsContainer }}>
                 <Button onClick={handleClose}>Anulare</Button>
                 <Button onClick={() => formRef.current.submitForm()}>
                     Salveaza

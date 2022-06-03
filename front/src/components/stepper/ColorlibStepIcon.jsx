@@ -1,36 +1,38 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-
-import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector';
+import _ from 'lodash';
+import StepConnector, {
+    stepConnectorClasses
+} from '@mui/material/StepConnector';
 import { styled } from '@mui/material/styles';
 import Check from '@mui/icons-material/Check';
 
 //connection line
-export const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
+export const ColorlibConnector = styled(StepConnector)(({ expired }) => ({
     [`&.${stepConnectorClasses.alternativeLabel}`]: {
-        top: 22,
+        top: 22
     },
     [`&.${stepConnectorClasses.active}`]: {
         [`& .${stepConnectorClasses.line}`]: {
             backgroundColor: '#6FF394'
-        },
+        }
     },
     [`&.${stepConnectorClasses.completed}`]: {
         [`& .${stepConnectorClasses.line}`]: {
             backgroundColor: '#6FF394'
-        },
+        }
     },
     [`& .${stepConnectorClasses.line}`]: {
         height: 3,
         border: 0,
-        backgroundColor:
-            theme.palette.mode === 'dark' ? theme.palette.grey[800] : '#eaeaf0',
-        borderRadius: 1,
-    },
+        backgroundColor: expired ? '#D96C06' : '#eaeaf0',
+        borderRadius: 1
+    }
 }));
 
 const ColorlibStepIconRoot = styled('div')(({ theme, ownerState }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#ccc',
+    backgroundColor:
+        theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#ccc',
     zIndex: 1,
     color: '#fff',
     width: 50,
@@ -41,22 +43,32 @@ const ColorlibStepIconRoot = styled('div')(({ theme, ownerState }) => ({
     alignItems: 'center',
     ...(ownerState.active && {
         backgroundColor: '#19AC43',
-        boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
+        boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)'
     }),
     ...(ownerState.completed && {
         backgroundColor: '#19AC43'
     }),
+    ...(ownerState.expired && {
+        backgroundColor: '#D96C06'
+    })
 }));
 
 export const ColorlibStepIcon = (props) => {
-    const { active, completed, className } = props;
-    console.log(completed)
+    const { active, completed, expired, className } = props;
+
+    console.log({ active, completed, props });
     return (
-        <ColorlibStepIconRoot ownerState={{ completed, active }} className={className}>
-            {completed && props.showCheck ? < Check /> : props.icon}
+        <ColorlibStepIconRoot
+            ownerState={{
+                completed,
+                active,
+                expired
+            }}
+            className={className}>
+            {completed && props.showCheck ? <Check /> : props.icon}
         </ColorlibStepIconRoot>
     );
-}
+};
 
 ColorlibStepIcon.propTypes = {
     /**
@@ -75,12 +87,12 @@ ColorlibStepIcon.propTypes = {
      */
     icon: PropTypes.node,
     /**
-    * Show check as icon if step is completed
-    * @default false
-    */
-    showCheck: PropTypes.bool,
+     * Show check as icon if step is completed
+     * @default false
+     */
+    showCheck: PropTypes.bool
 };
 
 ColorlibStepIcon.defaultProps = {
     showCheck: false
-}
+};

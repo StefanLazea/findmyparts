@@ -28,6 +28,7 @@ export const ScreenDialog = (props) => {
             fullScreen
             open={open}
             onClose={handleClose}
+            maxWidth="xl"
             TransitionComponent={Transition}>
             <AppBar sx={{ position: 'relative' }}>
                 <Toolbar>

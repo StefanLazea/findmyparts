@@ -29,7 +29,6 @@ export const DetectionDataResult = (props) => {
     });
     const addEventToCalendar = async (fromDate, expDate) => {
         console.log(fromDate, expDate);
-        console.log('here');
         const request = {
             calendarId: 'primary',
             timeMin: new Date().toISOString(),
@@ -38,7 +37,7 @@ export const DetectionDataResult = (props) => {
             maxResults: 10,
             orderBy: 'startTime'
         };
-        console.log(gapi.client.calendar.events);
+        // console.log(gapi.client.calendar.events);
         const resp = await gapi.client.calendar.events.list(request);
         console.log(resp);
         const googleEvent = {
@@ -66,6 +65,7 @@ export const DetectionDataResult = (props) => {
             resource: googleEvent
         });
         if (!_.isNil(createEvent) && _.get(createEvent, 'status') === 200) {
+            console.log(createEvent);
             toast.success('Ati adaugat un eveniment nou!', {
                 position: 'top-right',
                 autoClose: 5000,
@@ -75,8 +75,9 @@ export const DetectionDataResult = (props) => {
                 draggable: true,
                 progress: undefined
             });
+            return _.get(createEvent, 'result.htmlLink');
         }
-        console.log(createEvent);
+        return '';
     };
 
     const saveDocument = (values) => {
@@ -85,7 +86,7 @@ export const DetectionDataResult = (props) => {
             .post(`/documents/add/${values.name}`, values)
             .then((res) => {
                 console.log(res.data);
-                closeScreen();
+                // closeScreen();
                 reRender();
             })
             .catch((err) => {
@@ -111,11 +112,21 @@ export const DetectionDataResult = (props) => {
                 expirationDate: detectionData?.expirationDate
             }}
             // validationSchema={validationSchema}
-            onSubmit={(values) => {
-                addEventToCalendar(values.fromDate, values.expirationDate);
-
+            onSubmit={async (values) => {
+                const eventLink = await addEventToCalendar(
+                    values.fromDate,
+                    values.expirationDate
+                );
                 //TODO get link from above and add to document model
-                const payload = { ...values, carId, name: type };
+                const payload = {
+                    ...values,
+                    ...(values.fromDate === '' && {
+                        fromDate: new Date().getTime()
+                    }),
+                    carId,
+                    name: type,
+                    eventLink: eventLink
+                };
                 saveDocument(payload);
             }}>
             {({ values, handleChange, setFieldValue }) => (

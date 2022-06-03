@@ -4,7 +4,7 @@ import { useGlobalContext } from 'global-context';
 
 import axios from 'axios';
 
-import { IconButton, Tooltip } from '@mui/material';
+import { IconButton, Tooltip, CircularProgress } from '@mui/material';
 import { CarRepair, DocumentScanner, EditRoad, Add } from '@mui/icons-material';
 import EditIcon from '@mui/icons-material/Edit';
 
@@ -17,57 +17,91 @@ import styles from './CarProfile.module.scss';
 import { DocumentDetailDialog } from '../components/document-detail-dialog/DocumentDetailDialog';
 import _ from 'lodash';
 
+const DEFAULT_DOC_DATA = [
+    {
+        label: 'ITP',
+        icon: <CarRepair />,
+        expired: true,
+        exists: false
+    },
+    {
+        label: 'RCA',
+        icon: <DocumentScanner />,
+        expired: true,
+        exists: false
+    },
+    {
+        label: 'Rovigneta',
+        icon: <EditRoad />,
+        expired: true,
+        exists: false
+    }
+];
+
+const DOCUMENTS_ICONS = {
+    ITP: <CarRepair />,
+    RCA: <DocumentScanner />,
+    Rovigneta: <EditRoad />
+};
+
 export const CarProfile = ({ ...props }) => {
     const { state } = useLocation();
     const {
         state: { socket }
     } = useGlobalContext();
 
-    console.log(props);
     const [step, setStep] = useState(-1);
-    const [, setDocuments] = useState({});
     const [isModalOpen, setModalOpen] = useState(false);
     const [triggerRender, setTriggerRender] = useState(false);
     const [editMode, setEditMode] = useState(false);
     const [selectedCar, setSelectedCar] = useState(state?.selectedCar);
     const [clickedDocument, setClickedDocument] = useState({});
     const [openDocDialog, setDocDialogOpen] = useState(false);
-    const stepsConfig = [
-        {
-            label: 'ITP',
-            icon: <CarRepair />,
-            expired: true,
-            tooltipData: {
-                expirationData: '27/10/2022',
-                startDate: '26/10/2021',
-                eventLink: 'https://calendar.google.com'
-            }
-        },
-        {
-            label: 'RCA',
-            icon: <DocumentScanner />,
-            expired: false,
-            tooltipData: {
-                expirationData: '27/10/2022',
-                startDate: '26/10/2021',
-                eventLink: 'https://calendar.google.com'
-            }
-        },
-        {
-            label: 'Rovigneta',
-            icon: <EditRoad />,
-            expired: false,
-            tooltipData: {
-                expirationData: '27/10/2022',
-                startDate: '26/10/2021',
-                eventLink: 'https://calendar.google.com'
+    const [stepsInfo, setStepsInfo] = useState(DEFAULT_DOC_DATA);
+    const [isLoading, setIsLoading] = useState(true);
+
+    const setStepperProgress = (
+        isITPAvailable,
+        isRcaAvailable,
+        isRovAvailable
+    ) => {
+        if (isITPAvailable) {
+            setStep((prev) => {
+                // console.log('prev', prev);
+                return prev + 1;
+            });
+            if (isRcaAvailable) {
+                setStep((prev) => prev + 1);
+                if (isRovAvailable) {
+                    setStep((prev) => prev + 1);
+                }
             }
         }
-    ];
+    };
+
+    const getAllDocuments = (response) => {
+        const docsResponse = response.map((item) => {
+            return {
+                documentData: { ...item },
+                icon: DOCUMENTS_ICONS[item.name],
+                label: item.name,
+                expired: item.expired,
+                //not the best approach
+                exists: true
+            };
+        });
+        const allSteps = stepsInfo.map((stepInfo) => {
+            const found = docsResponse.filter(
+                (item) => item.label === stepInfo.label
+            );
+            return found.length === 0 ? stepInfo : found[0];
+        });
+        return allSteps;
+    };
 
     useEffect(() => {
         const handler = (car) => {
-            console.log('client side am primit', car);
+            // console.log('client side am primit', car);
             setSelectedCar(car);
         };
         socket.on('carUpdated', handler);
@@ -77,34 +111,19 @@ export const CarProfile = ({ ...props }) => {
         axios.get(`/documents/car/${state?.selectedCar?.id}`).then((res) => {
             const response = res.data;
             const isRcaAvailable = response.some(
-                (item) => item.name === 'RCA' && !item.isExpired
+                (item) => item.name === 'RCA' && !item.expired
             );
             const isITPAvailable = response.some(
-                (item) => item.name === 'ITP' && !item.isExpired
+                (item) => item.name === 'ITP' && !item.expired
             );
             const isRovAvailable = response.some(
-                (item) => item.name === 'ROVIGNETA' && !item.isExpired
+                (item) => item.name === 'ROVIGNETA' && !item.expired
             );
             //refactor
-            if (isITPAvailable) {
-                setStep((prev) => {
-                    console.log('prev', prev);
-                    return prev + 1;
-                });
-                if (isRcaAvailable) {
-                    setStep((prev) => prev + 1);
-                    if (isRovAvailable) {
-                        console.log('here');
-                        setStep((prev) => prev + 1);
-                    }
-                }
-            }
-            setDocuments((prev) => {
-                return {
-                    ...prev,
-                    ...{ isRcaAvailable, isITPAvailable, isRovAvailable }
-                };
-            });
+            setStepperProgress(isITPAvailable, isRcaAvailable, isRovAvailable);
+            setStepsInfo(getAllDocuments(res.data));
+            // setTimeout(() => setIsLoading(false), 5000);
+            setIsLoading(false);
         });
         return () => setStep(-1);
     }, [triggerRender]);
@@ -115,38 +134,26 @@ export const CarProfile = ({ ...props }) => {
 
     const getCarDetails = () => {
         axios.get(`/cars/${state?.selectedCar?.id}`).then((res) => {
-            console.log(res);
             setSelectedCar(res.data);
         });
     };
-    const TooltipCustom = () => {
-        return (
-            <div>
-                <IconButton edge="start" color="inherit" aria-label="close">
-                    <EditIcon />
-                </IconButton>
-                <IconButton edge="start" color="inherit" aria-label="close">
-                    <EditIcon />
-                </IconButton>
-            </div>
-        );
-    };
+
     return (
         <PageContainer>
             <div className={styles.header}>
-                <Tooltip title={'HENLO'}>
-                    <span className={styles.title}>
-                        Masina ta, {selectedCar?.numberPlate}
-                    </span>
-                </Tooltip>
+                <span className={styles.title}>
+                    Masina ta, {selectedCar?.numberPlate}
+                </span>
 
-                <IconButton
-                    edge="start"
-                    color="inherit"
-                    aria-label="close"
-                    onClick={() => setEditMode((prev) => !prev)}>
-                    <EditIcon />
-                </IconButton>
+                <Tooltip title={'Editeaza informatiile despre masina ta.'}>
+                    <IconButton
+                        edge="start"
+                        color="inherit"
+                        aria-label="close"
+                        onClick={() => setEditMode((prev) => !prev)}>
+                        <EditIcon />
+                    </IconButton>
+                </Tooltip>
             </div>
 
             <CarDetails
@@ -156,25 +163,31 @@ export const CarProfile = ({ ...props }) => {
             />
             <div className={styles.carProfileStepper}>
                 <div className={styles.addButton}>
-                    <IconButton
-                        color="primary"
-                        aria-label="grid view"
-                        onClick={() => setModalOpen(true)}>
-                        <Add />
-                    </IconButton>
+                    <Tooltip title={'Adauga un nou document'}>
+                        <IconButton
+                            edge="start"
+                            color="inherit"
+                            onClick={() => setModalOpen(true)}>
+                            <Add />
+                        </IconButton>
+                    </Tooltip>
                 </div>
 
                 <div className={styles.stepContainer}>
-                    <CustomStepper
-                        currentStep={step}
-                        steps={stepsConfig}
-                        displayTooltip={true}
-                        tooltipHeader={'HELLLO'}
-                        onStepClick={(item) => {
-                            setClickedDocument(item);
-                            setDocDialogOpen(true);
-                        }}
-                    />
+                    {isLoading ? (
+                        <CircularProgress />
+                    ) : (
+                        <CustomStepper
+                            currentStep={step}
+                            steps={stepsInfo}
+                            displayTooltip={true}
+                            tooltipHeader={'HELLLO'}
+                            onStepClick={(item) => {
+                                setClickedDocument(item);
+                                setDocDialogOpen(true);
+                            }}
+                        />
+                    )}
                 </div>
             </div>
 

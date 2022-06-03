@@ -108,7 +108,6 @@ export const AddDocumentDialog = (props) => {
             <Fab
                 variant="extended"
                 size="medium"
-                color="transparent"
                 aria-label="add"
                 onClick={handleClose}>
                 {LABELS.cancel}
@@ -116,7 +115,6 @@ export const AddDocumentDialog = (props) => {
             <Fab
                 variant="extended"
                 size="medium"
-                color="transparent"
                 aria-label="add"
                 disabled={_.isEmpty(detectionResult)}
                 onClick={() => formRef.current.submitForm()}>

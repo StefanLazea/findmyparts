@@ -15,6 +15,7 @@ import {
     Button,
     TextField
 } from '@mui/material';
+// import styles from './AddPartDialog.module.scss';
 
 export const AddPartDialog = (props) => {
     const { open, setOpen } = props;
