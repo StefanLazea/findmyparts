@@ -2,12 +2,17 @@ import * as React from 'react';
 import moment from 'moment';
 import _ from 'lodash';
 import styles from './CustomTooltipMessage.module.scss';
+import { LABELS } from 'constants/labels';
 
 export const CustomTooltipMessage = ({ item }) => {
     const expirationDate = _.get(item, 'documentData.expirationDate', '');
+    console.log(item);
     return (
         <div className={styles.tooltipContainer}>
-            <span>Expira in {moment(expirationDate).format('DD-MM-YYYY')}</span>
+            <span>
+                {item.expired ? LABELS.expired : LABELS.willExpire}
+                {moment(expirationDate).format('DD-MM-YYYY')}
+            </span>
             <span>Apasa pe icon pentru mai multe informatii.</span>
         </div>
     );

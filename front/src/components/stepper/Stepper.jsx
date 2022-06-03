@@ -72,6 +72,7 @@ const CustomStepper = ({
             {steps.map((item) => (
                 <Tooltip
                     title={<CustomTooltipMessage item={item} />}
+                    enterTouchDelay={0}
                     key={item.label}>
                     <Step key={item.label}>
                         <StepLabelItem

@@ -46,9 +46,6 @@ export const PartProfile = () => {
         return () => socket.off('refreshProfilePage', handler);
     }, []);
 
-    // if (isLoading) {
-    //     return <div>is loading</div>
-    // }
     return (
         <PageContainer classes={{ root: styles.partsContainer }}>
             <div className={styles.partsHeader}>

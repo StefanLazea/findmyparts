@@ -165,7 +165,9 @@ export const CarProfile = () => {
                     Masina ta, {selectedCar?.numberPlate}
                 </span>
 
-                <Tooltip title={'Editeaza informatiile despre masina ta.'}>
+                <Tooltip
+                    title={'Editeaza informatiile despre masina ta.'}
+                    enterTouchDelay={0}>
                     <IconButton
                         edge="start"
                         color="inherit"
@@ -183,7 +185,9 @@ export const CarProfile = () => {
             />
             <div className={styles.carProfileStepper}>
                 <div className={styles.addButton}>
-                    <Tooltip title={'Adauga un nou document'}>
+                    <Tooltip
+                        title={'Adauga un nou document'}
+                        enterTouchDelay={0}>
                         <IconButton
                             edge="start"
                             color="inherit"
@@ -224,13 +228,14 @@ export const CarProfile = () => {
                     car={state?.selectedCar}
                 />
             )}
-            {!_.isEmpty(clickedDocument) && (
-                <DocumentDetailDialog
-                    documentDetail={clickedDocument}
-                    open={openDocDialog}
-                    setOpen={setDocDialogOpen}
-                />
-            )}
+            {!_.isEmpty(clickedDocument) &&
+                !_.isEmpty(clickedDocument.documentData) && (
+                    <DocumentDetailDialog
+                        documentDetail={clickedDocument}
+                        open={openDocDialog}
+                        setOpen={setDocDialogOpen}
+                    />
+                )}
             {confirmDelete && (
                 <ConfirmDialog
                     open={confirmDelete}

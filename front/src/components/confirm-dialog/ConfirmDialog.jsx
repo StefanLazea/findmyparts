@@ -14,7 +14,13 @@ export const ConfirmDialog = ({ open, setOpen, onConfirmClick, message }) => {
             <DialogContent>{message}</DialogContent>
             <DialogActions>
                 <Button onClick={() => setOpen(false)}>Anulare</Button>
-                <Button onClick={onConfirmClick}>Da</Button>
+                <Button
+                    onClick={() => {
+                        onConfirmClick();
+                        setOpen(false);
+                    }}>
+                    Da
+                </Button>
             </DialogActions>
         </Dialog>
     );
