@@ -1,15 +1,25 @@
 const LABELS = {
-    addToCalendar: 'Add to Google Calendar',
+    addToCalendar: 'Adauga in Google Calendar',
+    addPart: 'Adaugare piesa',
+    addPartDescription:
+        'Avem nevoie de urmatoarele detalii pentru a retine piesa pe care o ai.',
     beginDate: 'Data inceput',
-    cancel: 'Cancel',
+    cancel: 'Anulare',
+    detailsAbout: 'Detalii legate despre',
     documentDeleted: 'Document deleted with success',
     expired: 'A expirat pe ',
     expirationDate: 'Data expirare',
-    home: 'Home',
-    save: 'Save',
-    sendToDetect: 'Send to detect',
+    home: 'Acasa',
+    save: 'Salvare',
+    sendToDetect: 'Detecteaza',
+    seeCalendarEvent: 'Vezi evenimentul in google calendar',
     update: 'Update',
-    willExpire: 'Va expira in '
+    updatePart: 'Editare piesa',
+    updatePartDescription:
+        'Avem nevoie de urmatoarele detalii pentru a modifica piesa pe care o ai.',
+    usersWithSamePart: 'Utilizatori care au aceeasi piesa',
+    willExpire: 'Va expira in ',
+    yourPart: 'Piesa ta'
 };
 
 export { LABELS };

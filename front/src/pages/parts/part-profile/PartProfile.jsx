@@ -15,6 +15,7 @@ import { EditPartDialog } from '../components/edit-part/EditPartDialog';
 import EditIcon from '@mui/icons-material/Edit';
 
 import styles from './PartProfile.module.scss';
+import { LABELS } from 'constants/labels';
 
 export const PartProfile = () => {
     const { state } = useLocation();
@@ -52,7 +53,7 @@ export const PartProfile = () => {
                 <div className={styles.profileTitle}>
                     <div className={styles.textContainer}>
                         <span className={styles.title}>
-                            Piesa ta,{' '}
+                            {LABELS.yourPart},{' '}
                             {_.get(selectedPart, 'code', initPart.code)}
                         </span>
                         <span className={styles.subtitle}>
@@ -71,9 +72,7 @@ export const PartProfile = () => {
                 <Divider classes={{ root: styles.partsDivider }} />
             </div>
             <div className={styles.usersPartsList}>
-                <span className={styles.title}>
-                    Utilizatori care au aceeasi piesa
-                </span>
+                <span className={styles.title}>{LABELS.usersWithSamePart}</span>
                 <Grid
                     container
                     rowSpacing={2}

@@ -13,16 +13,6 @@ import DateRangeIcon from '@mui/icons-material/DateRange';
 import _ from 'lodash';
 import { LABELS } from 'constants/labels';
 
-const DETAILS = [
-    {
-        value: '20/10/2020',
-        label: 'Data expirare'
-    },
-    {
-        value: '20/10/2020',
-        label: 'Data expirare'
-    }
-];
 export const DocumentDetailDialog = ({ documentDetail, open, setOpen }) => {
     console.log('DIALOG', documentDetail);
     const [details, setDetails] = useState([]);
@@ -51,7 +41,7 @@ export const DocumentDetailDialog = ({ documentDetail, open, setOpen }) => {
     return (
         <Dialog open={open} onClose={() => setOpen((prev) => !prev)}>
             <DialogTitle>
-                Detalii legate despre {documentDetail.label}
+                {LABELS.detailsAbout} {documentDetail.label}
             </DialogTitle>
             <DialogContent>
                 <Grid
@@ -76,7 +66,7 @@ export const DocumentDetailDialog = ({ documentDetail, open, setOpen }) => {
                         )
                     }>
                     <DateRangeIcon />
-                    Vezi evenimentul in google calendar
+                    {LABELS.seeCalendarEvent}
                 </IconButton>
             </DialogContent>
         </Dialog>

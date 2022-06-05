@@ -16,6 +16,7 @@ import {
 import { Formik, Form } from 'formik';
 import _ from 'lodash';
 import axios from 'axios';
+import { LABELS } from 'constants/labels';
 
 export const EditPartDialog = (props) => {
     const { part, open, setOpen } = props;
@@ -74,11 +75,10 @@ export const EditPartDialog = (props) => {
     };
     return (
         <Dialog open={open} onClose={handleClose}>
-            <DialogTitle>Editare piesa</DialogTitle>
+            <DialogTitle>{LABELS.updatePart}</DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    Avem nevoie de urmatoarele detalii pentru a modifica piesa
-                    pe care o ai.
+                    {LABELS.updatePartDescription}
                 </DialogContentText>
                 <Formik
                     innerRef={formRef}
@@ -147,9 +147,9 @@ export const EditPartDialog = (props) => {
                 </Formik>
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleClose}>Anulare</Button>
+                <Button onClick={handleClose}>{LABELS.cancel}</Button>
                 <Button onClick={() => formRef.current.submitForm()}>
-                    Salveaza
+                    {LABELS.save}
                 </Button>
             </DialogActions>
         </Dialog>

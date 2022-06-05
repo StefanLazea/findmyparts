@@ -15,6 +15,7 @@ import {
     Button,
     TextField
 } from '@mui/material';
+import { LABELS } from 'constants/labels';
 // import styles from './AddPartDialog.module.scss';
 
 export const AddPartDialog = (props) => {
@@ -43,11 +44,10 @@ export const AddPartDialog = (props) => {
     };
     return (
         <Dialog open={open} onClose={handleClose}>
-            <DialogTitle>Adaugare piesa</DialogTitle>
+            <DialogTitle>{LABELS.addPart}</DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    Avem nevoie de urmatoarele detalii pentru a retine piesa pe
-                    care o ai.
+                    {LABELS.addPartDescription}
                 </DialogContentText>
                 <Formik
                     innerRef={formRef}
@@ -117,9 +117,9 @@ export const AddPartDialog = (props) => {
                 </Formik>
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleClose}>Anulare</Button>
+                <Button onClick={handleClose}>{LABELS.cancel}</Button>
                 <Button onClick={() => formRef.current.submitForm()}>
-                    Salveaza
+                    {LABELS.save}
                 </Button>
             </DialogActions>
         </Dialog>
