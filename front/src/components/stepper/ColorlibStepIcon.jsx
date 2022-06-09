@@ -55,17 +55,15 @@ const ColorlibStepIconRoot = styled('div')(({ theme, ownerState }) => ({
         backgroundColor: '#19AC43',
         boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)'
     }),
-    ...(ownerState.expired && {
-        backgroundColor: '#D96C06',
-        boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)'
-    }),
-    ...(ownerState.expired &&
-        ownerState.exists && {
-            backgroundColor: '#D96C06'
-        })
-    // ...(ownerState.exists && {
-    //     backgroundColor: '#D96C06'
-    // })
+    ...(ownerState.expired && ownerState.exists
+        ? {
+              backgroundColor: '#D96C06',
+              boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)'
+          }
+        : {
+              backgroundColor: '#DD1C1A',
+              boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)'
+          })
 }));
 
 export const ColorlibStepIcon = (props) => {
@@ -77,7 +75,8 @@ export const ColorlibStepIcon = (props) => {
             ownerState={{
                 completed,
                 active,
-                expired
+                expired,
+                exists
             }}
             onClick={props.onClick}
             className={className}>

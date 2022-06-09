@@ -17,13 +17,13 @@ import './Cars.scss';
 export const Cars = () => {
     const navigate = useNavigate();
     const {
-        state: { socket }
+        state: { userId, socket }
     } = useGlobalContext();
     const [cars, setCars] = useState([]);
     const [isModalOpen, setModalOpen] = useState(false);
 
     const getCars = () => {
-        axios.get(`/cars`).then((response) => {
+        axios.get(`/cars/${userId}`).then((response) => {
             setCars(response.data);
         });
     };
