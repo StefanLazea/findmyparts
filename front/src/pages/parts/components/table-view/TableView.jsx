@@ -71,14 +71,11 @@ export const TableView = ({ showAllParts }) => {
     //socket update
     useEffect(() => {
         const handler = (parts) => {
-            console.log('client side am primit', parts);
             setDataList(parts);
         };
         socket.on('partsListUpdate', handler);
-        // socket.on('refreshProfilePage', handler)
         return () => {
             socket.off('partsListUpdate', handler);
-            // socket.off("refreshProfilePage", handler);
         };
     }, [socket]);
 

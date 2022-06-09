@@ -37,7 +37,6 @@ export const DetectionDataResult = (props) => {
             maxResults: 10,
             orderBy: 'startTime'
         };
-        // console.log(gapi.client.calendar.events);
         const resp = await gapi.client.calendar.events.list(request);
         console.log(resp);
         const googleEvent = {

@@ -82,7 +82,6 @@ const getFormattedResponseITP = (text) => {
 };
 
 const detectImage = async (req, res) => {
-  // const filename = "/Users/stefan/Documents/projects/findmyparts/backend/controllers/wakeupcat.jpg";
   const client = new vision.ImageAnnotatorClient({
     keyFilename: GOOGLE_KEY_JSON,
   });
@@ -97,20 +96,10 @@ const detectImage = async (req, res) => {
     },
   };
   const [result] = await client.textDetection(request);
-  console.log(result);
   if (result) {
     const text = result.textAnnotations;
     const docType = req.body.documentType;
     let formattedResponse = {};
-
-    //TODO, format date to correct international date -> pass it as timestamp to FE
-    // if (docType === BACKEND_CONSTANTS.DOCUMENTS.RCA) {
-    //     try {
-    //         formattedResponse = getFormattedResponseRCA(text);
-    //     } catch (err) {
-    //         return res.status(500).send({ message: 'We encountered a problem. Try again later.', err })
-    //     }
-    // }
 
     try {
       switch (docType) {
@@ -128,7 +117,6 @@ const detectImage = async (req, res) => {
         .status(500)
         .send({ message: "We encountered a problem. Try again later.", err });
     }
-
     return res.status(200).send(formattedResponse);
   }
   return res.status(404).send({

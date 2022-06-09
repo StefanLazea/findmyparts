@@ -54,7 +54,6 @@ function App() {
             setIsAuth(false);
         }
     };
-    console.log(isAuth);
     return (
         <GlobalContextProvide>
             <ThemeProvider theme={darkTheme}>
@@ -76,13 +75,11 @@ function App() {
                                 path="/car-profile"
                                 element={<CarProfile />}
                             />
-
                             <Route path="/parts" element={<Parts />} />
                             <Route
                                 path="/part-profile"
                                 element={<PartProfile />}
                             />
-
                             {/* TODO: private routes */}
                         </Routes>
                     </GoogleApiProvider>

@@ -13,6 +13,7 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 
 import './NavigationBar.scss';
+import { LABELS } from 'constants/labels';
 const pages = [
     { name: 'Piese', link: '/parts' },
     { name: 'Masini', link: '/cars' },
@@ -42,7 +43,7 @@ export const NavigationBar = (props) => {
                         noWrap
                         component="div"
                         sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}>
-                        cautapiesa.online
+                        {LABELS.appTitle}
                     </Typography>
 
                     <Box

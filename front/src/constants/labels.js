@@ -3,6 +3,7 @@ const LABELS = {
     addPart: 'Adaugare piesa',
     addPartDescription:
         'Avem nevoie de urmatoarele detalii pentru a retine piesa pe care o ai.',
+    appTitle: 'gasestepiesa.online',
     beginDate: 'Data inceput',
     cancel: 'Anulare',
     detailsAbout: 'Detalii legate despre',

@@ -200,7 +200,6 @@ const getOnePartDetails = async (req, res) => {
   const found = await PartsService.findOnePartQuery({
     partId: req.params.partId,
   });
-  console.log(JSON.parse(JSON.stringify(found)));
   if (_.isEmpty(found)) {
     return res
       .status(404)
