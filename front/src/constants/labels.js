@@ -1,5 +1,6 @@
 const LABELS = {
     addToCalendar: 'Adauga in Google Calendar',
+    addDocument: 'Adauga un document de tipul asta.',
     addPart: 'Adaugare piesa',
     addPartDescription:
         'Avem nevoie de urmatoarele detalii pentru a retine piesa pe care o ai.',
@@ -11,6 +12,7 @@ const LABELS = {
     expired: 'A expirat pe ',
     expirationDate: 'Data expirare',
     home: 'Acasa',
+    notExisting: 'Nu exista',
     save: 'Salvare',
     sendToDetect: 'Detecteaza',
     seeCalendarEvent: 'Vezi evenimentul in google calendar',

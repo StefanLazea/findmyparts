@@ -52,7 +52,8 @@ export const CarDetails = ({ carData, ...props }) => {
                     <Grid
                         container
                         spacing={{ xs: 2, sm: 3, md: 3 }}
-                        columns={{ xs: 4, sm: 8, md: 12 }}>
+                        columns={{ xs: 4, sm: 8, md: 12 }}
+                        className={styles.gridContainer}>
                         <Grid
                             item
                             xs={4}
@@ -62,22 +63,22 @@ export const CarDetails = ({ carData, ...props }) => {
                             justify="center"
                             alignItems="center"
                             className={styles.imageElement}>
-                            {/* <img
-                                src={_.get(values, "carData.image", "https://via.placeholder.com/300")}
-                                alt={"to update"}
-                                className={styles.img}
-                                loading="lazy"
-                            /> */}
                             <CarIcon />
                         </Grid>
-                        <Grid item xs={4} sm={4} md={8}>
+                        <Grid
+                            item
+                            xs={4}
+                            sm={4}
+                            md={8}
+                            className={styles.itemContainer}>
                             <Grid
                                 container
                                 spacing={{ xs: 2, sm: 2, md: 3 }}
                                 columns={{ xs: 12, sm: 4, md: 12 }}
                                 align="center"
                                 justify="center"
-                                alignItems="center">
+                                alignItems="center"
+                                className={styles.gridContainer}>
                                 <Grid
                                     item
                                     xs={12}

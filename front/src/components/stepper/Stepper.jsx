@@ -27,7 +27,8 @@ const CustomStepper = ({
                         ...props,
                         icon: item.icon,
                         //if item is expired and data comes from backedn
-                        expired: item.expired && item.exists
+                        expired: item.expired,
+                        exists: item.exists
                     };
                     return (
                         <ColorlibStepIcon

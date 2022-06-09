@@ -8,12 +8,20 @@ export const CustomTooltipMessage = ({ item }) => {
     const expirationDate = _.get(item, 'documentData.expirationDate', '');
     console.log(item);
     return (
-        <div className={styles.tooltipContainer}>
-            <span>
-                {item.expired ? LABELS.expired : LABELS.willExpire}
-                {moment(expirationDate).format('DD-MM-YYYY')}
-            </span>
-            <span>Apasa pe icon pentru mai multe informatii.</span>
+        <div>
+            {item.exists ? (
+                <div className={styles.tooltipContainer}>
+                    <span>
+                        {item.expired ? LABELS.expired : LABELS.willExpire}
+                        {moment(expirationDate).format('DD-MM-YYYY')}
+                    </span>
+                    <span>Apasa pe icon pentru mai multe informatii.</span>
+                </div>
+            ) : (
+                <span>
+                    {LABELS.notExisting}! {LABELS.addDocument}
+                </span>
+            )}
         </div>
     );
 };

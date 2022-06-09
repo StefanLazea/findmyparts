@@ -8,7 +8,7 @@ import { styled } from '@mui/material/styles';
 import Check from '@mui/icons-material/Check';
 
 //connection line
-export const ColorlibConnector = styled(StepConnector)(({ expired }) => ({
+export const ColorlibConnector = styled(StepConnector)(() => ({
     [`&.${stepConnectorClasses.alternativeLabel}`]: {
         top: 22
     },
@@ -25,7 +25,13 @@ export const ColorlibConnector = styled(StepConnector)(({ expired }) => ({
     [`& .${stepConnectorClasses.line}`]: {
         height: 3,
         border: 0,
-        backgroundColor: expired ? '#D96C06' : '#eaeaf0',
+        backgroundColor: '#eaeaf0',
+        borderRadius: 1
+    },
+    [`& .${stepConnectorClasses.expired}`]: {
+        height: 3,
+        border: 0,
+        backgroundColor: '#eaeaf0',
         borderRadius: 1
     }
 }));
@@ -46,17 +52,26 @@ const ColorlibStepIconRoot = styled('div')(({ theme, ownerState }) => ({
         boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)'
     }),
     ...(ownerState.completed && {
-        backgroundColor: '#19AC43'
+        backgroundColor: '#19AC43',
+        boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)'
     }),
     ...(ownerState.expired && {
-        backgroundColor: '#D96C06'
-    })
+        backgroundColor: '#D96C06',
+        boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)'
+    }),
+    ...(ownerState.expired &&
+        ownerState.exists && {
+            backgroundColor: '#D96C06'
+        })
+    // ...(ownerState.exists && {
+    //     backgroundColor: '#D96C06'
+    // })
 }));
 
 export const ColorlibStepIcon = (props) => {
-    const { active, completed, expired, className } = props;
+    const { active, completed, expired, exists, className } = props;
 
-    console.log({ active, completed, props });
+    console.log({ active, completed, expired, exists, props });
     return (
         <ColorlibStepIconRoot
             ownerState={{

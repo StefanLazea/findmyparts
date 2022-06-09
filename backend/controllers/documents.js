@@ -66,6 +66,9 @@ const getCarDocuments = async (req, res) => {
       },
     }).then((allDocs) => {
       const documents = allDocs.map((item) => {
+        console.log(
+          DocumentsService.isDocExpired(item.dataValues.expirationDate)
+        );
         return {
           expired: DocumentsService.isDocExpired(
             item.dataValues.expirationDate
