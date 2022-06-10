@@ -3,6 +3,7 @@ import { Route, Routes, Navigate } from 'react-router-dom';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { toast } from 'react-toastify';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 import { Home } from './pages/home/Home';
 import { Parts } from './pages/parts/Parts';
@@ -63,8 +64,9 @@ function App() {
                     {!isAuth && <Navigate to="/login" />}
 
                     {/* DO NOT USE component like bellow in a Switch statement */}
-                    <GoogleApiProvider
-                        clientId={process.env.REACT_APP_GOOGLE_ID}>
+                    {/* <GoogleApiProvider
+                        clientId={process.env.REACT_APP_GOOGLE_ID}> */}
+                    <GoogleOAuthProvider clientId="142016303094-s370kn5js5vseuuklpdp8upuv8avbl81.apps.googleusercontent.com">
                         <Routes>
                             {/* non private routes */}
                             <Route path="/home" exact element={<Home />} />
@@ -81,7 +83,8 @@ function App() {
                             />
                             {/* TODO: private routes */}
                         </Routes>
-                    </GoogleApiProvider>
+                        {/* </GoogleApiProvider> */}
+                    </GoogleOAuthProvider>
                 </div>
             </ThemeProvider>
         </GlobalContextProvide>
