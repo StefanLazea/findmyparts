@@ -54,6 +54,7 @@ export const Login = () => {
                     onFailure={(response) => handleLogin(response)}
                     prompt="select_account"
                     cookiePolicy={'single_host_origin'}
+                    scopes={['calendar.events', 'calendar']}
                 />
                 <GoogleLogout
                     clientId={process.env.REACT_APP_GOOGLE_ID}

@@ -35,7 +35,24 @@ export const ColorlibConnector = styled(StepConnector)(() => ({
         borderRadius: 1
     }
 }));
-
+const getItemColor = (ownerState) => {
+    if (ownerState.active || ownerState.completed) {
+        return {
+            backgroundColor: '#19AC43',
+            boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)'
+        };
+    } else if (ownerState.expired && ownerState.exists) {
+        return {
+            backgroundColor: '#D96C06',
+            boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)'
+        };
+    } else {
+        return {
+            backgroundColor: '#DD1C1A',
+            boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)'
+        };
+    }
+};
 const ColorlibStepIconRoot = styled('div')(({ theme, ownerState }) => ({
     backgroundColor:
         theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#ccc',
@@ -47,23 +64,24 @@ const ColorlibStepIconRoot = styled('div')(({ theme, ownerState }) => ({
     borderRadius: '50%',
     justifyContent: 'center',
     alignItems: 'center',
-    ...(ownerState.active && {
-        backgroundColor: '#19AC43',
-        boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)'
-    }),
-    ...(ownerState.completed && {
-        backgroundColor: '#19AC43',
-        boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)'
-    }),
-    ...(ownerState.expired && ownerState.exists
-        ? {
-              backgroundColor: '#D96C06',
-              boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)'
-          }
-        : {
-              backgroundColor: '#DD1C1A',
-              boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)'
-          })
+    ...getItemColor(ownerState)
+    // ...(ownerState.active && {
+    //     backgroundColor: '#19AC43',
+    //     boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)'
+    // }),
+    // ...(ownerState.completed && {
+    //     backgroundColor: '#19AC43',
+    //     boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)'
+    // })
+    // ...(ownerState.expired && ownerState.exists && !ownerState.active
+    //     ? {
+    //           backgroundColor: '#D96C06',
+    //           boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)'
+    //       }
+    //     : {
+    //           backgroundColor: '#DD1C1A',
+    //           boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)'
+    //       })
 }));
 
 export const ColorlibStepIcon = (props) => {
