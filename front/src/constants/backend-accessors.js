@@ -2,12 +2,7 @@ export const BACKEND_PROPERTY_VALUE = {
     RCA: 'RCA',
     ITP: 'ITP',
     ROVIGNETA: 'ROVIGNETA',
-    BODY_STYLE_VARIANTS: [
-        "sedan",
-        "suv",
-        "hatchback",
-        "mini-car"
-    ],
+    BODY_STYLE_VARIANTS: ['sedan', 'suv', 'hatchback', 'mini-car'],
     FUEL_VARIANTS: [
         'benzina',
         'motorina',
@@ -15,7 +10,6 @@ export const BACKEND_PROPERTY_VALUE = {
         'hybrid',
         'electric'
     ]
-}
+};
 
-export const BACKEND_ACCESSORS = {
-}
+export const BACKEND_ACCESSORS = {};

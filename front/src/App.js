@@ -7,7 +7,6 @@ import { toast } from 'react-toastify';
 import { Home } from './pages/home/Home';
 import { Parts } from './pages/parts/Parts';
 import { Cars } from './pages/cars/Cars';
-import { Register } from './pages/auth/Register';
 import { Login } from './pages/auth/Login';
 import { CarProfile } from './pages/cars/car-profile/CarProfile';
 import { PartProfile } from './pages/parts/part-profile/PartProfile';
@@ -54,6 +53,7 @@ function App() {
             setIsAuth(false);
         }
     };
+    console.log(process.env.REACT_APP_GOOGLE_ID);
     return (
         <GlobalContextProvide>
             <ThemeProvider theme={darkTheme}>
@@ -69,7 +69,6 @@ function App() {
                             {/* non private routes */}
                             <Route path="/home" exact element={<Home />} />
                             <Route path="/login" element={<Login />} />
-                            <Route path="/register" element={<Register />} />
                             <Route path="/cars" element={<Cars />} />
                             <Route
                                 path="/car-profile"

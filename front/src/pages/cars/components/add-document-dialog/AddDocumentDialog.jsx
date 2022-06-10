@@ -18,7 +18,7 @@ import NavigationIcon from '@mui/icons-material/Navigation';
 import UploadIcon from '@mui/icons-material/Upload';
 import DocumentIcon from 'assets/icons/DocumentIcon';
 
-import { ScreenDialog } from 'components/screen-dialog/ScreenDialog.jsx';
+import { CustomDialog } from 'components/custom-dialog/CustomDialog';
 import { DetectionDataResult } from './DetectionDataResult';
 
 import { BACKEND_PROPERTY_VALUE } from 'constants/backend-accessors';
@@ -28,13 +28,13 @@ import { useEffect } from 'react';
 
 export const AddDocumentDialog = (props) => {
     //todo add carId/userId to context or redux
-    const { open, setOpen, carId, car, reRender } = props;
+    const { open, setOpen, carId, car } = props;
     const handleClose = () => setOpen(false);
     const formRef = useRef();
     const inputRef = useRef();
     const [imgSrc, setImgSrc] = useState('');
     const [uploadedFile, setUploadFile] = useState('');
-    const [type, setType] = useState(BACKEND_PROPERTY_VALUE.RCA);
+    const [type, setType] = useState(BACKEND_PROPERTY_VALUE.ITP);
     const [detectionResult, setDetectionResult] = useState({});
 
     const handleUpload = () => {
@@ -123,7 +123,7 @@ export const AddDocumentDialog = (props) => {
     );
 
     return (
-        <ScreenDialog
+        <CustomDialog
             open={open}
             setOpen={setOpen}
             title={'Adauga un nou document'}
@@ -248,11 +248,10 @@ export const AddDocumentDialog = (props) => {
                         formRef={formRef}
                         carId={carId}
                         car={car}
-                        reRender={reRender}
                         closeScreen={handleClose}
                     />
                 </Grid>
             </Grid>
-        </ScreenDialog>
+        </CustomDialog>
     );
 };

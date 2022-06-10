@@ -1,7 +1,7 @@
 const vision = require("@google-cloud/vision");
 const _ = require("lodash");
 const GOOGLE_KEY_JSON =
-  "/Users/stefan/Documents/gasestepiesa-924dba9c251f.json";
+  "/Users/stefan/Documents/projects/findmyparts/backend/gasestepiesa-924dba9c251f.json";
 const { CONSTANTS, BACKEND_CONSTANTS } = require("../resources/constants");
 
 const REGEX_PRICE_LEI = /[\d|,|.|]{2,10} (lei)/g;

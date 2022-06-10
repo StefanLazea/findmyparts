@@ -3,7 +3,7 @@ const CarsController = require("../controllers/cars");
 // const { authorizeGoogle } = require('../services/authorize');
 
 router.get("/", CarsController.getAllCars);
-router.get("/:userId", CarsController.getUsersCars);
+router.get("/users/:userId", CarsController.getUsersCars);
 router.get("/:carId", CarsController.getCarById);
 router.get("/:carId/details", CarsController.getCarDetailsById);
 router.put("/:carId", CarsController.updateCar);

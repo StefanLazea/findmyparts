@@ -23,7 +23,7 @@ export const Cars = () => {
     const [isModalOpen, setModalOpen] = useState(false);
 
     const getCars = () => {
-        axios.get(`/cars/${userId}`).then((response) => {
+        axios.get(`/cars/users/${userId}`).then((response) => {
             setCars(response.data);
         });
     };

@@ -1,9 +1,4 @@
-export const BODY_STYLE_VARIANTS = [
-    "sedan",
-    "suv",
-    "hatchback",
-    "mini-car"
-]
+export const BODY_STYLE_VARIANTS = ['sedan', 'suv', 'hatchback', 'mini-car'];
 
 export const FUEL_VARIANTS = [
     'benzina',
@@ -11,4 +6,4 @@ export const FUEL_VARIANTS = [
     'benzina + gpl',
     'hybrid',
     'electric'
-]
+];

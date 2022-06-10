@@ -7,7 +7,8 @@ const BACKEND_ENDPOINT = process.env.REACT_APP_BACK_END_URL;
 const initialState = {
     count: 0,
     userId: localStorage.getItem('userId') || 0, // TODO: save as cookie not as this
-    socket: io(BACKEND_ENDPOINT)
+    socket: io(BACKEND_ENDPOINT),
+    gapi: ''
 };
 const ACTIONS = {
     ADD_USER_ID: 'addUserId',
@@ -48,10 +49,8 @@ function storeReducer(state = initialState, action) {
 
 function GlobalContextProvide({ children }) {
     const [state, dispatch] = React.useReducer(storeReducer, initialState);
-    // NOTE: you *might* need to memoize this value
-    // Learn more in http://kcd.im/optimize-context
     React.useEffect(() => {
-        initialState.socket.on('connect', (data) => {
+        initialState.socket.on('connect', () => {
             console.log('Socket connected');
         });
     }, []);

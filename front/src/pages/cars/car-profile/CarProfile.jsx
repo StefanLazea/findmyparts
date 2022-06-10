@@ -53,7 +53,7 @@ export const CarProfile = () => {
     const {
         state: { socket }
     } = useGlobalContext();
-
+    console.log(state);
     const [step, setStep] = useState(-1);
     const [isModalOpen, setModalOpen] = useState(false);
     const [triggerRender, setTriggerRender] = useState(false);
@@ -65,6 +65,10 @@ export const CarProfile = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [confirmDelete, setConfirmDelete] = useState(false);
     const [toDeleteItem, setToDeleteItem] = useState({});
+
+    useEffect(() => {
+        console.log(selectedCar);
+    }, [selectedCar]);
     const setStepperProgress = (
         isITPAvailable,
         isRcaAvailable,
@@ -72,7 +76,6 @@ export const CarProfile = () => {
     ) => {
         if (isITPAvailable) {
             setStep((prev) => {
-                // console.log('prev', prev);
                 return prev + 1;
             });
             if (isRcaAvailable) {
@@ -106,10 +109,11 @@ export const CarProfile = () => {
 
     useEffect(() => {
         const handler = (car) => {
-            // console.log('client side am primit', car);
-            setSelectedCar(car);
+            console.log('client side am primit', car);
+            // setSelectedCar(car);
         };
         socket.on('carUpdated', handler);
+        return () => socket.off('carUpdated', handler);
     }, [socket]);
 
     useEffect(() => {
@@ -148,7 +152,7 @@ export const CarProfile = () => {
             console.log('err to be thrown');
             return;
         }
-        axios.delete(`/documents/${docId}`).then((res) => {
+        axios.delete(`/documents/${docId}`).then(() => {
             toast.success(LABELS.documentDeleted, {
                 position: 'top-right',
                 autoClose: 5000,

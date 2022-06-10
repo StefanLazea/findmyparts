@@ -18,14 +18,16 @@ import moment from 'moment';
 const ONE_DAY = 86400000;
 
 export const DetectionDataResult = (props) => {
-    const { type, carId, car, detectionData, formRef, reRender, closeScreen } =
-        props;
+    const { type, carId, car, detectionData, formRef, closeScreen } = props;
 
     const gapi = useGoogleApi({
         discoveryDocs: [
             'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'
         ],
-        scopes: ['https://www.googleapis.com/auth/calendar.events']
+        scopes: [
+            'https://www.googleapis.com/auth/calendar.events',
+            'https://www.googleapis.com/auth/calendar'
+        ]
     });
     const addEventToCalendar = async (fromDate, expDate) => {
         console.log(fromDate, expDate);
@@ -39,6 +41,7 @@ export const DetectionDataResult = (props) => {
         };
         const resp = await gapi.client.calendar.events.list(request);
         console.log(resp);
+        // console.log(resp);
         const googleEvent = {
             summary: `gasestePiesa.online: ${car.numberPlate} Aveti de reinnoit ${type}`,
             start: {
@@ -85,8 +88,7 @@ export const DetectionDataResult = (props) => {
             .post(`/documents/add/${values.name}`, values)
             .then((res) => {
                 console.log(res.data);
-                // closeScreen();
-                reRender();
+                closeScreen();
             })
             .catch((err) => {
                 toast.error(err.response.data.message, {

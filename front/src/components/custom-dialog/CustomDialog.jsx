@@ -19,16 +19,20 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export const ScreenDialog = (props) => {
-    const { open, setOpen } = props;
+export const CustomDialog = ({
+    open,
+    setOpen,
+    fullScreen = false,
+    ...props
+}) => {
     const handleClose = () => setOpen(false);
 
     return (
         <Dialog
-            fullScreen
+            fullScreen={fullScreen}
             open={open}
             onClose={handleClose}
-            maxWidth="xl"
+            maxWidth="md"
             TransitionComponent={Transition}>
             <AppBar sx={{ position: 'relative' }}>
                 <Toolbar>

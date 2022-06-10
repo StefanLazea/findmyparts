@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 function CarIcon() {
     return (
@@ -8,286 +8,236 @@ function CarIcon() {
             xmlnsXlink="http://www.w3.org/1999/xlink"
             width="288"
             height="288"
-            version="1.1"
-        >
+            version="1.1">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="288"
                 height="288"
-                viewBox="0 0 150 150"
-            >
-                <g style={{ isolation: "isolate" }} className="color000 svgShape">
+                viewBox="0 0 150 150">
+                <g
+                    style={{ isolation: 'isolate' }}
+                    className="color000 svgShape">
                     <path
                         fill="#f8f8f8"
                         d="M123.982 85.5l-2.079 1v4h3.934a9.608 9.608 0 00-1.855-5z"
-                        className="colorfff svgShape"
-                    ></path>
+                        className="colorfff svgShape"></path>
                     <path
                         fill="#86a6df"
                         d="M101.206 77.5h5.874a1.654 1.654 0 011.503 2.347l-.042.09A2.688 2.688 0 01106.1 81.5h-6.562z"
-                        className="color8fd8f2 svgShape"
-                    ></path>
+                        className="color8fd8f2 svgShape"></path>
                     <path
                         fill="#324e7b"
                         d="M106.1 82h-6.562a.5.5 0 01-.461-.692l1.668-4a.5.5 0 01.461-.308h5.874a2.155 2.155 0 011.957 3.056l-.043.092A3.196 3.196 0 01106.1 82zm-5.812-1h5.812a2.194 2.194 0 001.987-1.272l.043-.093A1.154 1.154 0 00107.08 78h-5.54z"
-                        className="color2d2d2d svgShape"
-                    ></path>
+                        className="color2d2d2d svgShape"></path>
                     <path
                         fill="#86a6df"
                         d="M81.936 85.5L27.442 86.012 28.312 96.5 36.313 96.497 85.335 97.85 81.936 85.5z"
-                        className="color8fd8f2 svgShape"
-                    ></path>
+                        className="color8fd8f2 svgShape"></path>
                     <path
                         fill="#324e7b"
                         d="M85.335 98.35h-.013l-49.023-1.353-7.987.003a.5.5 0 01-.498-.459l-.87-10.488a.5.5 0 01.493-.541L81.931 85h.005a.5.5 0 01.482.367l3.4 12.35a.5.5 0 01-.483.633zm-49.022-2.353l48.361 1.335-3.118-11.329-53.57.504.787 9.493z"
-                        className="color2d2d2d svgShape"
-                    ></path>
+                        className="color2d2d2d svgShape"></path>
                     <circle
                         cx="109.403"
                         cy="98"
                         r="8.5"
                         fill="#324e7b"
-                        className="color2d2d2d svgShape"
-                    ></circle>
+                        className="color2d2d2d svgShape"></circle>
                     <path
                         fill="#324e7b"
                         d="M109.403 107a9 9 0 119-9 9.01 9.01 0 01-9 9zm0-17a8 8 0 108 8 8.01 8.01 0 00-8-8z"
-                        className="color2d2d2d svgShape"
-                    ></path>
+                        className="color2d2d2d svgShape"></path>
                     <path
                         fill="#86a6df"
                         d="M109.073 94.218a5.574 5.574 0 00-5.492 4.637 5.577 5.577 0 1110.984 0 5.574 5.574 0 00-5.492-4.637z"
-                        className="color8fd8f2 svgShape"
-                    ></path>
+                        className="color8fd8f2 svgShape"></path>
                     <path
                         fill="#324e7b"
                         d="M114.565 99.355a.5.5 0 01-.493-.416 5.07 5.07 0 00-9.998 0 .5.5 0 01-.985 0 6.077 6.077 0 1111.969 0 .5.5 0 01-.493.416zm-5.492-6.517a5.085 5.085 0 00-4.652 3.044 6.083 6.083 0 019.305 0 5.085 5.085 0 00-4.653-3.044z"
-                        className="color2d2d2d svgShape"
-                    ></path>
+                        className="color2d2d2d svgShape"></path>
                     <circle
                         cx="108.903"
                         cy="97.5"
                         r="2"
                         fill="#86a6df"
-                        className="color8fd8f2 svgShape"
-                    ></circle>
+                        className="color8fd8f2 svgShape"></circle>
                     <path
                         fill="#324e7b"
                         d="M108.903 100a2.5 2.5 0 112.5-2.5 2.503 2.503 0 01-2.5 2.5zm0-4a1.5 1.5 0 101.5 1.5 1.502 1.502 0 00-1.5-1.5zm-74.944-6.5h3.521c3.236 0 5.858 3.806 5.858 8.5s-2.622 8.5-5.858 8.5H33.96c-3.235 0-5.858-3.806-5.858-8.5s2.623-8.5 5.858-8.5z"
-                        className="color2d2d2d svgShape"
-                    ></path>
+                        className="color2d2d2d svgShape"></path>
                     <path
                         fill="#324e7b"
                         d="M37.48 107H33.96c-3.506 0-6.358-4.038-6.358-9s2.852-9 6.358-9h3.521c3.506 0 6.358 4.038 6.358 9s-2.852 9-6.358 9zM33.96 90c-2.955 0-5.358 3.589-5.358 8s2.403 8 5.358 8h3.521c2.955 0 5.358-3.589 5.358-8s-2.403-8-5.358-8z"
-                        className="color2d2d2d svgShape"
-                    ></path>
+                        className="color2d2d2d svgShape"></path>
                     <ellipse
                         cx="33.903"
                         cy="98"
                         fill="#f8f8f8"
                         className="colorfff svgShape"
                         rx="4"
-                        ry="5.5"
-                    ></ellipse>
+                        ry="5.5"></ellipse>
                     <path
                         fill="#324e7b"
                         d="M33.903 104c-2.482 0-4.5-2.691-4.5-6s2.018-6 4.5-6 4.5 2.691 4.5 6-2.019 6-4.5 6zm0-11c-1.93 0-3.5 2.243-3.5 5s1.57 5 3.5 5 3.5-2.243 3.5-5-1.57-5-3.5-5zm30.894-3.5h3.521c3.235 0 5.858 3.806 5.858 8.5s-2.623 8.5-5.858 8.5h-3.521c-3.236 0-5.858-3.806-5.858-8.5s2.622-8.5 5.858-8.5z"
-                        className="color2d2d2d svgShape"
-                    ></path>
+                        className="color2d2d2d svgShape"></path>
                     <path
                         fill="#324e7b"
                         d="M68.318 107h-3.522c-3.505 0-6.357-4.038-6.357-9s2.852-9 6.357-9h3.522c3.506 0 6.358 4.038 6.358 9s-2.852 9-6.358 9zm-3.522-17c-2.954 0-5.357 3.589-5.357 8s2.403 8 5.357 8h3.522c2.954 0 5.358-3.589 5.358-8s-2.404-8-5.358-8z"
-                        className="color2d2d2d svgShape"
-                    ></path>
+                        className="color2d2d2d svgShape"></path>
                     <path
                         fill="#86a6df"
                         d="M64.837 94.218c-1.902 0-3.476 2.005-3.785 4.637a8.048 8.048 0 01-.059-.94c0-3.08 1.721-5.577 3.844-5.577s3.843 2.497 3.843 5.577a8.048 8.048 0 01-.059.94c-.308-2.632-1.883-4.637-3.784-4.637z"
-                        className="color8fd8f2 svgShape"
-                    ></path>
+                        className="color8fd8f2 svgShape"></path>
                     <path
                         fill="#324e7b"
                         d="M68.621 99.355a.5.5 0 01-.496-.442c-.28-2.391-1.694-4.195-3.288-4.195-1.595 0-3.008 1.804-3.288 4.195a.5.5 0 01-.497.442.5.5 0 01-.496-.441 8.46 8.46 0 01-.063-1c0-3.35 1.949-6.076 4.344-6.076s4.343 2.726 4.343 6.077a8.552 8.552 0 01-.062.998.5.5 0 01-.496.442zm-3.784-6.517a3.3 3.3 0 00-2.797 2.297 3.468 3.468 0 015.594 0 3.3 3.3 0 00-2.797-2.297z"
-                        className="color2d2d2d svgShape"
-                    ></path>
+                        className="color2d2d2d svgShape"></path>
                     <ellipse
                         cx="64.403"
                         cy="97.5"
                         fill="#86a6df"
                         className="color8fd8f2 svgShape"
                         rx="1.5"
-                        ry="2"
-                    ></ellipse>
+                        ry="2"></ellipse>
                     <path
                         fill="#324e7b"
                         d="M64.403 100a2.563 2.563 0 112-2.5 2.295 2.295 0 01-2 2.5zm0-4c-.542 0-1 .687-1 1.5s.458 1.5 1 1.5 1-.687 1-1.5-.458-1.5-1-1.5z"
-                        className="color2d2d2d svgShape"
-                    ></path>
+                        className="color2d2d2d svgShape"></path>
                     <path
                         fill="#86a6df"
                         d="M62.27 62.5h27.864c2.57 0 3.475.464 4.411 2.036C95.65 66.39 104.562 81.5 104.562 81.5h-31.5z"
-                        className="color8fd8f2 svgShape"
-                    ></path>
+                        className="color8fd8f2 svgShape"></path>
                     <path
                         fill="#324e7b"
                         d="M104.562 82h-31.5a.5.5 0 01-.434-.253l-10.792-19a.5.5 0 01.435-.747h27.863c2.7 0 3.787.511 4.841 2.28a16007.47 16007.47 0 0110.018 16.966.5.5 0 01-.431.754zm-31.208-1h30.332c-1.815-3.078-8.615-14.604-9.57-16.209-.802-1.344-1.49-1.791-3.982-1.791H63.13z"
-                        className="color2d2d2d svgShape"
-                    ></path>
+                        className="color2d2d2d svgShape"></path>
                     <circle
                         cx="78.403"
                         cy="98"
                         r="8.5"
                         fill="#5068a9"
-                        className="color259ed9 svgShape"
-                    ></circle>
+                        className="color259ed9 svgShape"></circle>
                     <path
                         fill="#324e7b"
                         d="M78.403 107a9 9 0 119-9 9.01 9.01 0 01-9 9zm0-17a8 8 0 108 8 8.01 8.01 0 00-8-8z"
-                        className="color2d2d2d svgShape"
-                    ></path>
+                        className="color2d2d2d svgShape"></path>
                     <circle
                         cx="78.403"
                         cy="98"
                         r="5.5"
                         fill="#f8f8f8"
-                        className="colorfff svgShape"
-                    ></circle>
+                        className="colorfff svgShape"></circle>
                     <path
                         fill="#324e7b"
                         d="M78.403 104a6 6 0 116-6 6.007 6.007 0 01-6 6zm0-11a5 5 0 105 5 5.006 5.006 0 00-5-5z"
-                        className="color2d2d2d svgShape"
-                    ></path>
+                        className="color2d2d2d svgShape"></path>
                     <path
                         fill="#f8f8f8"
                         d="M94.904 65.5L61.209 65.5 73.125 81.5 104.481 81.5 94.904 65.5z"
-                        className="colorfff svgShape"
-                    ></path>
+                        className="colorfff svgShape"></path>
                     <path
                         fill="#324e7b"
                         d="M104.48 82H73.126a.5.5 0 01-.401-.201l-11.916-16A.5.5 0 0161.21 65h33.695a.5.5 0 01.43.243l9.576 16a.5.5 0 01-.43.757zm-31.104-1h30.223l-8.978-15H62.205z"
-                        className="color2d2d2d svgShape"
-                    ></path>
+                        className="color2d2d2d svgShape"></path>
                     <path
                         fill="#86a6df"
                         d="M62.44 62.5a3.522 3.522 0 013.347 2.377c.728 1.504 7.41 16.623 7.41 16.623h31.53a79.75 79.75 0 0113.61 1.86c2.641.632 4.558 1.257 5.71 2.424l-2.144.716v4h4v10H86.002a2.1 2.1 0 01-2.099-2.1v-2.517a6.018 6.018 0 00-6-6 6.018 6.018 0 00-6 6v2.444a2.173 2.173 0 01-2.173 2.173H42.95a2.338 2.338 0 01-2.324-2.36c.006-5.704-2.763-8.502-6.147-8.502-3.995 0-4.83 3.77-5.607 6.206a1.153 1.153 0 01-2.017.354l-1.784-2.342a5.703 5.703 0 01-1.167-3.457v-8.624c0-1.845 1.105-2.078 3.205-2.934a15.387 15.387 0 006.89-5.549c.884-1.293 1.447-2.154 3.107-4.633a12.664 12.664 0 014.655-4.163l-1.188-.706a.693.693 0 01.354-1.29H62.44z"
-                        className="color8fd8f2 svgShape"
-                    ></path>
+                        className="color8fd8f2 svgShape"></path>
                     <path
                         fill="#324e7b"
                         d="M125.903 101h-39.9a2.602 2.602 0 01-2.6-2.6v-2.517a5.5 5.5 0 00-11 0v2.445A2.675 2.675 0 0169.73 101H42.95a2.788 2.788 0 01-1.986-.824 2.856 2.856 0 01-.838-2.037c.003-2.9-.73-5.168-2.122-6.56a4.875 4.875 0 00-3.525-1.441c-3.325 0-4.227 2.928-4.951 5.282l-.18.576a1.654 1.654 0 01-2.89.505l-1.785-2.342a6.24 6.24 0 01-1.27-3.76v-8.624c0-2 1.163-2.461 2.921-3.159l.596-.238a14.907 14.907 0 006.677-5.383c.558-.817.993-1.47 1.675-2.491l1.419-2.123a13.063 13.063 0 014.077-3.894l-.45-.268a1.193 1.193 0 01.61-2.219H62.44a4.006 4.006 0 013.798 2.66c.675 1.395 6.318 14.153 7.284 16.34h31.205a80.906 80.906 0 0113.727 1.874c2.767.662 4.726 1.32 5.948 2.559a.5.5 0 01-.198.825l-1.801.602V90h3.5a.5.5 0 01.5.5v10a.5.5 0 01-.5.5zm-48-11.617a6.508 6.508 0 016.5 6.5V98.4a1.601 1.601 0 001.6 1.599h39.4v-9h-3.5a.5.5 0 01-.5-.5v-4a.5.5 0 01.341-.474l1.293-.432a15.018 15.018 0 00-4.815-1.748A79.907 79.907 0 00104.708 82H73.197a.5.5 0 01-.458-.298c-.066-.151-6.686-15.128-7.402-16.607C64.627 63.626 63.76 63 62.44 63H40.926a.194.194 0 00-.099.36l1.189.706a.5.5 0 01-.021.871 12.183 12.183 0 00-4.474 4l-1.419 2.122c-.684 1.025-1.12 1.68-1.692 2.515a15.89 15.89 0 01-7.114 5.73l-.604.242c-1.777.705-2.29.964-2.29 2.229v8.624a5.234 5.234 0 001.066 3.154l1.784 2.341a.636.636 0 00.628.248.648.648 0 00.514-.45l.177-.566c.734-2.385 1.843-5.988 5.907-5.988a5.855 5.855 0 014.233 1.734c1.582 1.584 2.417 4.097 2.414 7.268a1.865 1.865 0 00.545 1.33 1.795 1.795 0 001.279.53H69.73a1.674 1.674 0 001.673-1.672v-2.446a6.507 6.507 0 016.5-6.5z"
-                        className="color2d2d2d svgShape"
-                    ></path>
+                        className="color2d2d2d svgShape"></path>
                     <path
                         fill="#f8f8f8"
                         d="M86.571 84.986a8.206 8.206 0 012.854.011c2.174.341 7.86 1.503 7.86 1.503l1.1 4H87.622s-2.12-2.386-3.817-4.285a7.047 7.047 0 012.765-1.229z"
-                        className="colorfff svgShape"
-                    ></path>
+                        className="colorfff svgShape"></path>
                     <path
                         fill="#324e7b"
                         d="M98.384 91H87.623a.498.498 0 01-.374-.168s-2.12-2.386-3.816-4.284a.5.5 0 01.086-.742 7.596 7.596 0 012.958-1.31 8.638 8.638 0 013.026.007c2.16.34 7.826 1.496 7.883 1.507a.5.5 0 01.382.358l1.098 4a.5.5 0 01-.482.632zm-10.536-1h9.88l-.843-3.071c-1.203-.244-5.685-1.147-7.537-1.437a7.67 7.67 0 00-2.683-.014 6.19 6.19 0 00-2.1.836c1.34 1.5 2.817 3.162 3.283 3.686z"
-                        className="color2d2d2d svgShape"
-                    ></path>
+                        className="color2d2d2d svgShape"></path>
                     <path
                         fill="#324e7b"
                         d="M121.903 91h-24a.5.5 0 010-1h23.5v-3h-24.5a.5.5 0 010-1h25a.5.5 0 01.5.5v4a.5.5 0 01-.5.5z"
-                        className="color2d2d2d svgShape"
-                    ></path>
+                        className="color2d2d2d svgShape"></path>
                     <path fill="#8fd8f2" d="M55.903 83.5L51.903 83.5"></path>
                     <path
                         fill="#324e7b"
                         d="M55.903 84h-4a.5.5 0 010-1h4a.5.5 0 010 1z"
-                        className="color2d2d2d svgShape"
-                    ></path>
+                        className="color2d2d2d svgShape"></path>
                     <path fill="#8fd8f2" d="M40.903 83.5L36.903 83.5"></path>
                     <path
                         fill="#324e7b"
                         d="M40.903 84h-4a.5.5 0 010-1h4a.5.5 0 010 1z"
-                        className="color2d2d2d svgShape"
-                    ></path>
+                        className="color2d2d2d svgShape"></path>
                     <path
                         fill="#f8f8f8"
                         d="M35.597 78.184a1.474 1.474 0 01.117-1.392l1.201-1.841c.384-.592.686-1.053.947-1.451.47-.716.827-1.253 1.366-2.094 3.119-4.87 5.258-5.906 11.633-5.906h8.54c2.895 0 4.812 1.915 5.902 4.418.377.865.929 2.164 1.527 3.582 1.524 3.611 3.348 8 3.348 8h-32.24a1.374 1.374 0 01-1.26-.827z"
-                        className="colorfff svgShape"
-                    ></path>
+                        className="colorfff svgShape"></path>
                     <path
                         fill="#324e7b"
                         d="M70.178 82h-32.24a1.873 1.873 0 01-1.72-1.128l-1.08-2.489a1.969 1.969 0 01.157-1.864l1.201-1.841a243.4 243.4 0 01.948-1.452l.22-.335c.37-.561.692-1.052 1.143-1.755C42.003 66.147 44.256 65 50.861 65h8.54c2.777 0 5.035 1.676 6.36 4.718.378.867.93 2.167 1.53 3.588a1985.01 1985.01 0 013.35 8.002.5.5 0 01-.463.692zm-34.122-4.015l1.08 2.489a.873.873 0 00.802.526h31.49c-.573-1.377-1.902-4.565-3.058-7.306a382.95 382.95 0 00-1.526-3.576C64.026 68.239 62.418 66 59.4 66h-8.539c-6.231 0-8.222 1.008-11.212 5.675-.453.708-.778 1.201-1.15 1.765l-.22.335c-.26.396-.561.857-.944 1.448l-1.202 1.842a.973.973 0 00-.077.92z"
-                        className="color2d2d2d svgShape"
-                    ></path>
+                        className="color2d2d2d svgShape"></path>
                     <path fill="#8fd8f2" d="M52.807 65.75L50.793 81.131"></path>
                     <path
                         fill="#324e7b"
                         d="M50.793 81.63a.501.501 0 01-.496-.564l2.014-15.38a.5.5 0 11.991.13l-2.014 15.38a.5.5 0 01-.495.435z"
-                        className="color2d2d2d svgShape"
-                    ></path>
+                        className="color2d2d2d svgShape"></path>
                     <path
                         fill="#f8f8f8"
                         d="M23.903 82.5h1.393a1.036 1.036 0 01.952.627l1.33 3.098a.914.914 0 01-.84 1.275h-2.835z"
-                        className="colorfff svgShape"
-                    ></path>
+                        className="colorfff svgShape"></path>
                     <path
                         fill="#324e7b"
                         d="M26.738 88h-2.835a.5.5 0 01-.5-.5v-5a.5.5 0 01.5-.5h1.393a1.534 1.534 0 011.411.93l1.33 3.098A1.414 1.414 0 0126.739 88zm-2.335-1h2.335a.414.414 0 00.38-.577l-1.33-3.099a.535.535 0 00-.492-.324h-.893z"
-                        className="color2d2d2d svgShape"
-                    ></path>
+                        className="color2d2d2d svgShape"></path>
                     <path
                         fill="#86a6df"
                         d="M68.336 77.5h-5.874a1.654 1.654 0 00-1.502 2.347l.041.09a2.688 2.688 0 002.442 1.563h6.561z"
-                        className="color8fd8f2 svgShape"
-                    ></path>
+                        className="color8fd8f2 svgShape"></path>
                     <path
                         fill="#324e7b"
                         d="M70.004 82h-6.562a3.197 3.197 0 01-2.895-1.854 2.192 2.192 0 01.1-2.153A2.145 2.145 0 0162.463 77h5.874a.5.5 0 01.461.308l1.669 4a.5.5 0 01-.462.692zm-7.542-4a1.154 1.154 0 00-1.048 1.637A2.233 2.233 0 0063.442 81h5.812l-1.251-3z"
-                        className="color2d2d2d svgShape"
-                    ></path>
+                        className="color2d2d2d svgShape"></path>
                     <path
                         fill="#86a6df"
                         d="M122.681 100.5l-.449-3.835A2.45 2.45 0 00119.8 94.5h-19.088a3.778 3.778 0 00-3.416 2.165l-1.811 3.835z"
-                        className="color8fd8f2 svgShape"
-                    ></path>
+                        className="color8fd8f2 svgShape"></path>
                     <path
                         fill="#324e7b"
                         d="M122.682 101H95.484a.5.5 0 01-.452-.713l1.811-3.836A4.295 4.295 0 01100.711 94H119.8a2.95 2.95 0 012.93 2.607l.45 3.835a.5.5 0 01-.497.558zm-26.41-1h25.848l-.384-3.277A1.95 1.95 0 00119.799 95h-19.088a3.292 3.292 0 00-2.964 1.878z"
-                        className="color2d2d2d svgShape"
-                    ></path>
+                        className="color2d2d2d svgShape"></path>
                     <circle
                         cx="78.403"
                         cy="98"
                         r="8.5"
                         fill="#324e7b"
-                        className="color2d2d2d svgShape"
-                    ></circle>
+                        className="color2d2d2d svgShape"></circle>
                     <path
                         fill="#324e7b"
                         d="M78.403 107a9 9 0 119-9 9.01 9.01 0 01-9 9zm0-17a8 8 0 108 8 8.01 8.01 0 00-8-8z"
-                        className="color2d2d2d svgShape"
-                    ></path>
+                        className="color2d2d2d svgShape"></path>
                     <circle
                         cx="78.403"
                         cy="98"
                         r="5.5"
                         fill="#f8f8f8"
-                        className="colorfff svgShape"
-                    ></circle>
+                        className="colorfff svgShape"></circle>
                     <path
                         fill="#324e7b"
                         d="M78.403 104a6 6 0 116-6 6.007 6.007 0 01-6 6zm0-11a5 5 0 105 5 5.006 5.006 0 00-5-5z"
-                        className="color2d2d2d svgShape"
-                    ></path>
+                        className="color2d2d2d svgShape"></path>
                     <path
                         fill="none"
                         d="M61.403 86H78.40299999999999V110H61.403z"
-                        transform="rotate(-180 69.903 98)"
-                    ></path>
+                        transform="rotate(-180 69.903 98)"></path>
                     <path
                         fill="#86a6df"
                         d="M125.903 90.5a5.92 5.92 0 00-1.857-4.716"
-                        className="color8fd8f2 svgShape"
-                    ></path>
+                        className="color8fd8f2 svgShape"></path>
                     <path
                         fill="#324e7b"
                         d="M125.904 91a.445.445 0 01-.057-.004.5.5 0 01-.441-.552 5.467 5.467 0 00-1.696-4.29.5.5 0 11.672-.74 6.386 6.386 0 012.017 5.143.5.5 0 01-.495.443z"
-                        className="color2d2d2d svgShape"
-                    ></path>
+                        className="color2d2d2d svgShape"></path>
                 </g>
             </svg>
         </svg>
