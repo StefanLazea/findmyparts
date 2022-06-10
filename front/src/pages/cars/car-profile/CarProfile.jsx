@@ -4,19 +4,21 @@ import { useGlobalContext } from 'global-context';
 
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import _ from 'lodash';
 
 import { IconButton, Tooltip, CircularProgress } from '@mui/material';
 import { CarRepair, DocumentScanner, EditRoad, Add } from '@mui/icons-material';
 import EditIcon from '@mui/icons-material/Edit';
 
 import CustomStepper from 'components/stepper/Stepper';
-import { AddDocumentDialog } from '../components/add-document-dialog/AddDocumentDialog';
-import { CarDetails } from '../components/car-details-editable/CarDetails';
 import { PageContainer } from 'components/page-container/PageContainer';
 import { ConfirmDialog } from 'components/confirm-dialog/ConfirmDialog';
-import styles from './CarProfile.module.scss';
+
 import { DocumentDetailDialog } from '../components/document-detail-dialog/DocumentDetailDialog';
-import _ from 'lodash';
+import { AddDocumentDialog } from '../components/add-document-dialog/AddDocumentDialog';
+import { CarDetails } from '../components/car-details-editable/CarDetails';
+
+import styles from './CarProfile.module.scss';
 import { LABELS } from 'constants/labels';
 
 const DEFAULT_DOC_DATA = [

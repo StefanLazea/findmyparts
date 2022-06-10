@@ -8,7 +8,7 @@
 .addButton {
     display: flex;
     flex-direction: row;
-    justify-content: end;
+    justify-content: flex-end;
 }
 
 .stepContainer {
@@ -32,7 +32,6 @@
 .imageElement {
     min-height: 300px;
     min-width: 300px;
-    //TODO center image when in mobile
 }
 
 //overrides

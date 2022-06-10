@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React, { useState, useRef } from 'react';
 
 import _ from 'lodash';
@@ -168,14 +167,14 @@ export const AddDocumentDialog = (props) => {
                                             setType(e.target.value)
                                         }>
                                         <FormControlLabel
-                                            value={BACKEND_PROPERTY_VALUE.RCA}
-                                            control={<Radio />}
-                                            label="RCA"
-                                        />
-                                        <FormControlLabel
                                             value={BACKEND_PROPERTY_VALUE.ITP}
                                             control={<Radio />}
                                             label="ITP"
+                                        />
+                                        <FormControlLabel
+                                            value={BACKEND_PROPERTY_VALUE.RCA}
+                                            control={<Radio />}
+                                            label="RCA"
                                         />
                                         <FormControlLabel
                                             value={
@@ -196,11 +195,6 @@ export const AddDocumentDialog = (props) => {
                                         type="file"
                                         onChange={handleChange}
                                     />
-                                    {/* <Button
-                                        variant="contained"
-                                        component="span"
-                                        Upload
-                                    </Button> */}
                                     <Fab
                                         variant="extended"
                                         size="medium"
