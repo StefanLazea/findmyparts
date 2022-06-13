@@ -30,7 +30,6 @@ export const AddCarDialog = (props) => {
         state: { userId, socket }
     } = useGlobalContext();
     const formRef = useRef();
-    console.log({ userId });
     const validationSchema = yup.object({
         vin: yup
             .string()

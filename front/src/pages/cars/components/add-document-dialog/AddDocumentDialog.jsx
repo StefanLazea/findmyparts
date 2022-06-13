@@ -27,8 +27,7 @@ import styles from './AddDocumentDialog.module.scss';
 import { useEffect } from 'react';
 
 export const AddDocumentDialog = (props) => {
-    const { open, setOpen, carId, car } = props;
-    console.log({ doc: props.document });
+    const { open, setOpen, carId, car, edit, document } = props;
     const handleClose = () => setOpen(false);
     const formRef = useRef();
     const inputRef = useRef();
@@ -36,7 +35,14 @@ export const AddDocumentDialog = (props) => {
     const [uploadedFile, setUploadFile] = useState('');
     const [type, setType] = useState(BACKEND_PROPERTY_VALUE.ITP);
     const [detectionResult, setDetectionResult] = useState({});
-
+    const editDoc = edit
+        ? {
+              id: document.id,
+              price: document.price,
+              fromDate: document.fromDate,
+              expirationDate: document.expirationDate
+          }
+        : {};
     const handleUpload = () => {
         inputRef.current?.click();
     };
@@ -115,7 +121,7 @@ export const AddDocumentDialog = (props) => {
                 variant="extended"
                 size="medium"
                 aria-label="add"
-                disabled={_.isEmpty(detectionResult)}
+                disabled={_.isEmpty(detectionResult) && !edit}
                 onClick={() => formRef.current.submitForm()}>
                 {LABELS.save}
             </Fab>
@@ -126,9 +132,15 @@ export const AddDocumentDialog = (props) => {
         <CustomDialog
             open={open}
             setOpen={setOpen}
-            title={'Adauga un nou document'}
+            title={
+                props.edit
+                    ? LABELS.editDocumentTitle + document.name
+                    : LABELS.addDocumetTitle
+            }
             description={
-                'Adauga documentul tau. Incepe experienta prin alegerea tipului'
+                props.edit
+                    ? LABELS.editDocumetDescription
+                    : LABELS.addDocumetDescription
             }
             onClickInfo={() => {
                 triggerToastDisplay();
@@ -161,7 +173,9 @@ export const AddDocumentDialog = (props) => {
                                     </FormLabel>
                                     <RadioGroup
                                         aria-labelledby="demo-radio-buttons-group-label"
-                                        defaultValue={type}
+                                        defaultValue={
+                                            props.edit ? document?.name : type
+                                        }
                                         name="radio-buttons-group"
                                         onChange={(e) =>
                                             setType(e.target.value)
@@ -185,7 +199,6 @@ export const AddDocumentDialog = (props) => {
                                         />
                                     </RadioGroup>
                                 </FormControl>
-
                                 <label
                                     htmlFor="contained-button-file"
                                     className={styles.uploadButtons}>
@@ -243,12 +256,13 @@ export const AddDocumentDialog = (props) => {
                 </Grid>
                 <Grid item xs={8} sm={8} md={12}>
                     <DetectionDataResult
-                        type={type}
-                        detectionData={detectionResult}
+                        type={props.edit ? document?.name : type}
+                        detectionData={props.edit ? editDoc : detectionResult}
                         formRef={formRef}
                         carId={carId}
                         car={car}
                         closeScreen={handleClose}
+                        edit={edit}
                     />
                 </Grid>
             </Grid>

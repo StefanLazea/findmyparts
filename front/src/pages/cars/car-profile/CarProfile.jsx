@@ -64,7 +64,7 @@ export const CarProfile = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [confirmDelete, setConfirmDelete] = useState(false);
     const [toDeleteDoc, setToDeleteDoc] = useState({});
-
+    const [editDocument, setEditDocument] = useState(false);
     const setStepperProgress = (
         isITPAvailable,
         isRcaAvailable,
@@ -232,7 +232,8 @@ export const CarProfile = () => {
                     reRender={() => setTriggerRender((prev) => !prev)}
                     carId={selectedCar?.id}
                     car={selectedCar}
-                    document={clickedDocument}
+                    document={clickedDocument?.documentData}
+                    edit={editDocument}
                 />
             )}
             {!_.isEmpty(clickedDocument) &&
@@ -247,6 +248,7 @@ export const CarProfile = () => {
                                 color="inherit"
                                 aria-label="close"
                                 onClick={() => {
+                                    setEditDocument(true);
                                     setDocDialogOpen(false);
                                     setModalOpen(true);
                                 }}>

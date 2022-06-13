@@ -1,6 +1,9 @@
 const LABELS = {
     addToCalendar: 'Adauga in Google Calendar',
     addDocument: 'Adauga un document de tipul asta.',
+    addDocumetTitle: 'Adauga un nou document',
+    addDocumetDescription:
+        'Adauga documentul tau. Incepe experienta prin alegerea tipului',
     addPart: 'Adaugare piesa',
     addPartDescription:
         'Avem nevoie de urmatoarele detalii pentru a retine piesa pe care o ai.',
@@ -9,6 +12,8 @@ const LABELS = {
     cancel: 'Anulare',
     detailsAbout: 'Detalii legate despre',
     documentDeleted: 'Document deleted with success',
+    editDocumentTitle: 'Editeaza documentul ales',
+    editDocumetDescription: 'Editeaza documentul tau. Ai ales documentul:',
     expired: 'A expirat pe ',
     expirationDate: 'Data expirare',
     home: 'Acasa',

@@ -18,7 +18,8 @@ import moment from 'moment';
 const ONE_DAY = 86400000;
 
 export const DetectionDataResult = (props) => {
-    const { type, carId, car, detectionData, formRef, closeScreen } = props;
+    const { type, carId, car, detectionData, formRef, closeScreen, edit } =
+        props;
 
     const gapi = useGoogleApi({
         discoveryDocs: [
@@ -30,7 +31,6 @@ export const DetectionDataResult = (props) => {
         ]
     });
     const addEventToCalendar = async (fromDate, expDate) => {
-        console.log(fromDate, expDate);
         const request = {
             calendarId: 'primary',
             timeMin: new Date().toISOString(),
@@ -41,7 +41,6 @@ export const DetectionDataResult = (props) => {
         };
         const resp = await gapi.client.calendar.events.list(request);
         console.log(resp);
-        // console.log(resp);
         const googleEvent = {
             summary: `gasestePiesa.online: ${car.numberPlate} Aveti de reinnoit ${type}`,
             start: {
@@ -67,7 +66,6 @@ export const DetectionDataResult = (props) => {
             resource: googleEvent
         });
         if (!_.isNil(createEvent) && _.get(createEvent, 'status') === 200) {
-            console.log(createEvent);
             toast.success('Ati adaugat un eveniment nou!', {
                 position: 'top-right',
                 autoClose: 5000,
@@ -83,11 +81,27 @@ export const DetectionDataResult = (props) => {
     };
 
     const saveDocument = (values) => {
-        console.log({ values });
         axios
             .post(`/documents/add/${values.name}`, values)
-            .then((res) => {
-                console.log(res.data);
+            .then(() => {
+                closeScreen();
+            })
+            .catch((err) => {
+                toast.error(err.response.data.message, {
+                    position: 'top-right',
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined
+                });
+            });
+    };
+    const editDocument = (values) => {
+        axios
+            .put(`/documents/${detectionData?.id}`, values)
+            .then(() => {
                 closeScreen();
             })
             .catch((err) => {
@@ -114,6 +128,7 @@ export const DetectionDataResult = (props) => {
             }}
             // validationSchema={validationSchema}
             onSubmit={async (values) => {
+                //TODO modify event in calendar
                 const eventLink = await addEventToCalendar(
                     values.fromDate,
                     values.expirationDate
@@ -128,7 +143,11 @@ export const DetectionDataResult = (props) => {
                     name: type,
                     eventLink: eventLink
                 };
-                saveDocument(payload);
+                if (edit) {
+                    editDocument(payload);
+                } else {
+                    saveDocument(payload);
+                }
             }}>
             {({ values, handleChange, setFieldValue }) => (
                 <Grid
@@ -156,7 +175,10 @@ export const DetectionDataResult = (props) => {
                                 value={values?.fromDate}
                                 disabled={_.isEmpty(detectionData)}
                                 onChange={(newValue) => {
-                                    setFieldValue('fromDate', newValue);
+                                    setFieldValue(
+                                        'fromDate',
+                                        new Date(newValue).getTime()
+                                    );
                                 }}
                                 renderInput={(params) => (
                                     <TextField
@@ -180,7 +202,7 @@ export const DetectionDataResult = (props) => {
                                     onChange={(newValue) => {
                                         setFieldValue(
                                             'expirationDate',
-                                            newValue
+                                            new Date(newValue).getTime()
                                         );
                                     }}
                                     renderInput={(params) => (

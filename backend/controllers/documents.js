@@ -74,6 +74,8 @@ const getCarDocuments = async (req, res) => {
             item.dataValues.expirationDate
           ),
           ...item.dataValues,
+          expirationDate: new Date(item.expirationDate).getTime(),
+          fromDate: new Date(item.fromDate).getTime(),
         };
       });
       return res.status(200).send(documents);
@@ -82,6 +84,28 @@ const getCarDocuments = async (req, res) => {
     return res
       .status(404)
       .send({ message: "No elements found in the database", err });
+  }
+};
+
+const updateDocument = async (req, res) => {
+  console.log("HELLO");
+  const paramId = req.params.docId;
+  const doc = await DocumentsService.findDocumentById(paramId);
+  console.log("alooo", paramId, doc);
+  if (!doc) {
+    return res.status(404).send({ message: "Document not found" });
+  }
+
+  try {
+    await Documents.update(req.body, {
+      where: { id: paramId },
+    });
+
+    return res
+      .status(200)
+      .send({ message: "Document details updated successfully!" });
+  } catch (err) {
+    return res.status(500).send({ message: "Something went wrong" });
   }
 };
 
@@ -109,6 +133,7 @@ const getDocument = async (req, res) => {
 module.exports = {
   getAllDocuments,
   getCarDocuments,
+  updateDocument,
   addDocument,
   deleteDocument,
   getDocument,
