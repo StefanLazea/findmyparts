@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -53,6 +53,9 @@ function App() {
             setIsAuth(false);
         }
     };
+    useEffect(() => {
+        triggerLogOut();
+    }, []);
     console.log(process.env.REACT_APP_GOOGLE_ID);
     return (
         <GlobalContextProvide>

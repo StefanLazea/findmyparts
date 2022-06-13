@@ -4,7 +4,6 @@ import { GoogleLogout } from 'react-google-login';
 
 import Container from '@mui/material/Container';
 import { addUserId, useGlobalContext } from 'global-context';
-import { useGoogleApi } from 'react-gapi';
 
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -13,15 +12,6 @@ import _ from 'lodash';
 import './Login.scss';
 export const Login = () => {
     const { dispatch } = useGlobalContext();
-    // const gapi = useGoogleApi({
-    //     discoveryDocs: [
-    //         'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'
-    //     ],
-    //     scopes: [
-    //         'https://www.googleapis.com/auth/calendar.events',
-    //         'https://www.googleapis.com/auth/calendar'
-    //     ]
-    // });
     const handleLogin = (response) => {
         axios
             .post(

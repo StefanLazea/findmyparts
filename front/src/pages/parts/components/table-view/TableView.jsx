@@ -16,10 +16,12 @@ import {
 
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import NoDataIcon from 'assets/icons/NoDataIcon';
+import { EditPartDialog } from '../edit-part/EditPartDialog';
 
 import { useGlobalContext } from 'global-context';
 import styles from './TableView.module.scss';
-import { EditPartDialog } from '../edit-part/EditPartDialog';
+import { LABELS } from 'constants/labels';
 
 const ALL_USERS_COLUMNS = [
     { name: 'name', label: 'denumire' },
@@ -30,6 +32,8 @@ const ALL_USERS_COLUMNS = [
 export const TableView = ({ showAllParts }) => {
     const [columns, setColumns] = useState(ALL_USERS_COLUMNS);
     const [dataList, setDataList] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+
     const [selectedPart, setSelectedPart] = useState({});
     const [openEditModal, setOpenEditModal] = useState(false);
     const navigate = useNavigate();
@@ -49,10 +53,13 @@ export const TableView = ({ showAllParts }) => {
         const path = showAllParts
             ? `/parts/users/stock/details`
             : `/parts/users/${userId}/stock/details`;
-        axios.get(path).then((response) => {
-            console.log(response);
-            setDataList(response.data);
-        });
+        axios
+            .get(path)
+            .then((response) => {
+                setIsLoading(false);
+                setDataList(response.data);
+            })
+            .catch(() => setIsLoading(false));
     }, [showAllParts]);
 
     const deletePart = (part) => {
@@ -79,6 +86,18 @@ export const TableView = ({ showAllParts }) => {
         };
     }, [socket]);
 
+    if (dataList.length === 0 && !isLoading) {
+        return (
+            <div className={styles.noDataContainer}>
+                <div className={styles.noDataImage}>
+                    <NoDataIcon />
+                    <span className={styles.noDataLable}>
+                        {LABELS.noDataAvailable}
+                    </span>
+                </div>
+            </div>
+        );
+    }
     return (
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">

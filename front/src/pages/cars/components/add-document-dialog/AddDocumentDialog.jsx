@@ -27,7 +27,6 @@ import styles from './AddDocumentDialog.module.scss';
 import { useEffect } from 'react';
 
 export const AddDocumentDialog = (props) => {
-    //todo add carId/userId to context or redux
     const { open, setOpen, carId, car } = props;
     const handleClose = () => setOpen(false);
     const formRef = useRef();

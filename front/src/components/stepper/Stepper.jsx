@@ -4,7 +4,6 @@ import { IconButton } from '@mui/material';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
-import EditIcon from '@mui/icons-material/Edit';
 
 import { Tooltip } from '@mui/material';
 import { CustomTooltipMessage } from '../tooltip-message/CustomTooltipMessage';

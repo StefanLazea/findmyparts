@@ -13,6 +13,7 @@ const LABELS = {
     expirationDate: 'Data expirare',
     home: 'Acasa',
     notExisting: 'Nu exista',
+    noDataAvailable: 'Nu exista date',
     save: 'Salvare',
     sendToDetect: 'Detecteaza',
     seeCalendarEvent: 'Vezi evenimentul in google calendar',
