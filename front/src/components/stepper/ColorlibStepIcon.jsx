@@ -87,7 +87,6 @@ const ColorlibStepIconRoot = styled('div')(({ theme, ownerState }) => ({
 export const ColorlibStepIcon = (props) => {
     const { active, completed, expired, exists, className } = props;
 
-    console.log({ active, completed, expired, exists, props });
     return (
         <ColorlibStepIconRoot
             ownerState={{

@@ -53,7 +53,6 @@ export const CarProfile = () => {
     const {
         state: { socket }
     } = useGlobalContext();
-    console.log(state);
     const [step, setStep] = useState(-1);
     const [isModalOpen, setModalOpen] = useState(false);
     const [triggerRender, setTriggerRender] = useState(false);
@@ -64,11 +63,8 @@ export const CarProfile = () => {
     const [stepsInfo, setStepsInfo] = useState(DEFAULT_DOC_DATA);
     const [isLoading, setIsLoading] = useState(true);
     const [confirmDelete, setConfirmDelete] = useState(false);
-    const [toDeleteItem, setToDeleteItem] = useState({});
+    const [toDeleteDoc, setToDeleteDoc] = useState({});
 
-    useEffect(() => {
-        console.log(selectedCar);
-    }, [selectedCar]);
     const setStepperProgress = (
         isITPAvailable,
         isRcaAvailable,
@@ -110,14 +106,14 @@ export const CarProfile = () => {
     useEffect(() => {
         const handler = (car) => {
             console.log('client side am primit', car);
-            // setSelectedCar(car);
+            setSelectedCar(car);
         };
         socket.on('carUpdated', handler);
         return () => socket.off('carUpdated', handler);
     }, [socket]);
 
     useEffect(() => {
-        axios.get(`/documents/car/${state?.selectedCar?.id}`).then((res) => {
+        axios.get(`/documents/car/${selectedCar?.id}`).then((res) => {
             const response = res.data;
             const isRcaAvailable = response.some(
                 (item) => item.name === 'RCA' && !item.expired
@@ -137,17 +133,18 @@ export const CarProfile = () => {
 
     useEffect(() => {
         getCarDetails();
-    }, [state?.selectedCar?.id]);
+    }, [selectedCar.id]);
 
     const getCarDetails = () => {
-        axios.get(`/cars/${state?.selectedCar?.id}`).then((res) => {
+        axios.get(`/cars/${selectedCar?.id}`).then((res) => {
+            console.log('here');
             setSelectedCar(res.data);
         });
     };
 
     const deleteDocument = () => {
-        console.log(toDeleteItem);
-        const docId = _.get(toDeleteItem, 'documentData.id', '');
+        console.log(toDeleteDoc);
+        const docId = _.get(toDeleteDoc, 'documentData.id', '');
         if (docId === '') {
             console.log('err to be thrown');
             return;
@@ -214,7 +211,7 @@ export const CarProfile = () => {
                             tooltipHeader={'HELLLO'}
                             onStepDelete={(item) => {
                                 setConfirmDelete(true);
-                                setToDeleteItem(item);
+                                setToDeleteDoc(item);
                             }}
                             onStepClick={(item) => {
                                 setClickedDocument(item);
@@ -230,8 +227,8 @@ export const CarProfile = () => {
                     open={isModalOpen}
                     setOpen={setModalOpen}
                     reRender={() => setTriggerRender((prev) => !prev)}
-                    carId={state?.selectedCar?.id}
-                    car={state?.selectedCar}
+                    carId={selectedCar?.id}
+                    car={selectedCar}
                 />
             )}
             {!_.isEmpty(clickedDocument) &&
@@ -240,6 +237,18 @@ export const CarProfile = () => {
                         documentDetail={clickedDocument}
                         open={openDocDialog}
                         setOpen={setDocDialogOpen}
+                        headerActions={
+                            <IconButton
+                                edge="start"
+                                color="inherit"
+                                aria-label="close"
+                                onClick={() => {
+                                    setDocDialogOpen(false);
+                                    setModalOpen(true);
+                                }}>
+                                <EditIcon />
+                            </IconButton>
+                        }
                     />
                 )}
             {confirmDelete && (

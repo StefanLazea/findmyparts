@@ -11,13 +11,17 @@ import {
 
 import SummaryCard from 'components/summary-card/SummaryCard';
 import DateRangeIcon from '@mui/icons-material/DateRange';
-import EditIcon from '@mui/icons-material/Edit';
 
 import _ from 'lodash';
 import { LABELS } from 'constants/labels';
 import styles from './DocumentDetailDialog.module.scss';
 
-export const DocumentDetailDialog = ({ documentDetail, open, setOpen }) => {
+export const DocumentDetailDialog = ({
+    documentDetail,
+    open,
+    setOpen,
+    ...props
+}) => {
     console.log('DIALOG', documentDetail);
     const [details, setDetails] = useState([]);
     useEffect(() => {
@@ -49,13 +53,7 @@ export const DocumentDetailDialog = ({ documentDetail, open, setOpen }) => {
                     <span className={styles.dialogTitle}>
                         {LABELS.detailsAbout} {documentDetail.label}
                     </span>
-                    <IconButton
-                        edge="start"
-                        color="inherit"
-                        aria-label="close"
-                        onClick={() => {}}>
-                        <EditIcon />
-                    </IconButton>
+                    {props?.headerActions}
                 </div>
             </DialogTitle>
             <DialogContent>
