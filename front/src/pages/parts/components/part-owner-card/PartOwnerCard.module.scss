@@ -2,26 +2,27 @@
 //     // background-color: #2C8C99 !important;
 //  }
 
- .summaryCardContent {
+.summaryCardContent {
     display: flex;
     flex-direction: column;
     justify-content: center;
- 
+
     .text {
-    //    color: white;
-       display: flex;
-       flex-direction: row;
-       justify-content: center;
+        //    color: white;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
     }
 
     .requestPart {
-       display: flex;
-       flex-direction: row;
-       align-items: center;
-       justify-content: space-between;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 40px;
     }
 
     .title {
-       font-size: 22px;
+        font-size: 22px;
     }
- }
+}

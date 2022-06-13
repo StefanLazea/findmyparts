@@ -4,8 +4,9 @@ import {
     DialogTitle,
     Dialog,
     DialogContent,
-    IconButton,
-    Grid
+    Button,
+    Grid,
+    IconButton
 } from '@mui/material';
 
 import SummaryCard from 'components/summary-card/SummaryCard';
@@ -45,7 +46,7 @@ export const DocumentDetailDialog = ({ documentDetail, open, setOpen }) => {
         <Dialog open={open} onClose={() => setOpen((prev) => !prev)}>
             <DialogTitle>
                 <div className={styles.titleContainer}>
-                    <span>
+                    <span className={styles.dialogTitle}>
                         {LABELS.detailsAbout} {documentDetail.label}
                     </span>
                     <IconButton
@@ -69,19 +70,19 @@ export const DocumentDetailDialog = ({ documentDetail, open, setOpen }) => {
                         </Grid>
                     ))}
                 </Grid>
-                <IconButton
-                    edge="start"
-                    color="inherit"
-                    aria-label="close"
-                    onClick={() =>
-                        window.open(
-                            documentDetail.documentData.eventLink,
-                            '_blank'
-                        )
-                    }>
-                    <DateRangeIcon />
-                    {LABELS.seeCalendarEvent}
-                </IconButton>
+                <div className={styles.calendarButton}>
+                    <Button
+                        variant="outlined"
+                        startIcon={<DateRangeIcon />}
+                        onClick={() =>
+                            window.open(
+                                documentDetail.documentData.eventLink,
+                                '_blank'
+                            )
+                        }>
+                        {LABELS.seeCalendarEvent}
+                    </Button>
+                </div>
             </DialogContent>
         </Dialog>
     );

@@ -4,15 +4,24 @@
     justify-content: space-between;
     align-items: center;
 }
+.dialogTitle {
+    font-size: 1rem !important;
+}
 .gridContainer {
     width: 100% !important;
+
     margin-left: 0px !important;
 }
 .itemContainer {
     padding-left: 0px !important;
 }
+
 .imageElement {
     min-height: 200px;
     min-width: 200px;
     padding: 0px !important;
+}
+
+.calendarButton {
+    padding: 20px;
 }
