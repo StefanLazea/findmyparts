@@ -28,6 +28,7 @@ import { useEffect } from 'react';
 
 export const AddDocumentDialog = (props) => {
     const { open, setOpen, carId, car } = props;
+    console.log({ doc: props.document });
     const handleClose = () => setOpen(false);
     const formRef = useRef();
     const inputRef = useRef();

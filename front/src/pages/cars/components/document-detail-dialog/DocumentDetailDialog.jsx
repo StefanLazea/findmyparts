@@ -5,8 +5,7 @@ import {
     Dialog,
     DialogContent,
     Button,
-    Grid,
-    IconButton
+    Grid
 } from '@mui/material';
 
 import SummaryCard from 'components/summary-card/SummaryCard';
@@ -22,7 +21,6 @@ export const DocumentDetailDialog = ({
     setOpen,
     ...props
 }) => {
-    console.log('DIALOG', documentDetail);
     const [details, setDetails] = useState([]);
     useEffect(() => {
         const fromDate =

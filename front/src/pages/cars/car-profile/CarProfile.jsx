@@ -161,6 +161,9 @@ export const CarProfile = () => {
             });
         });
     };
+    useEffect(() => {
+        console.log(clickedDocument);
+    }, [clickedDocument]);
     return (
         <PageContainer>
             <div className={styles.header}>
@@ -229,6 +232,7 @@ export const CarProfile = () => {
                     reRender={() => setTriggerRender((prev) => !prev)}
                     carId={selectedCar?.id}
                     car={selectedCar}
+                    document={clickedDocument}
                 />
             )}
             {!_.isEmpty(clickedDocument) &&

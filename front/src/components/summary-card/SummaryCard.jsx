@@ -3,8 +3,8 @@ import React from 'react';
 import { Card, CardContent, Typography } from '@mui/material';
 
 import styles from './SummaryCard.module.scss';
+
 const SummaryCard = ({ data, ...props }) => {
-    console.log(styles[props.colors]);
     return (
         <Card classes={{ root: styles.summaryCard }}>
             <CardContent onClick={props.onClick}>

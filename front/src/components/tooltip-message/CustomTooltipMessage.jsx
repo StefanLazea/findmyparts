@@ -6,7 +6,6 @@ import { LABELS } from 'constants/labels';
 
 export const CustomTooltipMessage = ({ item }) => {
     const expirationDate = _.get(item, 'documentData.expirationDate', '');
-    console.log(item);
     return (
         <div>
             {item.exists ? (
