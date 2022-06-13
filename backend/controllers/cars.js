@@ -18,11 +18,10 @@ const getAllCars = async (req, res) => {
 const getUsersCars = async (req, res) => {
   const userId = req.params.userId;
   const cars = await CarsService.findCarsByUserId(userId);
-  if (!cars) {
-    return res.status(404).send({ message: "Cars not found" });
+  if (!_.isEmpty(cars)) {
+    return res.status(200).send(CarsService.getCarsFormattedResponse(cars));
   }
-  //refactor
-  return res.status(200).send(cars);
+  return res.status(404).send({ message: "No elements found in the database" });
 };
 
 const saveCar = async (req, res) => {

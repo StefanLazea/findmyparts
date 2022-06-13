@@ -19,6 +19,7 @@ const findCarById = async (carId) => {
 const findCarsByUserId = async (userId) => {
   return await Cars.findAll({
     where: [{ userId: userId }],
+    include: [{ model: Documents }],
   });
 };
 
