@@ -104,7 +104,6 @@ const getOnePartWithUserStock = async (req, res) => {
  */
 const getAllPartsStockDetails = async (req, res) => {
   const found = await PartsService.findQuery();
-  console.log(JSON.parse(JSON.stringify(found)));
   if (_.isEmpty(found)) {
     return res
       .status(404)
@@ -114,7 +113,6 @@ const getAllPartsStockDetails = async (req, res) => {
 };
 const getPartStockDetails = async (req, res) => {
   const found = await PartsService.findQuery(req.params.userId);
-  console.log(JSON.parse(JSON.stringify(found)));
   if (_.isEmpty(found)) {
     return res
       .status(404)
@@ -127,7 +125,6 @@ const getAllPartsStock = async (req, res) => {
   const found = await Parts.findAll({
     include: { model: Users, attributes: ["id", "email"] },
   });
-  console.log(JSON.parse(JSON.stringify(found)));
   if (_.isEmpty(found)) {
     return res
       .status(404)
@@ -150,13 +147,11 @@ const updatePart = async (req, res) => {
     currency: "lei",
     quantity: req.body.quantity,
   };
-  console.log("bingoooo", requestStock);
   const partId = req.params.partId;
 
   const user = await UsersService.findUserWithParts(req.body.userId);
   const foundPart = await PartsService.findUserPartById({ user, partId });
   let foundPartJSON = JSON.parse(JSON.stringify(foundPart));
-  console.log(foundPartJSON);
   if (_.isEmpty(foundPartJSON)) {
     return res.status(404).send({ message: "Part not found" });
   }
