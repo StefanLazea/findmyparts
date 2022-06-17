@@ -143,10 +143,8 @@ export const CarProfile = () => {
     };
 
     const deleteDocument = () => {
-        console.log(toDeleteDoc);
         const docId = _.get(toDeleteDoc, 'documentData.id', '');
         if (docId === '') {
-            console.log('err to be thrown');
             return;
         }
         axios.delete(`/documents/${docId}`).then(() => {

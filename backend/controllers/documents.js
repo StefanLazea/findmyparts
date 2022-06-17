@@ -14,7 +14,6 @@ const getAllDocuments = async (req, res) => {
 };
 
 const addDocument = async (req, res) => {
-  console.log(req.body);
   if (!req.body) {
     return res
       .status(500)
@@ -50,7 +49,6 @@ const addDocument = async (req, res) => {
   try {
     await Documents.create(document);
   } catch (err) {
-    console.log(err);
     return res.status(500).send({ message: err });
   }
   return res
@@ -66,9 +64,6 @@ const getCarDocuments = async (req, res) => {
       },
     }).then((allDocs) => {
       const documents = allDocs.map((item) => {
-        console.log(
-          DocumentsService.isDocExpired(item.dataValues.expirationDate)
-        );
         return {
           expired: DocumentsService.isDocExpired(
             item.dataValues.expirationDate
@@ -88,10 +83,8 @@ const getCarDocuments = async (req, res) => {
 };
 
 const updateDocument = async (req, res) => {
-  console.log("HELLO");
   const paramId = req.params.docId;
   const doc = await DocumentsService.findDocumentById(paramId);
-  console.log("alooo", paramId, doc);
   if (!doc) {
     return res.status(404).send({ message: "Document not found" });
   }

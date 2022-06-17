@@ -1,12 +1,11 @@
-const Parts = require('../models').Part;
-const sequelize = require('../models/db')
+const Parts = require("../models").Part;
+const sequelize = require("../models/db");
 
 const findAll = async () => {
-    return await Parts.findAll();
-}
+  return await Parts.findAll();
+};
 const findOnePartQuery = async ({ partId }) => {
-    console.log(partId)
-    const query = `select \
+  const query = `select \
         parts.id,\
         parts.name, \
         parts.code, \
@@ -21,34 +20,40 @@ const findOnePartQuery = async ({ partId }) => {
             LEFT JOIN users\
                 on users.id = stocks.userId\
         where stocks.partId='${partId}' and users.id = stocks.userId \
-        `
-    const result = await sequelize.query(query,
-        {
-            type: sequelize.QueryTypes.SELECT,
-            nest: true,
-            // plain: true, //gives unique value
-            raw: true
-        }
+        `;
+  const result = await sequelize.query(query, {
+    type: sequelize.QueryTypes.SELECT,
+    nest: true,
+    // plain: true, //gives unique value
+    raw: true,
+  });
+  const jsonResult = JSON.parse(JSON.stringify(result));
+  const filteredResult = [];
+  jsonResult.forEach((item) => {
+    const foundIndex = filteredResult.findIndex(
+      (result) => result.id === item.id
     );
-    const jsonResult = JSON.parse(JSON.stringify(result))
-    console.log('asjaidsda', jsonResult)
-    const filteredResult = []
-    jsonResult.forEach(item => {
-        const foundIndex = filteredResult.findIndex(result => result.id === item.id)
-        if (foundIndex !== -1) {
-            const itemFound = filteredResult[foundIndex]
-            itemFound.stocks.push(item.stocks)
-            const total = itemFound.stocks.reduce((acc, current) => acc + current.quantity, 0)
-            itemFound.total = total;
-        } else {
-            filteredResult.push({ ...item, stocks: [{ ...item.stocks }], total: item.stocks.quantity })
-        }
-    })
-    console.log(filteredResult)
-    return filteredResult[0];
-}
-const findQuery = async (userId = '') => {
-    const queryAll = "select \
+    if (foundIndex !== -1) {
+      const itemFound = filteredResult[foundIndex];
+      itemFound.stocks.push(item.stocks);
+      const total = itemFound.stocks.reduce(
+        (acc, current) => acc + current.quantity,
+        0
+      );
+      itemFound.total = total;
+    } else {
+      filteredResult.push({
+        ...item,
+        stocks: [{ ...item.stocks }],
+        total: item.stocks.quantity,
+      });
+    }
+  });
+  return filteredResult[0];
+};
+const findQuery = async (userId = "") => {
+  const queryAll =
+    "select \
         parts.id,\
         parts.name, \
         parts.code, \
@@ -63,8 +68,8 @@ const findQuery = async (userId = '') => {
             LEFT JOIN users\
                 on users.id = stocks.userId\
         where parts.id = stocks.partId and users.id = stocks.userId \
-        "
-    const queryOne = `select \
+        ";
+  const queryOne = `select \
         parts.id,\
         parts.name, \
         parts.code, \
@@ -79,69 +84,73 @@ const findQuery = async (userId = '') => {
             LEFT JOIN users\
                 on users.id = stocks.userId\
         where parts.id = stocks.partId and stocks.userId='${userId}' \
-        `
-    console.log('USER ID', userId)
-    const result = await sequelize.query(userId !== '' ? queryOne : queryAll,
-        {
-            type: sequelize.QueryTypes.SELECT,
-            nest: true,
-            // plain: true, //gives unique value
-            raw: true
-        }
+        `;
+  const result = await sequelize.query(userId !== "" ? queryOne : queryAll, {
+    type: sequelize.QueryTypes.SELECT,
+    nest: true,
+    // plain: true, //gives unique value
+    raw: true,
+  });
+  const jsonResult = JSON.parse(JSON.stringify(result));
+  const filteredResult = [];
+  jsonResult.forEach((item) => {
+    const foundIndex = filteredResult.findIndex(
+      (result) => result.id === item.id
     );
-    const jsonResult = JSON.parse(JSON.stringify(result))
-    const filteredResult = []
-    jsonResult.forEach(item => {
-        const foundIndex = filteredResult.findIndex(result => result.id === item.id)
-        if (foundIndex !== -1) {
-            const itemFound = filteredResult[foundIndex]
-            itemFound.stocks.push(item.stocks)
-            const total = itemFound.stocks.reduce((acc, current) => acc + current.quantity, 0)
-            itemFound.total = total;
-        } else {
-            filteredResult.push({ ...item, stocks: [{ ...item.stocks }], total: item.stocks.quantity })
-        }
-    })
-    return filteredResult;
-}
-
-
+    if (foundIndex !== -1) {
+      const itemFound = filteredResult[foundIndex];
+      itemFound.stocks.push(item.stocks);
+      const total = itemFound.stocks.reduce(
+        (acc, current) => acc + current.quantity,
+        0
+      );
+      itemFound.total = total;
+    } else {
+      filteredResult.push({
+        ...item,
+        stocks: [{ ...item.stocks }],
+        total: item.stocks.quantity,
+      });
+    }
+  });
+  return filteredResult;
+};
 
 const findPartByCode = async (code) => {
-    let partFound;
-    await Parts.findOne({
-        where: {
-            code: code
-        }
-    }).then((part) => partFound = part);
+  let partFound;
+  await Parts.findOne({
+    where: {
+      code: code,
+    },
+  }).then((part) => (partFound = part));
 
-    return partFound;
-}
+  return partFound;
+};
 
 const findPartById = async (partId) => {
-    let partFound;
-    await Parts.findOne({
-        where: { id: partId }
-    }).then((part) => partFound = part);
+  let partFound;
+  await Parts.findOne({
+    where: { id: partId },
+  }).then((part) => (partFound = part));
 
-    return partFound;
-}
+  return partFound;
+};
 
 const findUserPartById = async ({ user, partId } = {}) => {
-    return await user.getParts({
-        where: { id: partId }
-    });
-}
+  return await user.getParts({
+    where: { id: partId },
+  });
+};
 
 const updatePart = async (partId, part) => {
-    return await Parts.update(part, { where: { id: partId } })
-}
+  return await Parts.update(part, { where: { id: partId } });
+};
 module.exports = {
-    findPartByCode,
-    findPartById,
-    findUserPartById,
-    findAll,
-    findQuery,
-    updatePart,
-    findOnePartQuery
-}
+  findPartByCode,
+  findPartById,
+  findUserPartById,
+  findAll,
+  findQuery,
+  updatePart,
+  findOnePartQuery,
+};

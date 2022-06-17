@@ -11,7 +11,6 @@ const findDocumentById = async (docId) => {
 };
 
 const findDocumentByCarIdAndType = async ({ carId, type }) => {
-  console.log(carId, type);
   let docFound;
   await Documents.findOne({
     where: {
@@ -24,7 +23,6 @@ const findDocumentByCarIdAndType = async ({ carId, type }) => {
 
 const isDocExpired = (date) => {
   const expirationTimestamp = new Date(date).getTime();
-  console.log(expirationTimestamp, new Date().getTime());
   let expired = false;
   if (expirationTimestamp - new Date().getTime() < 0) {
     expired = true;

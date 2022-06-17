@@ -51,7 +51,6 @@ export const Login = () => {
                     buttonText="Logout"
                     onLogoutSuccess={() => localStorage.clear()}
                     onFailure={(response) =>
-                        console.log(response)
                     }></GoogleLogout>
             </div>
         </Container>

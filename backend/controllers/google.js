@@ -14,7 +14,6 @@ const transformDateToTimestamp = (str) => {
     splittedDate[2],
   ].join("/");
   const transformDate = new Date(shortDateFormat).getTime();
-  console.log(transformDate);
   return transformDate;
 };
 

@@ -18,7 +18,6 @@ const CustomStepper = ({
     stepperWidth = '600px',
     ...props
 }) => {
-    console.log('aici');
     const StepLabelItem = ({ item, onStepDelete }) => {
         return (
             <StepLabel
