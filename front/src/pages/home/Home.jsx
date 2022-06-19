@@ -15,15 +15,15 @@ export const Home = () => {
         ]
     });
     const addEventToCalendar = async (fromDate, expDate) => {
-        console.log(fromDate, expDate);
-        const request = {
-            calendarId: 'primary',
-            timeMin: new Date().toISOString(),
-            showDeleted: false,
-            singleEvents: true,
-            maxResults: 10,
-            orderBy: 'startTime'
-        };
+        // console.log(fromDate, expDate);
+        // const request = {
+        //     calendarId: 'primary',
+        //     timeMin: new Date().toISOString(),
+        //     showDeleted: false,
+        //     singleEvents: true,
+        //     maxResults: 10,
+        //     orderBy: 'startTime'
+        // };
         // const resp = await gapi.client.calendar.events.list(request);
         const googleEvent = {
             summary: `gasestePiesa.online: hello Aveti de reinnoit JJJJ`,
