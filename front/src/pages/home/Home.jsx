@@ -24,7 +24,7 @@ export const Home = () => {
             maxResults: 10,
             orderBy: 'startTime'
         };
-        const resp = await gapi.client.calendar.events.list(request);
+        // const resp = await gapi.client.calendar.events.list(request);
         const googleEvent = {
             summary: `gasestePiesa.online: hello Aveti de reinnoit JJJJ`,
             start: {
