@@ -55,7 +55,6 @@ export const CarProfile = () => {
     } = useGlobalContext();
     const [step, setStep] = useState(-1);
     const [isModalOpen, setModalOpen] = useState(false);
-    const [triggerRender, setTriggerRender] = useState(false);
     const [editMode, setEditMode] = useState(false);
     const [selectedCar, setSelectedCar] = useState(state?.selectedCar);
     const [clickedDocument, setClickedDocument] = useState({});
@@ -65,6 +64,7 @@ export const CarProfile = () => {
     const [confirmDelete, setConfirmDelete] = useState(false);
     const [toDeleteDoc, setToDeleteDoc] = useState({});
     const [editDocument, setEditDocument] = useState(false);
+
     const setStepperProgress = (
         isITPAvailable,
         isRcaAvailable,
@@ -103,33 +103,45 @@ export const CarProfile = () => {
         return allSteps;
     };
 
+    const gatherDocsData = (response) => {
+        const isRcaAvailable = response.some(
+            (item) => item.name === 'RCA' && !item.expired
+        );
+        const isITPAvailable = response.some(
+            (item) => item.name === 'ITP' && !item.expired
+        );
+        const isRovAvailable = response.some(
+            (item) => item.name === 'ROVIGNETA' && !item.expired
+        );
+        console.log({ isITPAvailable, isRcaAvailable, isRovAvailable });
+        setStepperProgress(isITPAvailable, isRcaAvailable, isRovAvailable);
+        setStepsInfo(getAllDocuments(response));
+    };
+
     useEffect(() => {
         const handler = (car) => {
             console.log('client side am primit', car);
             setSelectedCar(car);
         };
         socket.on('carUpdated', handler);
-        return () => socket.off('carUpdated', handler);
+        const docsUpdateHandler = (docs) => {
+            console.log('client side am primit', docs);
+            gatherDocsData(docs);
+        };
+        socket.on('docsListUpdate', docsUpdateHandler);
+        return () => {
+            socket.off('carUpdated', handler);
+            socket.off('docsListUpdate', docsUpdateHandler);
+        };
     }, [socket]);
 
     useEffect(() => {
         axios.get(`/documents/car/${selectedCar?.id}`).then((res) => {
-            const response = res.data;
-            const isRcaAvailable = response.some(
-                (item) => item.name === 'RCA' && !item.expired
-            );
-            const isITPAvailable = response.some(
-                (item) => item.name === 'ITP' && !item.expired
-            );
-            const isRovAvailable = response.some(
-                (item) => item.name === 'ROVIGNETA' && !item.expired
-            );
-            setStepperProgress(isITPAvailable, isRcaAvailable, isRovAvailable);
-            setStepsInfo(getAllDocuments(res.data));
+            gatherDocsData(res.data);
             setIsLoading(false);
         });
         return () => setStep(-1);
-    }, [triggerRender]);
+    }, []);
 
     useEffect(() => {
         getCarDetails();
@@ -148,6 +160,7 @@ export const CarProfile = () => {
             return;
         }
         axios.delete(`/documents/${docId}`).then(() => {
+            socket.emit('deleteDoc', selectedCar?.id);
             toast.success(LABELS.documentDeleted, {
                 position: 'top-right',
                 autoClose: 5000,
@@ -195,7 +208,10 @@ export const CarProfile = () => {
                         <IconButton
                             edge="start"
                             color="inherit"
-                            onClick={() => setModalOpen(true)}>
+                            onClick={() => {
+                                setEditDocument(false);
+                                setModalOpen(true);
+                            }}>
                             <Add />
                         </IconButton>
                     </Tooltip>
@@ -227,7 +243,6 @@ export const CarProfile = () => {
                 <AddDocumentDialog
                     open={isModalOpen}
                     setOpen={setModalOpen}
-                    reRender={() => setTriggerRender((prev) => !prev)}
                     carId={selectedCar?.id}
                     car={selectedCar}
                     document={clickedDocument?.documentData}
@@ -260,7 +275,7 @@ export const CarProfile = () => {
                     open={confirmDelete}
                     setOpen={setConfirmDelete}
                     onConfirmClick={() => deleteDocument()}
-                    message={'Are you sure you want to delete this item?'}
+                    message={LABELS.deleteItemMessage}
                 />
             )}
         </PageContainer>

@@ -1,5 +1,6 @@
 const PartsService = require("./services/part");
 const CarsService = require("./services/car");
+const DocumentsService = require("./services/document");
 
 const bindWebSocket = (socket) => {
   socket.on("parts", () => {});
@@ -30,23 +31,36 @@ const bindWebSocket = (socket) => {
 
   //cars
   socket.on("saveCar", async (car) => {
-    console.log("am primit ", car);
     const carsList = JSON.parse(
       JSON.stringify(await CarsService.findCarsByUserId())
     );
     socket.emit("carsListUpdate", carsList);
   });
   socket.on("updateCar", async (carId) => {
-    console.log("am primit ", carId);
     const updatedCar = JSON.parse(
       JSON.stringify(await CarsService.findCarById(carId))
     );
     socket.emit("carUpdated", updatedCar);
   });
-  socket.on("deleteCar", async (carId) => {
-    console.log("am primit ", carId);
+  socket.on("deleteCar", async () => {
     const carsList = JSON.parse(JSON.stringify(await CarsService.findAll()));
     socket.emit("carsListUpdate", carsList);
+  });
+
+  //documents
+  socket.on("editNewDocument", async (carId) => {
+    const documents = await DocumentsService.findCarDocsFormatted(carId);
+    socket.emit("docsListUpdate", documents);
+  });
+
+  socket.on("addNewDocument", async (carId) => {
+    const documents = await DocumentsService.findCarDocsFormatted(carId);
+    socket.emit("docsListUpdate", documents);
+  });
+
+  socket.on("deleteDoc", async (carId) => {
+    const documents = await DocumentsService.findCarDocsFormatted(carId);
+    socket.emit("docsListUpdate", documents);
   });
 };
 module.exports = {

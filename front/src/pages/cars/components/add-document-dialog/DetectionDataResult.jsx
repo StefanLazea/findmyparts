@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { useGoogleApi } from 'react-gapi';
+import { useGlobalContext } from 'global-context';
 
 import _ from 'lodash';
 import axios from 'axios';
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
 
-import { Grid, TextField } from '@mui/material';
+import { Grid, TextField, Switch, FormControlLabel } from '@mui/material';
 import DateAdapter from '@mui/lab/AdapterMoment';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
@@ -20,6 +21,10 @@ const ONE_DAY = 86400000;
 export const DetectionDataResult = (props) => {
     const { type, carId, car, detectionData, formRef, closeScreen, edit } =
         props;
+    const [enterManualData, setEnterManualData] = useState(false);
+    const {
+        state: { socket }
+    } = useGlobalContext();
 
     const gapi = useGoogleApi({
         discoveryDocs: [
@@ -84,6 +89,7 @@ export const DetectionDataResult = (props) => {
         axios
             .post(`/documents/add/${values.name}`, values)
             .then(() => {
+                socket.emit('addNewDocument', carId);
                 closeScreen();
             })
             .catch((err) => {
@@ -98,10 +104,12 @@ export const DetectionDataResult = (props) => {
                 });
             });
     };
+
     const editDocument = (values) => {
         axios
             .put(`/documents/${detectionData?.id}`, values)
             .then(() => {
+                socket.emit('editNewDocument', carId);
                 closeScreen();
             })
             .catch((err) => {
@@ -126,14 +134,11 @@ export const DetectionDataResult = (props) => {
                 fromDate: detectionData?.fromDate,
                 expirationDate: detectionData?.expirationDate
             }}
-            // validationSchema={validationSchema}
             onSubmit={async (values) => {
-                //TODO modify event in calendar
                 const eventLink = await addEventToCalendar(
                     values.fromDate,
                     values.expirationDate
                 );
-                //TODO get link from above and add to document model
                 const payload = {
                     ...values,
                     ...(values.fromDate === '' && {
@@ -150,58 +155,46 @@ export const DetectionDataResult = (props) => {
                 }
             }}>
             {({ values, handleChange, setFieldValue }) => (
-                <Grid
-                    container
-                    spacing={{ xs: 2, sm: 3, md: 3 }}
-                    columns={{ xs: 4, sm: 4, md: 12 }}
-                    className={styles.detectionContainer}>
-                    <Grid item xs={8} sm={8} md={8}>
-                        <TextField
-                            id="price"
-                            name="price"
-                            label="Pret"
-                            type="number"
-                            value={values?.price}
-                            disabled={_.isEmpty(detectionData)}
-                            onChange={handleChange}
-                            classes={{ root: styles.datePickerWidth }}
-                            fullWidth
-                        />
-                    </Grid>
-                    <Grid item xs={8} sm={8} md={8}>
-                        <LocalizationProvider dateAdapter={DateAdapter}>
-                            <DatePicker
-                                label="Data inceput"
-                                value={values?.fromDate}
-                                disabled={_.isEmpty(detectionData)}
-                                onChange={(newValue) => {
-                                    setFieldValue(
-                                        'fromDate',
-                                        new Date(newValue).getTime()
-                                    );
-                                }}
-                                renderInput={(params) => (
-                                    <TextField
-                                        classes={{
-                                            root: styles.datePickerWidth
-                                        }}
-                                        {...params}
-                                    />
-                                )}
+                <div>
+                    <FormControlLabel
+                        control={
+                            <Switch
+                                checked={enterManualData}
+                                onChange={() =>
+                                    setEnterManualData((prev) => !prev)
+                                }
+                                name="data"
                             />
-                        </LocalizationProvider>
-                    </Grid>
-                    <Grid item xs={8} sm={8} md={8}>
-                        <div style={{ width: '100%' }}>
+                        }
+                        label="Introducerea manuala a datelor "
+                    />
+                    <Grid
+                        container
+                        spacing={{ xs: 2, sm: 3, md: 3 }}
+                        columns={{ xs: 4, sm: 4, md: 12 }}
+                        className={styles.detectionContainer}>
+                        <Grid item xs={8} sm={8} md={8}>
+                            <TextField
+                                id="price"
+                                name="price"
+                                label="Pret"
+                                type="number"
+                                value={values?.price}
+                                disabled={_.isEmpty(detectionData)}
+                                onChange={handleChange}
+                                classes={{ root: styles.datePickerWidth }}
+                                fullWidth
+                            />
+                        </Grid>
+                        <Grid item xs={8} sm={8} md={8}>
                             <LocalizationProvider dateAdapter={DateAdapter}>
                                 <DatePicker
-                                    label="Data expirare"
-                                    value={values.expirationDate}
-                                    format="dd/MM/yyyy"
+                                    label="Data inceput"
+                                    value={values?.fromDate}
                                     disabled={_.isEmpty(detectionData)}
                                     onChange={(newValue) => {
                                         setFieldValue(
-                                            'expirationDate',
+                                            'fromDate',
                                             new Date(newValue).getTime()
                                         );
                                     }}
@@ -215,9 +208,35 @@ export const DetectionDataResult = (props) => {
                                     )}
                                 />
                             </LocalizationProvider>
-                        </div>
+                        </Grid>
+                        <Grid item xs={8} sm={8} md={8}>
+                            <div style={{ width: '100%' }}>
+                                <LocalizationProvider dateAdapter={DateAdapter}>
+                                    <DatePicker
+                                        label="Data expirare"
+                                        value={values.expirationDate}
+                                        format="dd/MM/yyyy"
+                                        disabled={_.isEmpty(detectionData)}
+                                        onChange={(newValue) => {
+                                            setFieldValue(
+                                                'expirationDate',
+                                                new Date(newValue).getTime()
+                                            );
+                                        }}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                classes={{
+                                                    root: styles.datePickerWidth
+                                                }}
+                                                {...params}
+                                            />
+                                        )}
+                                    />
+                                </LocalizationProvider>
+                            </div>
+                        </Grid>
                     </Grid>
-                </Grid>
+                </div>
             )}
         </Formik>
     );

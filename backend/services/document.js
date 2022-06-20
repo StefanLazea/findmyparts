@@ -30,8 +30,27 @@ const isDocExpired = (date) => {
   return expired;
 };
 
+const findCarDocsFormatted = async (carId) => {
+  return await Documents.findAll({
+    where: {
+      carId: carId,
+    },
+  }).then((allDocs) => {
+    const documents = allDocs.map((item) => {
+      return {
+        expired: isDocExpired(item.dataValues.expirationDate),
+        ...item.dataValues,
+        expirationDate: new Date(item.expirationDate).getTime(),
+        fromDate: new Date(item.fromDate).getTime(),
+      };
+    });
+    return documents;
+  });
+};
+
 module.exports = {
   findDocumentById,
   findDocumentByCarIdAndType,
+  findCarDocsFormatted,
   isDocExpired,
 };

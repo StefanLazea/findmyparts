@@ -58,23 +58,10 @@ const addDocument = async (req, res) => {
 
 const getCarDocuments = async (req, res) => {
   try {
-    await Documents.findAll({
-      where: {
-        carId: req.params.carId,
-      },
-    }).then((allDocs) => {
-      const documents = allDocs.map((item) => {
-        return {
-          expired: DocumentsService.isDocExpired(
-            item.dataValues.expirationDate
-          ),
-          ...item.dataValues,
-          expirationDate: new Date(item.expirationDate).getTime(),
-          fromDate: new Date(item.fromDate).getTime(),
-        };
-      });
-      return res.status(200).send(documents);
-    });
+    const documents = await DocumentsService.findCarDocsFormatted(
+      req.params.carId
+    );
+    return res.status(200).send(documents);
   } catch (err) {
     return res
       .status(404)
