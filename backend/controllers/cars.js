@@ -69,7 +69,6 @@ const updateCar = async (req, res) => {
 
 const deleteCar = async (req, res) => {
   const paramId = req.params.carId;
-  console.log(paramId);
   const car = await CarsService.findCarById(paramId);
   if (!car) {
     return res.status(404).send({ message: "Car not found" });

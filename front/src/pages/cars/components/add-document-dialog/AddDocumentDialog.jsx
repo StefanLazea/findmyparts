@@ -123,7 +123,7 @@ export const AddDocumentDialog = (props) => {
                 aria-label="add"
                 disabled={_.isEmpty(detectionResult) && !edit}
                 onClick={() => formRef.current.submitForm()}>
-                {LABELS.save}
+                {!props.edit ? LABELS.save : LABELS.edit}
             </Fab>
         </DialogActions>
     );

@@ -2,9 +2,7 @@ const PartsService = require("./services/part");
 const CarsService = require("./services/car");
 
 const bindWebSocket = (socket) => {
-  socket.on("parts", () => {
-    console.log("parts");
-  });
+  socket.on("parts", () => {});
   socket.on("savePart", async (part) => {
     console.log("am primit ", part);
     const partsList = JSON.parse(

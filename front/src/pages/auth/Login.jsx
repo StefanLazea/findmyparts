@@ -50,8 +50,7 @@ export const Login = () => {
                     clientId={process.env.REACT_APP_GOOGLE_ID}
                     buttonText="Logout"
                     onLogoutSuccess={() => localStorage.clear()}
-                    onFailure={(response) =>
-                    }></GoogleLogout>
+                    onFailure={(response) => {}}></GoogleLogout>
             </div>
         </Container>
     );
