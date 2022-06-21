@@ -18,6 +18,9 @@ const CustomStepper = ({
     stepperWidth = '600px',
     ...props
 }) => {
+    console.log({ currentStep, steps });
+    const currentStepIndex = steps?.filter((item) => item.exists).length - 1;
+    console.log({ currentStepIndex });
     const StepLabelItem = ({ item, onStepDelete }) => {
         return (
             <StepLabel
@@ -67,7 +70,7 @@ const CustomStepper = ({
         <Stepper
             sx={{ width: stepperWidth }}
             alternativeLabel
-            activeStep={currentStep}
+            activeStep={currentStepIndex}
             connector={<ColorlibConnector />}>
             {steps.map((item) => (
                 <Tooltip

@@ -53,7 +53,6 @@ export const CarProfile = () => {
     const {
         state: { socket }
     } = useGlobalContext();
-    const [step, setStep] = useState(-1);
     const [isModalOpen, setModalOpen] = useState(false);
     const [editMode, setEditMode] = useState(false);
     const [selectedCar, setSelectedCar] = useState(state?.selectedCar);
@@ -64,24 +63,6 @@ export const CarProfile = () => {
     const [confirmDelete, setConfirmDelete] = useState(false);
     const [toDeleteDoc, setToDeleteDoc] = useState({});
     const [editDocument, setEditDocument] = useState(false);
-
-    const setStepperProgress = (
-        isITPAvailable,
-        isRcaAvailable,
-        isRovAvailable
-    ) => {
-        if (isITPAvailable) {
-            setStep((prev) => {
-                return prev + 1;
-            });
-            if (isRcaAvailable) {
-                setStep((prev) => prev + 1);
-                if (isRovAvailable) {
-                    setStep((prev) => prev + 1);
-                }
-            }
-        }
-    };
 
     const getAllDocuments = (response) => {
         const docsResponse = response.map((item) => {
@@ -100,6 +81,7 @@ export const CarProfile = () => {
             );
             return found.length === 0 ? stepInfo : found[0];
         });
+        console.log({ allSteps });
         return allSteps;
     };
 
@@ -114,7 +96,6 @@ export const CarProfile = () => {
             (item) => item.name === 'ROVIGNETA' && !item.expired
         );
         console.log({ isITPAvailable, isRcaAvailable, isRovAvailable });
-        setStepperProgress(isITPAvailable, isRcaAvailable, isRovAvailable);
         setStepsInfo(getAllDocuments(response));
     };
 
@@ -140,7 +121,6 @@ export const CarProfile = () => {
             gatherDocsData(res.data);
             setIsLoading(false);
         });
-        return () => setStep(-1);
     }, []);
 
     useEffect(() => {
@@ -222,7 +202,6 @@ export const CarProfile = () => {
                         <CircularProgress />
                     ) : (
                         <CustomStepper
-                            currentStep={step}
                             steps={stepsInfo}
                             displayTooltip={true}
                             tooltipHeader={'HELLLO'}
