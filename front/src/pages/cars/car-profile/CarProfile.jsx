@@ -61,7 +61,6 @@ export const CarProfile = () => {
     const [stepsInfo, setStepsInfo] = useState(DEFAULT_DOC_DATA);
     const [isLoading, setIsLoading] = useState(true);
     const [confirmDelete, setConfirmDelete] = useState(false);
-    const [toDeleteDoc, setToDeleteDoc] = useState({});
     const [editDocument, setEditDocument] = useState(false);
 
     const getAllDocuments = (response) => {
@@ -71,7 +70,6 @@ export const CarProfile = () => {
                 icon: DOCUMENTS_ICONS[item.name],
                 label: item.name,
                 expired: item.expired,
-                //not the best approach
                 exists: true
             };
         });
@@ -81,22 +79,7 @@ export const CarProfile = () => {
             );
             return found.length === 0 ? stepInfo : found[0];
         });
-        console.log({ allSteps });
         return allSteps;
-    };
-
-    const gatherDocsData = (response) => {
-        const isRcaAvailable = response.some(
-            (item) => item.name === 'RCA' && !item.expired
-        );
-        const isITPAvailable = response.some(
-            (item) => item.name === 'ITP' && !item.expired
-        );
-        const isRovAvailable = response.some(
-            (item) => item.name === 'ROVIGNETA' && !item.expired
-        );
-        console.log({ isITPAvailable, isRcaAvailable, isRovAvailable });
-        setStepsInfo(getAllDocuments(response));
     };
 
     useEffect(() => {
@@ -106,8 +89,7 @@ export const CarProfile = () => {
         };
         socket.on('carUpdated', handler);
         const docsUpdateHandler = (docs) => {
-            console.log('client side am primit', docs);
-            gatherDocsData(docs);
+            setStepsInfo(getAllDocuments(docs));
         };
         socket.on('docsListUpdate', docsUpdateHandler);
         return () => {
@@ -118,24 +100,31 @@ export const CarProfile = () => {
 
     useEffect(() => {
         axios.get(`/documents/car/${selectedCar?.id}`).then((res) => {
-            gatherDocsData(res.data);
+            setStepsInfo(getAllDocuments(res.data));
             setIsLoading(false);
         });
-    }, []);
-
-    useEffect(() => {
-        getCarDetails();
-    }, [selectedCar.id]);
-
-    const getCarDetails = () => {
         axios.get(`/cars/${selectedCar?.id}`).then((res) => {
             console.log('here');
             setSelectedCar(res.data);
         });
-    };
+        return () => setStepsInfo(getAllDocuments([]));
+    }, [selectedCar.id]);
+
+    // useEffect(() => {
+    //     getCarDetails();
+    //     return () => setSelectedCar({});
+    // }, [selectedCar.id]);
+
+    // const getCarDetails = () => {
+
+    // };
+
+    useEffect(() => {
+        console.log('BINGO');
+    });
 
     const deleteDocument = () => {
-        const docId = _.get(toDeleteDoc, 'documentData.id', '');
+        const docId = _.get(clickedDocument, 'documentData.id', '');
         if (docId === '') {
             return;
         }
@@ -152,9 +141,7 @@ export const CarProfile = () => {
             });
         });
     };
-    useEffect(() => {
-        console.log(clickedDocument);
-    }, [clickedDocument]);
+
     return (
         <PageContainer>
             <div className={styles.header}>
@@ -207,7 +194,7 @@ export const CarProfile = () => {
                             tooltipHeader={'HELLLO'}
                             onStepDelete={(item) => {
                                 setConfirmDelete(true);
-                                setToDeleteDoc(item);
+                                setClickedDocument(item);
                             }}
                             onStepClick={(item) => {
                                 setClickedDocument(item);

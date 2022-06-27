@@ -15,6 +15,7 @@ import DatePicker from '@mui/lab/DatePicker';
 
 import styles from './AddDocumentDialog.module.scss';
 import moment from 'moment';
+import { LABELS } from 'constants/labels';
 
 const ONE_DAY = 86400000;
 
@@ -166,7 +167,7 @@ export const DetectionDataResult = (props) => {
                                 name="data"
                             />
                         }
-                        label="Introducerea manuala a datelor "
+                        label={LABELS.manualData}
                     />
                     <Grid
                         container
@@ -177,7 +178,7 @@ export const DetectionDataResult = (props) => {
                             <TextField
                                 id="price"
                                 name="price"
-                                label="Pret"
+                                label={LABELS.price}
                                 type="number"
                                 value={values?.price}
                                 disabled={_.isEmpty(detectionData)}
@@ -189,7 +190,7 @@ export const DetectionDataResult = (props) => {
                         <Grid item xs={8} sm={8} md={8}>
                             <LocalizationProvider dateAdapter={DateAdapter}>
                                 <DatePicker
-                                    label="Data inceput"
+                                    label={LABELS.beginDate}
                                     value={values?.fromDate}
                                     disabled={_.isEmpty(detectionData)}
                                     onChange={(newValue) => {
@@ -210,30 +211,28 @@ export const DetectionDataResult = (props) => {
                             </LocalizationProvider>
                         </Grid>
                         <Grid item xs={8} sm={8} md={8}>
-                            <div style={{ width: '100%' }}>
-                                <LocalizationProvider dateAdapter={DateAdapter}>
-                                    <DatePicker
-                                        label="Data expirare"
-                                        value={values.expirationDate}
-                                        format="dd/MM/yyyy"
-                                        disabled={_.isEmpty(detectionData)}
-                                        onChange={(newValue) => {
-                                            setFieldValue(
-                                                'expirationDate',
-                                                new Date(newValue).getTime()
-                                            );
-                                        }}
-                                        renderInput={(params) => (
-                                            <TextField
-                                                classes={{
-                                                    root: styles.datePickerWidth
-                                                }}
-                                                {...params}
-                                            />
-                                        )}
-                                    />
-                                </LocalizationProvider>
-                            </div>
+                            <LocalizationProvider dateAdapter={DateAdapter}>
+                                <DatePicker
+                                    label={LABELS.expirationDate}
+                                    value={values.expirationDate}
+                                    format="dd/MM/yyyy"
+                                    disabled={_.isEmpty(detectionData)}
+                                    onChange={(newValue) => {
+                                        setFieldValue(
+                                            'expirationDate',
+                                            new Date(newValue).getTime()
+                                        );
+                                    }}
+                                    renderInput={(params) => (
+                                        <TextField
+                                            classes={{
+                                                root: styles.datePickerWidth
+                                            }}
+                                            {...params}
+                                        />
+                                    )}
+                                />
+                            </LocalizationProvider>
                         </Grid>
                     </Grid>
                 </div>

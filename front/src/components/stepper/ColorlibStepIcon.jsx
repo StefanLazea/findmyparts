@@ -1,6 +1,5 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
 import StepConnector, {
     stepConnectorClasses
 } from '@mui/material/StepConnector';
@@ -36,14 +35,14 @@ export const ColorlibConnector = styled(StepConnector)(() => ({
     }
 }));
 const getItemColor = (ownerState) => {
-    if (ownerState.active || ownerState.completed) {
-        return {
-            backgroundColor: '#19AC43',
-            boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)'
-        };
-    } else if (ownerState.expired && ownerState.exists) {
+    if (ownerState.expired && ownerState.exists) {
         return {
             backgroundColor: '#D96C06',
+            boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)'
+        };
+    } else if (ownerState.active || ownerState.completed) {
+        return {
+            backgroundColor: '#19AC43',
             boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)'
         };
     } else {
@@ -53,6 +52,7 @@ const getItemColor = (ownerState) => {
         };
     }
 };
+
 const ColorlibStepIconRoot = styled('div')(({ theme, ownerState }) => ({
     backgroundColor:
         theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#ccc',
@@ -65,28 +65,10 @@ const ColorlibStepIconRoot = styled('div')(({ theme, ownerState }) => ({
     justifyContent: 'center',
     alignItems: 'center',
     ...getItemColor(ownerState)
-    // ...(ownerState.active && {
-    //     backgroundColor: '#19AC43',
-    //     boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)'
-    // }),
-    // ...(ownerState.completed && {
-    //     backgroundColor: '#19AC43',
-    //     boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)'
-    // })
-    // ...(ownerState.expired && ownerState.exists && !ownerState.active
-    //     ? {
-    //           backgroundColor: '#D96C06',
-    //           boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)'
-    //       }
-    //     : {
-    //           backgroundColor: '#DD1C1A',
-    //           boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)'
-    //       })
 }));
 
 export const ColorlibStepIcon = (props) => {
     const { active, completed, expired, exists, className } = props;
-
     return (
         <ColorlibStepIconRoot
             ownerState={{

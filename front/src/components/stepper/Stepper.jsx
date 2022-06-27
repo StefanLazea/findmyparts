@@ -12,21 +12,19 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import styles from './Stepper.module.scss';
 const CustomStepper = ({
-    currentStep = 0,
     steps = [],
     onStepClick = () => {},
     stepperWidth = '600px',
     ...props
 }) => {
-    console.log({ currentStep, steps });
     const currentStepIndex = steps?.filter((item) => item.exists).length - 1;
-    console.log({ currentStepIndex });
     const StepLabelItem = ({ item, onStepDelete }) => {
         return (
             <StepLabel
                 StepIconComponent={(props) => {
                     const stepLabelProps = {
                         ...props,
+                        item,
                         icon: item.icon,
                         //if item is expired and data comes from backedn
                         expired: item.expired,
@@ -66,6 +64,7 @@ const CustomStepper = ({
             </div>
         );
     };
+    console.log('aici', steps);
     return (
         <Stepper
             sx={{ width: stepperWidth }}

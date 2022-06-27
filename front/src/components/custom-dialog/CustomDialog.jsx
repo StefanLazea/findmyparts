@@ -39,9 +39,9 @@ export const CustomDialog = ({
                     <IconButton
                         edge="start"
                         color="inherit"
-                        onClick={handleClose}
+                        onClick={props.onClickInfo}
                         aria-label="close">
-                        <CloseIcon />
+                        <InfoIcon />
                     </IconButton>
                     <Typography
                         sx={{ ml: 2, flex: 1 }}
@@ -52,9 +52,9 @@ export const CustomDialog = ({
                     <IconButton
                         edge="start"
                         color="inherit"
-                        onClick={props.onClickInfo}
+                        onClick={handleClose}
                         aria-label="close">
-                        <InfoIcon />
+                        <CloseIcon />
                     </IconButton>
                 </Toolbar>
             </AppBar>

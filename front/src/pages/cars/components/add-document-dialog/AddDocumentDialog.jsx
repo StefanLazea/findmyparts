@@ -14,6 +14,7 @@ import {
     FormLabel,
     Fab
 } from '@mui/material';
+
 import NavigationIcon from '@mui/icons-material/Navigation';
 import UploadIcon from '@mui/icons-material/Upload';
 import DocumentIcon from 'assets/icons/DocumentIcon';
@@ -43,6 +44,7 @@ export const AddDocumentDialog = (props) => {
               expirationDate: document.expirationDate
           }
         : {};
+
     const handleUpload = () => {
         inputRef.current?.click();
     };
@@ -57,7 +59,7 @@ export const AddDocumentDialog = (props) => {
             .then((res) => {
                 if (!_.isEmpty(res.data)) {
                     setDetectionResult(res.data);
-                    toast.success('Detection success', {
+                    toast.success(LABELS.detectionSuccess, {
                         position: 'top-right',
                         autoClose: 5000,
                         hideProgressBar: false,
@@ -89,20 +91,15 @@ export const AddDocumentDialog = (props) => {
     };
 
     const triggerToastDisplay = () =>
-        toast.info(
-            `Alege un tip de document, incarca-l si apasa pe detectarea textului.
-         La final, verifica corectitudinea datelor si salveaza datele. Se va seta
-         automat in calendarul tau Google un nou eveniment.`,
-            {
-                position: 'top-right',
-                autoClose: 8000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined
-            }
-        );
+        toast.info(LABELS.chooseDocumentDescription, {
+            position: 'bottom-left',
+            autoClose: 8000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined
+        });
 
     useEffect(() => {
         triggerToastDisplay();
@@ -169,12 +166,14 @@ export const AddDocumentDialog = (props) => {
                             <div className={styles.uploadDocument}>
                                 <FormControl>
                                     <FormLabel id="demo-radio-buttons-group-label">
-                                        Tipul documentului
+                                        {LABELS.documentType}
                                     </FormLabel>
                                     <RadioGroup
                                         aria-labelledby="demo-radio-buttons-group-label"
-                                        defaultValue={
-                                            props.edit ? document?.name : type
+                                        value={
+                                            props.edit && document
+                                                ? document?.name
+                                                : type
                                         }
                                         name="radio-buttons-group"
                                         onChange={(e) =>
@@ -183,19 +182,19 @@ export const AddDocumentDialog = (props) => {
                                         <FormControlLabel
                                             value={BACKEND_PROPERTY_VALUE.ITP}
                                             control={<Radio />}
-                                            label="ITP"
+                                            label={LABELS.itp}
                                         />
                                         <FormControlLabel
                                             value={BACKEND_PROPERTY_VALUE.RCA}
                                             control={<Radio />}
-                                            label="RCA"
+                                            label={LABELS.rca}
                                         />
                                         <FormControlLabel
                                             value={
                                                 BACKEND_PROPERTY_VALUE.ROVIGNETA
                                             }
                                             control={<Radio />}
-                                            label="Rovigneta"
+                                            label={LABELS.rovigneta}
                                         />
                                     </RadioGroup>
                                 </FormControl>
