@@ -110,19 +110,6 @@ export const CarProfile = () => {
         return () => setStepsInfo(getAllDocuments([]));
     }, [selectedCar.id]);
 
-    // useEffect(() => {
-    //     getCarDetails();
-    //     return () => setSelectedCar({});
-    // }, [selectedCar.id]);
-
-    // const getCarDetails = () => {
-
-    // };
-
-    useEffect(() => {
-        console.log('BINGO');
-    });
-
     const deleteDocument = () => {
         const docId = _.get(clickedDocument, 'documentData.id', '');
         if (docId === '') {
@@ -169,9 +156,7 @@ export const CarProfile = () => {
             />
             <div className={styles.carProfileStepper}>
                 <div className={styles.addButton}>
-                    <Tooltip
-                        title={'Adauga un nou document'}
-                        enterTouchDelay={0}>
+                    <Tooltip title={LABELS.addDocumetTitle} enterTouchDelay={0}>
                         <IconButton
                             edge="start"
                             color="inherit"

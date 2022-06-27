@@ -1,0 +1,26 @@
+.noDataContainer {
+    margin-top: 15%;
+    height: 100%;
+
+    .noDataImage {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .center {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .noDataTitle {
+        padding: 14px;
+        font-weight: 500;
+    }
+
+    .noDataSubtitle {
+        font-size: 12px;
+    }
+}

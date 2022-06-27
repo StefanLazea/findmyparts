@@ -13,10 +13,9 @@ import {
     Paper,
     IconButton
 } from '@mui/material';
-
+import { NoData } from 'components/no-data/NoData';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import NoDataIcon from 'assets/icons/NoDataIcon';
 import { EditPartDialog } from '../edit-part/EditPartDialog';
 
 import { useGlobalContext } from 'global-context';
@@ -88,14 +87,7 @@ export const TableView = ({ showAllParts }) => {
 
     if (dataList.length === 0 && !isLoading) {
         return (
-            <div className={styles.noDataContainer}>
-                <div className={styles.noDataImage}>
-                    <NoDataIcon />
-                    <span className={styles.noDataLable}>
-                        {LABELS.noDataAvailable}
-                    </span>
-                </div>
-            </div>
+            <NoData title={LABELS.createPart} subtitle={LABELS.noPartFound} />
         );
     }
     return (
@@ -123,7 +115,6 @@ export const TableView = ({ showAllParts }) => {
                                     {item.code}
                                 </TableCell>
                                 <TableCell>{item.total}</TableCell>
-                                {/* <TableCell>{item.price}</TableCell> */}
                                 <TableCell>
                                     <IconButton
                                         color="primary"
@@ -153,7 +144,6 @@ export const TableView = ({ showAllParts }) => {
                     part={selectedPart}
                     open={openEditModal}
                     setOpen={setOpenEditModal}
-                    //todo
                     oneUserDisplay={true}
                 />
             )}

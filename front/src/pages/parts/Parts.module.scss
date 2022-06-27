@@ -1,0 +1,21 @@
+.switchButton {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    padding: 5px;
+}
+
+.partsContainer {
+    height: 100%;
+
+    .headerButtons {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        height: 10%;
+    }
+
+    .tableContainer {
+        height: 90%;
+    }
+}

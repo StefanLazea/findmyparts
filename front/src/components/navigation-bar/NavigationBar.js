@@ -84,7 +84,7 @@ export const NavigationBar = (props) => {
                                     <Typography textAlign="center">
                                         <Link
                                             to={page.link}
-                                            className="text black">
+                                            className="text black lowercase">
                                             {page.name}
                                         </Link>
                                     </Typography>

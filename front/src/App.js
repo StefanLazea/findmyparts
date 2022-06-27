@@ -25,25 +25,27 @@ function App() {
     const [isAuth, setIsAuth] = useState(true);
 
     const darkTheme = createTheme({
+        typography: {
+            fontFamily: 'Roboto'
+        },
         palette: {
-            // mode: 'dark',
             primary: {
-                main: '#1B2F33'
+                main: '#4281A4'
             },
             secondary: {
-                main: '#326771'
+                main: '#E6B89C'
             },
             tertiary: {
                 main: '#FFFFFF'
             },
             error: {
-                main: '#D81C2C'
+                main: '#da3e52'
             },
             warning: {
-                main: '#FFD23F'
+                main: '#F2E94E'
             },
             info: {
-                main: '#42D9C8'
+                main: '#96e6b3' //'#42D9C8'
             }
         }
     });
@@ -53,10 +55,11 @@ function App() {
             setIsAuth(false);
         }
     };
+
     useEffect(() => {
         triggerLogOut();
     }, []);
-    console.log(process.env.REACT_APP_GOOGLE_ID);
+
     return (
         <GlobalContextProvide>
             <ThemeProvider theme={darkTheme}>

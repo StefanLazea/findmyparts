@@ -10,27 +10,27 @@ import Container from '@mui/material/Container';
 import { AddPartDialog } from './components/add-part/AddPartDialog';
 import { TableView } from './components/table-view/TableView';
 
-import './Parts.scss';
+import styles from './Parts.module.scss';
 
 export const Parts = () => {
     const [openModal, setOpenAddModal] = useState(false);
     const [showAllParts, setShowAllParts] = useState(true);
     return (
-        <Container maxWidth="lg">
-            <div className="header-buttons">
+        <Container maxWidth="lg" className={styles.partsContainer}>
+            <div className={styles.headerButtons}>
                 <IconButton
                     color="primary"
                     aria-label="grid view"
                     onClick={() => setOpenAddModal(true)}>
                     <AddIcon />
                 </IconButton>
-                <div className="switch-button">
+                <div className={styles.switchButton}>
                     <IconButton
                         color="primary"
                         aria-label="grid view"
                         onClick={() => setShowAllParts(true)}>
                         <GroupIcon
-                            sx={{ color: showAllParts ? '#2C8C99' : '#00000' }}
+                            sx={{ color: showAllParts ? '#7E6BEF' : '#4281A4' }}
                         />
                     </IconButton>
                     <IconButton
@@ -38,12 +38,16 @@ export const Parts = () => {
                         aria-label="grid view"
                         onClick={() => setShowAllParts(false)}>
                         <PersonIcon
-                            sx={{ color: !showAllParts ? '#2C8C99' : '#00000' }}
+                            sx={{
+                                color: !showAllParts ? '#7E6BEF' : '#4281A4'
+                            }}
                         />
                     </IconButton>
                 </div>
             </div>
-            <TableView showAllParts={showAllParts} />
+            <div className={styles.tableContainer}>
+                <TableView showAllParts={showAllParts} />
+            </div>
             {openModal && (
                 <AddPartDialog open={openModal} setOpen={setOpenAddModal} />
             )}

@@ -10,6 +10,7 @@ const LABELS = {
     appTitle: 'gasestepiesa.online',
     beginDate: 'Data inceput',
     cancel: 'Anulare',
+    createPart: 'Crează o piesă nouă.',
     chooseDocumentDescription: `Alege un tip de document, incarca-l si apasa pe detectarea textului.
     La final, verifica corectitudinea datelor si salveaza datele. Se va seta
     automat in calendarul tau Google un nou eveniment.`,
@@ -28,6 +29,7 @@ const LABELS = {
     manualData: 'Introducerea manuala a datelor ',
     notExisting: 'Nu exista',
     noDataAvailable: 'Nu exista date',
+    noPartFound: 'Nu există date.',
     save: 'Salvare',
     sendToDetect: 'Detecteaza',
     seeCalendarEvent: 'Vezi evenimentul in google calendar',
