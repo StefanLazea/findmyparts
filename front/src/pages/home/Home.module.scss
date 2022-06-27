@@ -2,7 +2,22 @@
     height: 400px;
 }
 
-.partsPie {
+.homeHeader {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.itemContainer {
+    display: flex;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    .partsPie {
+        height: 300px;
+        width: 100%;
+    }
+}
+
+.lineContainer {
     height: 400px;
-    width: 80%;
 }

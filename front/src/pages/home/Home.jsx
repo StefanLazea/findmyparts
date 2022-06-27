@@ -1,8 +1,10 @@
 import React from 'react';
+import { Grid } from '@mui/material';
 
 import { PieChart } from 'components/pie-chart/PieChart';
+import { LineChart } from 'components/line-chart/LineChart';
 import { PageContainer } from 'components/page-container/PageContainer';
-
+import { ProfileCard } from './components/ProfileCard';
 import styles from './Home.module.scss';
 
 export const Home = () => {
@@ -40,9 +42,39 @@ export const Home = () => {
     ];
     return (
         <PageContainer>
-            {/* todo check for data to pe passed */}
-            <div className={styles.partsPie}>
-                <PieChart data={data} />
+            <div className={styles.homeHeader}>Salut, Stefan</div>
+            <Grid
+                container
+                spacing={{ xs: 2, sm: 3, md: 3 }}
+                columns={{ xs: 4, sm: 8, md: 12 }}
+                className={styles.gridContainer}>
+                <Grid
+                    item
+                    xs={4}
+                    sm={4}
+                    md={4}
+                    align="center"
+                    justify="center"
+                    alignItems="center"
+                    className={styles.imageElement}>
+                    <ProfileCard />
+                </Grid>
+                <Grid
+                    item
+                    xs={4}
+                    sm={4}
+                    md={8}
+                    align="center"
+                    justify="center"
+                    alignItems="center"
+                    className={styles.itemContainer}>
+                    <div className={styles.partsPie}>
+                        <PieChart data={data} />
+                    </div>
+                </Grid>
+            </Grid>
+            <div className={styles.lineContainer}>
+                <LineChart />
             </div>
         </PageContainer>
     );
