@@ -54,7 +54,7 @@ export const AddCarDialog = (props) => {
             userId: userId
         };
         axios.post('/cars/save', payload).then((res) => {
-            socket.emit('saveCar', payload);
+            socket.emit('saveCar', userId);
             toast(res.data.message);
             setOpen(false);
         });

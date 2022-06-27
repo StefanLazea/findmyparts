@@ -1,4 +1,4 @@
-.pageContainer{
-    // height: 100%; //or inherit
-    margin: 20px
+.pageContainer {
+    height: calc(100% - 40px);
+    margin: 20px;
 }

@@ -8,10 +8,13 @@ import {
     IconButton,
     Typography
 } from '@mui/material';
-import styles from './CustomCard.module.scss';
 import { red } from '@mui/material/colors';
+
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { LABELS } from 'constants/labels';
+
+import styles from './CustomCard.module.scss';
 
 export const CustomCard = ({ carData = {}, ...props }) => {
     const checkColor = (check) => (check ? 'info' : 'error');
@@ -34,7 +37,9 @@ export const CustomCard = ({ carData = {}, ...props }) => {
                     title={carData.VIN}
                     subheader={`${carData.brand} ${carData.model}`}
                 />
-                <CardContent onClick={props.onClick}>
+                <CardContent
+                    onClick={props.onClick}
+                    classes={{ root: styles.customContent }}>
                     <div className={styles.carsCardContent}>
                         <Typography
                             variant="h5"
@@ -47,19 +52,19 @@ export const CustomCard = ({ carData = {}, ...props }) => {
                             <CheckCircleIcon
                                 color={checkColor(carData.hasITP)}
                             />
-                            ITP
+                            {LABELS.itp.toUpperCase()}
                         </div>
                         <div className={styles.check}>
                             <CheckCircleIcon
                                 color={checkColor(carData.hasRCA)}
                             />
-                            RCA
+                            {LABELS.rca.toUpperCase()}
                         </div>
                         <div className={styles.check}>
                             <CheckCircleIcon
                                 color={checkColor(carData.hasRovigneta)}
                             />
-                            Rovigneta
+                            {LABELS.rovigneta}
                         </div>
                     </div>
                 </CardContent>

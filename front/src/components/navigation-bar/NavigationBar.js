@@ -17,11 +17,11 @@ import { LABELS } from 'constants/labels';
 const pages = [
     { name: 'Piese', link: '/parts' },
     { name: 'Masini', link: '/cars' },
-    { name: 'Acasa', link: '/home' },
+    { name: 'Acasa', link: '/' },
     { name: 'Login', link: '/login' }
 ];
 
-export const NavigationBar = (props) => {
+export const NavigationBar = () => {
     const [anchorElNav, setAnchorElNav] = useState(null);
 
     const handleOpenNavMenu = (event) => {

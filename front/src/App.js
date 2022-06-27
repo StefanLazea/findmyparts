@@ -73,7 +73,7 @@ function App() {
                         clientId={process.env.REACT_APP_GOOGLE_ID}>
                         <Routes>
                             {/* non private routes */}
-                            <Route path="/home" exact element={<Home />} />
+                            <Route path="/" exact element={<Home />} />
                             <Route path="/login" element={<Login />} />
                             <Route path="/cars" element={<Cars />} />
                             <Route

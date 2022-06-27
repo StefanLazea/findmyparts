@@ -12,7 +12,7 @@ import { CustomCard } from './components/custom-card/CustomCard';
 import { AddCarDialog } from './components/add-car-dialog/AddCarDialog';
 import { PageContainer } from 'components/page-container/PageContainer';
 
-import './Cars.scss';
+import styles from './Cars.module.scss';
 
 export const Cars = () => {
     const navigate = useNavigate();
@@ -56,21 +56,30 @@ export const Cars = () => {
     return (
         <PageContainer>
             {/* todo spacing right incorrect */}
-            <Tooltip title="Adauga o masina">
-                <IconButton
-                    color="primary"
-                    aria-label="grid view"
-                    onClick={() => setModalOpen(true)}>
-                    <Add />
-                </IconButton>
-            </Tooltip>
+            <div className={styles.tooltipHeader}>
+                <Tooltip title="Adauga o masina">
+                    <IconButton
+                        color="primary"
+                        aria-label="grid view"
+                        onClick={() => setModalOpen(true)}>
+                        <Add />
+                    </IconButton>
+                </Tooltip>
+            </div>
             <Grid
                 container
+                className={styles.carsContainer}
                 rowSpacing={4}
                 spacing={{ xs: 1, sm: 3, md: 6 }}
                 columns={{ xs: 1, sm: 8, md: 12 }}>
                 {cars.map((car, index) => (
-                    <Grid item xs={1} sm={4} md={4} key={index}>
+                    <Grid
+                        item
+                        xs={1}
+                        sm={4}
+                        md={4}
+                        key={index}
+                        classes={{ item: styles.gridItem }}>
                         <CustomCard
                             md={12}
                             key={car.VIN}

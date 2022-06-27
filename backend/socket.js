@@ -30,9 +30,9 @@ const bindWebSocket = (socket) => {
   });
 
   //cars
-  socket.on("saveCar", async (car) => {
+  socket.on("saveCar", async (userId) => {
     const carsList = JSON.parse(
-      JSON.stringify(await CarsService.findCarsByUserId())
+      JSON.stringify(await CarsService.findCarsByUserId(userId))
     );
     socket.emit("carsListUpdate", carsList);
   });
