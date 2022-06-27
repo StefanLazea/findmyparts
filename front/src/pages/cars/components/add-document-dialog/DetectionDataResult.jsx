@@ -36,6 +36,7 @@ export const DetectionDataResult = (props) => {
             'https://www.googleapis.com/auth/calendar'
         ]
     });
+
     const addEventToCalendar = async (fromDate, expDate) => {
         const request = {
             calendarId: 'primary',
@@ -71,6 +72,7 @@ export const DetectionDataResult = (props) => {
             calendarId: 'primary',
             resource: googleEvent
         });
+        //todo HANDLE 403 error
         if (!_.isNil(createEvent) && _.get(createEvent, 'status') === 200) {
             toast.success('Ati adaugat un eveniment nou!', {
                 position: 'top-right',

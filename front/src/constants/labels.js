@@ -4,6 +4,7 @@ const LABELS = {
     addDocumetTitle: 'Adauga un nou document',
     addDocumetDescription:
         'Adauga documentul tau. Incepe experienta prin alegerea tipului',
+    addANewCar: 'Adaugă o nouă mașină.',
     addPart: 'Adaugare piesa',
     addPartDescription:
         'Avem nevoie de urmatoarele detalii pentru a retine piesa pe care o ai.',

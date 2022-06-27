@@ -13,6 +13,8 @@ import { AddCarDialog } from './components/add-car-dialog/AddCarDialog';
 import { PageContainer } from 'components/page-container/PageContainer';
 
 import styles from './Cars.module.scss';
+import { NoData } from 'components/no-data/NoData';
+import { LABELS } from 'constants/labels';
 
 export const Cars = () => {
     const navigate = useNavigate();
@@ -66,34 +68,36 @@ export const Cars = () => {
                     </IconButton>
                 </Tooltip>
             </div>
-            <Grid
-                container
-                className={styles.carsContainer}
-                rowSpacing={4}
-                spacing={{ xs: 1, sm: 3, md: 6 }}
-                columns={{ xs: 1, sm: 8, md: 12 }}>
-                {cars.map((car, index) => (
-                    <Grid
-                        item
-                        xs={1}
-                        sm={4}
-                        md={4}
-                        key={index}
-                        classes={{ item: styles.gridItem }}>
-                        <CustomCard
-                            md={12}
-                            key={car.VIN}
-                            carData={car}
-                            onDelete={(id) => deleteCar(id)}
-                            onClick={() =>
-                                navigate('/car-profile', {
-                                    state: { selectedCar: car }
-                                })
-                            }
-                        />
-                    </Grid>
-                ))}
-            </Grid>
+            {cars.length === 0 && <NoData subtitle={LABELS.addANewCar} />}
+            {cars.length !== 0 && (
+                <Grid
+                    container
+                    className={styles.carsContainer}
+                    rowSpacing={12}
+                    spacing={{ xs: 1, sm: 1, md: 3 }}
+                    columns={{ xs: 1, sm: 8, md: 12 }}>
+                    {cars.map((car, index) => (
+                        <Grid
+                            item
+                            xs={1}
+                            sm={4}
+                            md={4}
+                            key={index}
+                            classes={{ item: styles.gridItem }}>
+                            <CustomCard
+                                key={car.VIN}
+                                carData={car}
+                                onDelete={(id) => deleteCar(id)}
+                                onClick={() =>
+                                    navigate('/car-profile', {
+                                        state: { selectedCar: car }
+                                    })
+                                }
+                            />
+                        </Grid>
+                    ))}
+                </Grid>
+            )}
             {isModalOpen && (
                 <AddCarDialog open={isModalOpen} setOpen={setModalOpen} />
             )}
