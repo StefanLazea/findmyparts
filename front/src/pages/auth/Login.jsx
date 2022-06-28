@@ -26,6 +26,7 @@ export const Login = () => {
             .then((res) => {
                 if (res.data.message === 'Success') {
                     localStorage.setItem('token', res.data.token);
+                    console.log(res);
                     const userId = _.get(res, 'data.user.id', '');
                     //todo navigation
                     dispatch(addUserId(userId));

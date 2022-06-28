@@ -324,7 +324,7 @@ export const LineChart = ({ ...props }) => {
                     direction: 'row',
                     justify: false,
                     translateX: 0,
-                    translateY: 60,
+                    translateY: 0,
                     itemsSpacing: 0,
                     itemDirection: 'left-to-right',
                     itemWidth: 80,

@@ -116,7 +116,9 @@ export const NavigationBar = () => {
                                     color: 'white',
                                     display: 'block'
                                 }}>
-                                <Link to={page.link} className="text white">
+                                <Link
+                                    to={page.link}
+                                    className="text white lowercase">
                                     {page.name}
                                 </Link>
                             </Button>

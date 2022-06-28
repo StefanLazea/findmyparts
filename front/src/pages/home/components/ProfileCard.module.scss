@@ -2,22 +2,35 @@
     margin-top: 20px;
     min-width: 30%;
     margin-bottom: 20px;
-    background-color: #a3d9ee !important;
+    // background-color: #a3d9ee !important;
+    // opacity: 0.2;
     height: 250px;
 
-    .customContent {
+    .customCard {
         padding: 0 16px 16px 16px;
     }
-    .carsCardContent {
-        .centerTypo {
-            display: flex;
-            justify-content: center;
-        }
-        .check {
+
+    .cardContent {
+        .userInfoCardContent {
+            padding: 20px;
             display: flex;
             flex-direction: row;
-            align-items: center;
-            gap: 3%;
+            justify-content: space-between;
+
+            .userInfoContainer {
+                display: flex;
+                flex-direction: column;
+                justify-content: left;
+                font-weight: 500;
+                .textAlign {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: start;
+                }
+            }
+        }
+        .summaryContainer {
+            display: flex;
         }
     }
 }

@@ -15,30 +15,28 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { LABELS } from 'constants/labels';
 
 import styles from './ProfileCard.module.scss';
+import AvatarIcon from 'assets/icons/AvatarIcon';
 
 export const ProfileCard = ({ carData = {}, ...props }) => {
     return (
         <Card classes={{ root: styles.profileCard }}>
-            {/* <CardHeader
-                    avatar={
-                        <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                            {carData?.numberPlate.split('-')[0] || 'M'}
-                        </Avatar>
-                    }
-                    action={
-                        <IconButton
-                            aria-label="settings"
-                            onClick={() => props.onDelete(carData.id)}>
-                            <DeleteIcon />
-                        </IconButton>
-                    }
-                    title={carData.VIN}
-                    subheader={`${carData.brand} ${carData.model}`}
-                /> */}
             <CardContent
                 onClick={() => {}}
-                classes={{ root: styles.customContent }}>
-                <div className={styles.carsCardContent}>test</div>
+                classes={{ root: styles.customCard }}>
+                <div className={styles.cardContent}>
+                    <div className={styles.userInfoCardContent}>
+                        <AvatarIcon />
+                        <div className={styles.userInfoContainer}>
+                            <span className={`${styles.textAlign}`}>
+                                Lazea Stefan
+                            </span>
+                            <span className={styles.textAlign}>
+                                lazeastefan@gmail.com
+                            </span>
+                        </div>
+                    </div>
+                    <div className={styles.summaryContainer}>test</div>
+                </div>
             </CardContent>
         </Card>
     );
