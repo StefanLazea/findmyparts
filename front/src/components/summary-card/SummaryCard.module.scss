@@ -3,21 +3,7 @@
 }
 
 .summaryCardContent {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
-    .text {
-        color: white;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-    }
-
-    .title {
-        font-weight: 500;
-        font-size: 20px;
-    }
+    color: white;
 }
 
 .red-accent {

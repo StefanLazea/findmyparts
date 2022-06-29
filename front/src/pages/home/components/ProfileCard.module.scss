@@ -2,8 +2,6 @@
     margin-top: 20px;
     min-width: 30%;
     margin-bottom: 20px;
-    // background-color: #a3d9ee !important;
-    // opacity: 0.2;
     height: 250px;
 
     .customCard {
@@ -21,16 +19,24 @@
                 display: flex;
                 flex-direction: column;
                 justify-content: left;
-                font-weight: 500;
-                .textAlign {
+                .email {
                     display: flex;
                     flex-direction: row;
-                    justify-content: start;
+                    justify-content: flex-start;
+                }
+                .userNameContainer {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+                    font-weight: 500;
                 }
             }
         }
         .summaryContainer {
             display: flex;
+            flex-direction: row;
+            justify-content: space-around;
         }
     }
 }

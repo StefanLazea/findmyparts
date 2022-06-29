@@ -2,11 +2,14 @@ import React from 'react';
 
 import { Typography } from '@mui/material';
 
-import styles from './SummaryCard.module.scss';
+import styles from './SummaryText.module.scss';
 
-const SummaryTest = ({ data }) => {
+const SummaryTest = ({ data, className }) => {
     return (
-        <div className={styles.summaryCardContent}>
+        <div
+            className={`${styles.summaryTextContent}${
+                className ? ' ' + className : ''
+            }`}>
             <Typography
                 component="div"
                 className={`${styles.title} ${styles.text}`}>

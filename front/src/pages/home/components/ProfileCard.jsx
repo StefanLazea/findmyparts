@@ -1,23 +1,15 @@
 import React from 'react';
 
-import {
-    Card,
-    CardContent,
-    CardHeader,
-    Avatar,
-    IconButton,
-    Typography
-} from '@mui/material';
-import { red } from '@mui/material/colors';
+import { Card, CardContent, IconButton } from '@mui/material';
 
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import SummaryText from 'components/summary-card/SummaryText';
+
 import DeleteIcon from '@mui/icons-material/Delete';
-import { LABELS } from 'constants/labels';
-
-import styles from './ProfileCard.module.scss';
 import AvatarIcon from 'assets/icons/AvatarIcon';
 
-export const ProfileCard = ({ carData = {}, ...props }) => {
+import styles from './ProfileCard.module.scss';
+
+export const ProfileCard = ({ props }) => {
     return (
         <Card classes={{ root: styles.profileCard }}>
             <CardContent
@@ -27,15 +19,27 @@ export const ProfileCard = ({ carData = {}, ...props }) => {
                     <div className={styles.userInfoCardContent}>
                         <AvatarIcon />
                         <div className={styles.userInfoContainer}>
-                            <span className={`${styles.textAlign}`}>
+                            <span className={`${styles.userNameContainer}`}>
                                 Lazea Stefan
+                                <IconButton
+                                    edge="start"
+                                    color="inherit"
+                                    aria-label="close"
+                                    classes={{ root: styles.deleteIcon }}
+                                    onClick={() => {}}>
+                                    <DeleteIcon />
+                                </IconButton>
                             </span>
-                            <span className={styles.textAlign}>
+                            <span className={styles.email}>
                                 lazeastefan@gmail.com
                             </span>
                         </div>
                     </div>
-                    <div className={styles.summaryContainer}>test</div>
+                    <div className={styles.summaryContainer}>
+                        <SummaryText data={{ label: 'Mașini', value: '10' }} />
+                        <SummaryText data={{ label: 'Piese', value: '300' }} />
+                        <SummaryText data={{ label: 'Acte', value: '10' }} />
+                    </div>
                 </div>
             </CardContent>
         </Card>
