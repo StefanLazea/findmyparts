@@ -1,4 +1,6 @@
 import React from 'react';
+
+import _ from 'lodash';
 import { Grid } from '@mui/material';
 
 import { PieChart } from 'components/pie-chart/PieChart';
@@ -42,7 +44,9 @@ export const Home = () => {
     ];
     return (
         <PageContainer>
-            <div className={styles.homeHeader}>Salut, Stefan</div>
+            <div className={styles.homeHeader}>
+                Salut, {_.get(localStorage, 'userName', '')}
+            </div>
             <Grid
                 container
                 spacing={{ xs: 2, sm: 3, md: 3 }}

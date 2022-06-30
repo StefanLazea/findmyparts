@@ -51,6 +51,7 @@ const findOnePartQuery = async ({ partId }) => {
   });
   return filteredResult[0];
 };
+
 const findQuery = async (userId = "") => {
   const queryAll =
     "select \
@@ -145,6 +146,7 @@ const findUserPartById = async ({ user, partId } = {}) => {
 const updatePart = async (partId, part) => {
   return await Parts.update(part, { where: { id: partId } });
 };
+
 module.exports = {
   findPartByCode,
   findPartById,

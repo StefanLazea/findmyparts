@@ -24,7 +24,7 @@ export const DetectionDataResult = (props) => {
         props;
     const [enterManualData, setEnterManualData] = useState(false);
     const {
-        state: { socket }
+        state: { socket, userId }
     } = useGlobalContext();
 
     const gapi = useGoogleApi({
@@ -90,7 +90,10 @@ export const DetectionDataResult = (props) => {
 
     const saveDocument = (values) => {
         axios
-            .post(`/documents/add/${values.name}`, values)
+            .post(`/documents/add/${values.name}`, {
+                ...values,
+                userId: userId
+            })
             .then(() => {
                 socket.emit('addNewDocument', carId);
                 closeScreen();

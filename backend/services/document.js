@@ -48,9 +48,18 @@ const findCarDocsFormatted = async (carId) => {
   });
 };
 
+const findDocumentByUserId = async (userId) => {
+  return await Documents.findAll({
+    where: {
+      userId: userId,
+    },
+  });
+};
+
 module.exports = {
   findDocumentById,
   findDocumentByCarIdAndType,
   findCarDocsFormatted,
   isDocExpired,
+  findDocumentByUserId,
 };

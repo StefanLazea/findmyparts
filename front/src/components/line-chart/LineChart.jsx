@@ -97,7 +97,7 @@ export const LineChart = ({ ...props }) => {
                 tickSize: 5,
                 tickPadding: 5,
                 tickRotation: 0,
-                legend: 'transportation',
+                legend: 'număr de înmatriculare',
                 legendOffset: 36,
                 legendPosition: 'middle'
             }}
@@ -106,8 +106,8 @@ export const LineChart = ({ ...props }) => {
                 tickSize: 5,
                 tickPadding: 5,
                 tickRotation: 0,
-                legend: 'count',
-                legendOffset: -40,
+                legend: 'preț',
+                legendOffset: -45,
                 legendPosition: 'middle'
             }}
             pointSize={10}

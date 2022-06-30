@@ -3,7 +3,7 @@ import { GoogleLogin } from 'react-google-login';
 import { GoogleLogout } from 'react-google-login';
 
 import Container from '@mui/material/Container';
-import { addUserId, useGlobalContext } from 'global-context';
+import { addUserId, addUsersDetails, useGlobalContext } from 'global-context';
 
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -28,8 +28,12 @@ export const Login = () => {
                     localStorage.setItem('token', res.data.token);
                     console.log(res);
                     const userId = _.get(res, 'data.user.id', '');
+                    const userDetails = _.get(res, 'data.user', '');
+
                     //todo navigation
                     dispatch(addUserId(userId));
+                    dispatch(addUsersDetails(userDetails));
+
                     // dispatch(addGapiInstance(gapi))
                 }
                 toast(res.data.message);

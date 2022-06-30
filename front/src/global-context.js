@@ -8,11 +8,13 @@ const initialState = {
     count: 0,
     userId: localStorage.getItem('userId') || 0, // TODO: save as cookie not as this
     socket: io(BACKEND_ENDPOINT),
+    userDetails: {},
     gapi: ''
 };
 const ACTIONS = {
     ADD_USER_ID: 'addUserId',
-    REMOVE_USER_ID: 'removeUserId'
+    REMOVE_USER_ID: 'removeUserId',
+    ADD_USER_DETAILS: 'addUserDetails'
 };
 
 //todo add a actions.js file into a global-context directory
@@ -20,9 +22,15 @@ export const addUserId = (userId) => ({
     type: ACTIONS.ADD_USER_ID,
     userId
 });
+
 export const removeUserId = (userId) => ({
     type: ACTIONS.REMOVE_USER_ID,
     userId
+});
+
+export const addUsersDetails = (userDetails) => ({
+    type: ACTIONS.ADD_USER_DETAILS,
+    userDetails
 });
 
 function storeReducer(state = initialState, action) {
@@ -39,6 +47,15 @@ function storeReducer(state = initialState, action) {
             return {
                 ...state,
                 userId: 0
+            };
+        }
+        case ACTIONS.ADD_USER_DETAILS: {
+            localStorage.setItem('userName', action.userDetails.name);
+            localStorage.setItem('email', action.userDetails.email);
+
+            return {
+                ...state,
+                userDetails: action.userDetails
             };
         }
         default: {
