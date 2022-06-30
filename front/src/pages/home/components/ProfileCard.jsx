@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
+import { useGlobalContext } from 'global-context';
+import axios from 'axios';
 import { Card, CardContent, IconButton } from '@mui/material';
 
 import SummaryText from 'components/summary-card/SummaryText';
@@ -8,8 +10,20 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AvatarIcon from 'assets/icons/AvatarIcon';
 
 import styles from './ProfileCard.module.scss';
+import _ from 'lodash';
 
-export const ProfileCard = ({ props }) => {
+export const ProfileCard = () => {
+    const [details, setDetails] = useState({});
+    const {
+        state: { userId, userDetails }
+    } = useGlobalContext();
+    console.log(userDetails);
+    useEffect(() => {
+        axios.get(`/statistics/details/user/${userId}`).then((res) => {
+            setDetails(res.data);
+            console.log(res.data);
+        });
+    }, []);
     return (
         <Card classes={{ root: styles.profileCard }}>
             <CardContent
@@ -20,7 +34,7 @@ export const ProfileCard = ({ props }) => {
                         <AvatarIcon />
                         <div className={styles.userInfoContainer}>
                             <span className={`${styles.userNameContainer}`}>
-                                Lazea Stefan
+                                {_.get(userDetails, 'name', 'N/A')}
                                 <IconButton
                                     edge="start"
                                     color="inherit"
@@ -31,14 +45,29 @@ export const ProfileCard = ({ props }) => {
                                 </IconButton>
                             </span>
                             <span className={styles.email}>
-                                lazeastefan@gmail.com
+                                {_.get(userDetails, 'email', 'N/A')}
                             </span>
                         </div>
                     </div>
                     <div className={styles.summaryContainer}>
-                        <SummaryText data={{ label: 'Mașini', value: '10' }} />
-                        <SummaryText data={{ label: 'Piese', value: '300' }} />
-                        <SummaryText data={{ label: 'Acte', value: '10' }} />
+                        <SummaryText
+                            data={{
+                                label: 'Mașini',
+                                value: _.get(details, 'cars', 0)
+                            }}
+                        />
+                        <SummaryText
+                            data={{
+                                label: 'Piese',
+                                value: _.get(details, 'parts', 0)
+                            }}
+                        />
+                        <SummaryText
+                            data={{
+                                label: 'Acte',
+                                value: _.get(details, 'documents', 0)
+                            }}
+                        />
                     </div>
                 </div>
             </CardContent>

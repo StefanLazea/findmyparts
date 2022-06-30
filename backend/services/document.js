@@ -1,4 +1,6 @@
 const Documents = require("../models").Documents;
+const Cars = require("../models").Cars;
+
 const { Op } = require("sequelize");
 
 const findDocumentById = async (docId) => {
@@ -48,11 +50,26 @@ const findCarDocsFormatted = async (carId) => {
   });
 };
 
-const findDocumentByUserId = async (userId) => {
+const findDocumentsByUserId = async (userId) => {
   return await Documents.findAll({
     where: {
       userId: userId,
     },
+  });
+};
+
+const findDocsWithCarByUserId = async (userId) => {
+  return await Documents.findAll({
+    where: {
+      userId: userId,
+    },
+    include: [
+      {
+        model: Cars,
+        attributes: ["numberPlate", "id"],
+      },
+    ],
+    nest: false,
   });
 };
 
@@ -61,5 +78,6 @@ module.exports = {
   findDocumentByCarIdAndType,
   findCarDocsFormatted,
   isDocExpired,
-  findDocumentByUserId,
+  findDocumentsByUserId,
+  findDocsWithCarByUserId,
 };

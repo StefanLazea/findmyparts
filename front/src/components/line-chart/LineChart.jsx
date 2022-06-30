@@ -7,79 +7,9 @@ import { ResponsiveLine } from '@nivo/line';
 // website examples showcase many properties,
 // you'll often use just a few of them.
 export const LineChart = ({ ...props }) => {
-    const data = [
-        {
-            id: 'Rovigneta',
-            color: 'hsl(274, 70%, 50%)',
-            data: [
-                {
-                    x: 'AG77VOB',
-                    y: 662
-                },
-                {
-                    x: 'AG99VOB',
-                    y: 111
-                },
-                {
-                    x: 'AG67VOB',
-                    y: 888
-                },
-                {
-                    x: 'AG12GOR',
-                    y: 88
-                }
-            ]
-        },
-
-        {
-            id: 'ITP',
-            color: 'hsl(295, 70%, 50%)',
-            data: [
-                {
-                    x: 'AG77VOB',
-                    y: 120
-                },
-                {
-                    x: 'AG99VOB',
-                    y: 0
-                },
-                {
-                    x: 'AG67VOB',
-                    y: 300
-                },
-                {
-                    x: 'AG12GOR',
-                    y: 109
-                }
-            ]
-        },
-
-        {
-            id: 'RCA',
-            color: 'hsl(244, 70%, 50%)',
-            data: [
-                {
-                    x: 'AG77VOB',
-                    y: 1200
-                },
-                {
-                    x: 'AG99VOB',
-                    y: 532
-                },
-                {
-                    x: 'AG67VOB',
-                    y: 789
-                },
-                {
-                    x: 'AG12GOR',
-                    y: 111
-                }
-            ]
-        }
-    ];
     return (
         <ResponsiveLine
-            data={data}
+            data={props.data}
             margin={{ top: 50, right: 50, bottom: 100, left: 60 }}
             xScale={{ type: 'point' }}
             yScale={{

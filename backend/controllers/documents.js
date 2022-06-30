@@ -1,5 +1,7 @@
 const Documents = require("../models").Documents;
 const DocumentsService = require("../services/document");
+const _ = require("lodash");
+const { BACKEND_CONSTANTS } = require("../resources/constants");
 
 const getAllDocuments = async (req, res) => {
   try {
@@ -110,6 +112,59 @@ const getDocument = async (req, res) => {
   return res.status(200).send(doc);
 };
 
+const getUserCarsWithDocuments = async (req, res) => {
+  const paramId = req.params.userId;
+  const docs = await DocumentsService.findDocsWithCarByUserId(paramId);
+  if (!docs) {
+    return res.status(404).send({ message: "Docs not found" });
+  }
+  const docsResponse = JSON.parse(JSON.stringify(docs));
+  const rovData = [],
+    rcaData = [],
+    itpData = [];
+  docsResponse.forEach((item) => {
+    switch (item.name) {
+      case BACKEND_CONSTANTS.DOCUMENTS.RCA: {
+        const element = {
+          x: _.get(item, "car.numberPlate", "N/A"),
+          y: Number(_.get(item, "price", 0)),
+        };
+        rcaData.push(element);
+        return;
+      }
+      case BACKEND_CONSTANTS.DOCUMENTS.ITP: {
+        const element = {
+          x: _.get(item, "car.numberPlate", "N/A"),
+          y: Number(_.get(item, "price", 0)),
+        };
+        itpData.push(element);
+        return;
+      }
+      case BACKEND_CONSTANTS.DOCUMENTS.ROVIGNETA: {
+        const element = {
+          x: _.get(item, "car.numberPlate", "N/A"),
+          y: Number(_.get(item, "price", 0)),
+        };
+        rovData.push(element);
+        return;
+      }
+    }
+  });
+  const statisticsResponse = [
+    {
+      id: "RCA",
+      data: _.sortBy(rcaData, "price"),
+    },
+    { id: "ITP", data: _.sortBy(rcaData, "price") },
+    rovData.length !== 1 && {
+      id: "Rovigneta",
+      data: _.sortBy(rcaData, "price"),
+    },
+  ];
+
+  return res.status(200).send(statisticsResponse);
+};
+
 module.exports = {
   getAllDocuments,
   getCarDocuments,
@@ -117,4 +172,5 @@ module.exports = {
   addDocument,
   deleteDocument,
   getDocument,
+  getUserCarsWithDocuments,
 };

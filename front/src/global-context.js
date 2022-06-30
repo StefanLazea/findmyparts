@@ -8,7 +8,8 @@ const initialState = {
     count: 0,
     userId: localStorage.getItem('userId') || 0, // TODO: save as cookie not as this
     socket: io(BACKEND_ENDPOINT),
-    userDetails: {},
+    //not the best approach
+    userDetails: JSON.parse(localStorage.getItem('userDetails')) || {},
     gapi: ''
 };
 const ACTIONS = {
@@ -50,12 +51,14 @@ function storeReducer(state = initialState, action) {
             };
         }
         case ACTIONS.ADD_USER_DETAILS: {
-            localStorage.setItem('userName', action.userDetails.name);
-            localStorage.setItem('email', action.userDetails.email);
+            localStorage.setItem(
+                'userDetails',
+                JSON.stringify(action.userDetails)
+            );
 
             return {
                 ...state,
-                userDetails: action.userDetails
+                userName: action.user
             };
         }
         default: {

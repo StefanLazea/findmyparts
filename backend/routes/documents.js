@@ -8,5 +8,6 @@ router.delete("/:docId", DocumentsController.deleteDocument);
 router.post("/add/:type", DocumentsController.addDocument);
 router.put("/:docId", DocumentsController.updateDocument);
 router.get("/car/:carId", DocumentsController.getCarDocuments);
+router.get("/user/:userId", DocumentsController.getUserCarsWithDocuments);
 
 module.exports = router;
