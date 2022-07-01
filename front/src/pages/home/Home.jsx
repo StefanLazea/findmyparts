@@ -4,128 +4,36 @@ import { useGlobalContext } from 'global-context';
 import axios from 'axios';
 import _ from 'lodash';
 
-import { Grid } from '@mui/material';
-import { PieChart } from 'components/pie-chart/PieChart';
-import { LineChart } from 'components/line-chart/LineChart';
+import { Grid, CircularProgress } from '@mui/material';
+import { PieChart } from 'components/charts/pie-chart/PieChart';
+import { LineChart } from 'components/charts/line-chart/LineChart';
 import { PageContainer } from 'components/page-container/PageContainer';
 import { ProfileCard } from './components/ProfileCard';
 
 import styles from './Home.module.scss';
-const LINE_CHART = [
-    {
-        id: 'Rovigneta',
-        color: 'hsl(274, 70%, 50%)',
-        data: [
-            {
-                x: 'AG77VOB',
-                y: 662
-            },
-            {
-                x: 'AG99VOB',
-                y: 111
-            },
-            {
-                x: 'AG67VOB',
-                y: 888
-            },
-            {
-                x: 'AG12GOR',
-                y: 88
-            }
-        ]
-    },
+import { LABELS } from 'constants/labels';
 
-    {
-        id: 'ITP',
-        color: 'hsl(295, 70%, 50%)',
-        data: [
-            {
-                x: 'AG77VOB',
-                y: 120
-            },
-            {
-                x: 'AG99VOB',
-                y: 0
-            },
-            {
-                x: 'AG67VOB',
-                y: 300
-            },
-            {
-                x: 'AG12GOR',
-                y: 109
-            }
-        ]
-    },
-
-    {
-        id: 'RCA',
-        color: 'hsl(244, 70%, 50%)',
-        data: [
-            {
-                x: 'AG77VOB',
-                y: 1200
-            },
-            {
-                x: 'AG99VOB',
-                y: 532
-            },
-            {
-                x: 'AG67VOB',
-                y: 789
-            },
-            {
-                x: 'AG12GOR',
-                y: 111
-            }
-        ]
-    }
-];
 export const Home = () => {
     const {
         state: { userId }
     } = useGlobalContext();
 
     const [lineChartData, setLineChartData] = useState([]);
-    const data = [
-        {
-            id: 'php',
-            label: 'php',
-            value: 46,
-            color: 'hsl(73, 70%, 50%)'
-        },
-        {
-            id: 'c',
-            label: 'c',
-            value: 252,
-            color: 'hsl(99, 70%, 50%)'
-        },
-        {
-            id: 'javascript',
-            label: 'javascript',
-            value: 563,
-            color: 'hsl(65, 70%, 50%)'
-        },
-        {
-            id: 'go',
-            label: 'go',
-            value: 7,
-            color: 'hsl(100, 70%, 50%)'
-        },
-        {
-            id: 'ruby',
-            label: 'ruby',
-            value: 133,
-            color: 'hsl(286, 70%, 50%)'
-        }
-    ];
+    const [pieChartData, setPieChartData] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        axios.get(`/documents/user/${userId}`).then((res) => {
-            console.log(res);
-            setLineChartData(res.data);
-            // setLineChartData(LINE_CHART);
-        });
+        Promise.all([
+            axios.get(`/documents/user/${userId}`),
+            axios.get(`/documents/expired/user/${userId}`)
+        ])
+            .then((res) => {
+                console.log(res);
+                setLineChartData(_.get(res, '[0].data', []));
+                setPieChartData(_.get(res, '[1].data.expiredCount', []));
+                setIsLoading(false);
+            })
+            .catch(() => setIsLoading(false));
     }, []);
 
     return (
@@ -159,11 +67,19 @@ export const Home = () => {
                     alignItems="center"
                     className={styles.itemContainer}>
                     <div className={styles.partsPie}>
-                        <PieChart data={data} />
+                        <span>{LABELS.expiredDocuments}</span>
+                        {isLoading ? (
+                            <CircularProgress />
+                        ) : (
+                            <PieChart data={pieChartData} />
+                        )}
                     </div>
                 </Grid>
             </Grid>
             <div className={styles.lineContainer}>
+                <span className={styles.lineChartTitle}>
+                    {LABELS.documentsCosts}
+                </span>
                 <LineChart data={lineChartData} />
             </div>
         </PageContainer>

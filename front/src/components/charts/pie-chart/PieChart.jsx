@@ -1,8 +1,6 @@
 import React from 'react';
 import { ResponsivePie } from '@nivo/pie';
 
-import styles from './PieChart.module.scss';
-
 export const PieChart = ({ data }) => {
     return (
         <ResponsivePie

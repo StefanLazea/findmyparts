@@ -8,6 +8,7 @@ import CarIcon from 'assets/icons/CarIcon';
 import _ from 'lodash';
 import axios from 'axios';
 import { Formik, Form } from 'formik';
+import { toast } from 'react-toastify';
 
 import { BACKEND_PROPERTY_VALUE } from 'constants/backend-accessors';
 import { LABELS } from 'constants/labels';
@@ -25,8 +26,17 @@ export const CarDetails = ({ carData, ...props }) => {
     }, [props.editMode]);
 
     const updateCar = (values) => {
-        axios.put(`/cars/${carData.id}`, values).then((res) => {
+        axios.put(`/cars/${carData.id}`, values).then(() => {
             socket.emit('updateCar', carData.id);
+            toast.success(LABELS.carUpdated, {
+                position: 'top-right',
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined
+            });
             setDisableFields(true);
         });
     };

@@ -51,4 +51,23 @@ const googleAuth = async (req, res) => {
   });
 };
 
+const validateToken = async (req, res) => {
+  const { token } = req.body;
+  console.log({ token });
+  if (!token || _.isEmpty(token)) {
+    return res
+      .status(400)
+      .send({ message: "No token found. Please use another way to auth." });
+  }
+
+  const ticket = await client.verifyIdToken({
+    idToken: token,
+    audience: process.env.CLIENT_ID,
+  });
+
+  if (!ticket) {
+    return res.send({ message: "Failed to authenticate" });
+  }
+};
+
 module.exports = { createUser, getAllUsers, googleAuth };

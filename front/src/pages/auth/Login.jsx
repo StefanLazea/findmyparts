@@ -26,7 +26,6 @@ export const Login = () => {
             .then((res) => {
                 if (res.data.message === 'Success') {
                     localStorage.setItem('token', res.data.token);
-                    console.log(res);
                     const userId = _.get(res, 'data.user.id', '');
                     const userDetails = _.get(res, 'data.user', '');
 
@@ -55,7 +54,7 @@ export const Login = () => {
                     clientId={process.env.REACT_APP_GOOGLE_ID}
                     buttonText="Logout"
                     onLogoutSuccess={() => localStorage.clear()}
-                    onFailure={(response) => {}}></GoogleLogout>
+                    onFailure={() => {}}></GoogleLogout>
             </div>
         </Container>
     );

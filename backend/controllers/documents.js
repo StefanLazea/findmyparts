@@ -165,6 +165,59 @@ const getUserCarsWithDocuments = async (req, res) => {
   return res.status(200).send(statisticsResponse);
 };
 
+const getExpiredCountObject = (obj) => {
+  return [
+    {
+      id: "ITP",
+      label: "ITP",
+      value: _.get(obj, `[${BACKEND_CONSTANTS.DOCUMENTS.ITP}]`, 0),
+    },
+    {
+      id: "RCA",
+      label: "RCA",
+      value: _.get(obj, `[${BACKEND_CONSTANTS.DOCUMENTS.RCA}]`, 0),
+    },
+    {
+      id: "Rovigneta",
+      label: "Rovigneta",
+      value: _.get(obj, `[${BACKEND_CONSTANTS.DOCUMENTS.ROVIGNETA}]`, 0),
+    },
+  ];
+};
+// isDocExpired
+const getExpiredDocsForUser = async (req, res) => {
+  const paramId = req.params.userId;
+  const docs = await DocumentsService.findDocsWithCarByUserId(paramId);
+  if (!docs) {
+    return res.status(404).send({ message: "Docs not found" });
+  }
+  const docsResponse = JSON.parse(JSON.stringify(docs));
+  const expiredDocs = docsResponse.filter((item) =>
+    DocumentsService.isDocExpired(item.expirationDate)
+  );
+
+  const expiredCount = {};
+  const expResp = [];
+  docsResponse.forEach((item) => {
+    if (DocumentsService.isDocExpired(item.expirationDate)) {
+      if (expiredCount[item.name]) {
+        expiredCount[item.name] += 1;
+      } else {
+        expiredCount[item.name] = 1;
+      }
+    } else {
+      expiredCount[item.name] = 0;
+    }
+  });
+  console.log(expResp);
+
+  return res.status(200).send({
+    expiredCount: getExpiredCountObject(expiredCount),
+    totalCount: docs.length,
+    expired: expiredDocs,
+  });
+};
+
 module.exports = {
   getAllDocuments,
   getCarDocuments,
@@ -173,4 +226,5 @@ module.exports = {
   deleteDocument,
   getDocument,
   getUserCarsWithDocuments,
+  getExpiredDocsForUser,
 };

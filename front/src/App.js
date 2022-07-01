@@ -22,8 +22,7 @@ import './App.scss';
 toast.configure();
 
 function App() {
-    const [isAuth, setIsAuth] = useState(true);
-
+    const [isAuth, setIsAuth] = useState(false);
     const darkTheme = createTheme({
         typography: {
             fontFamily: 'Roboto'
@@ -55,10 +54,13 @@ function App() {
             setIsAuth(false);
         }
     };
-
     useEffect(() => {
-        triggerLogOut();
-    }, []);
+        if (!localStorage.getItem('token')) {
+            setIsAuth(false);
+        } else {
+            setIsAuth(true);
+        }
+    });
 
     return (
         <GlobalContextProvide>
@@ -66,7 +68,7 @@ function App() {
                 {isAuth && <NavigationBar triggerLogOut={triggerLogOut} />}
 
                 <div className="app">
-                    {!isAuth && <Navigate to="/login" />}
+                    {/* {!isAuth && <Navigate to="/login" />} */}
 
                     {/* DO NOT USE component like bellow in a Switch statement */}
                     <GoogleApiProvider
