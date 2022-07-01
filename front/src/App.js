@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { toast } from 'react-toastify';
@@ -18,6 +18,8 @@ import { GlobalContextProvide } from './global-context';
 import 'react-toastify/dist/ReactToastify.css';
 
 import './App.scss';
+import axios from 'axios';
+import { LABELS } from 'constants/labels';
 
 toast.configure();
 
@@ -48,19 +50,40 @@ function App() {
             }
         }
     });
-
     const triggerLogOut = () => {
-        if (!localStorage.getItem('token')) {
-            setIsAuth(false);
-        }
+        localStorage.removeItem('token');
+        setIsAuth(false);
     };
+
+    //move logic to nav bar as it is under global text provider
     useEffect(() => {
-        if (!localStorage.getItem('token')) {
+        const token = localStorage.getItem('token');
+        if (!token) {
             setIsAuth(false);
         } else {
-            setIsAuth(true);
+            axios
+                .get('/google/token/validation', {
+                    headers: {
+                        Authorization: token
+                    }
+                })
+                .then(() => {
+                    setIsAuth(true);
+                })
+                .catch(() => {
+                    setIsAuth(false);
+                    toast.error(LABELS.forbiddenMessage, {
+                        position: 'top-right',
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined
+                    });
+                });
         }
-    });
+    }, [localStorage]);
 
     return (
         <GlobalContextProvide>
@@ -68,8 +91,6 @@ function App() {
                 {isAuth && <NavigationBar triggerLogOut={triggerLogOut} />}
 
                 <div className="app">
-                    {/* {!isAuth && <Navigate to="/login" />} */}
-
                     {/* DO NOT USE component like bellow in a Switch statement */}
                     <GoogleApiProvider
                         clientId={process.env.REACT_APP_GOOGLE_ID}>

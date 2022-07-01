@@ -17,10 +17,10 @@ router.use("/documents", documentsRouter);
 
 router.use("/stocks", stocksRouter);
 router.use("/statistics", statisticsRouter);
+
 router.get("/test", authorizeGoogle, (req, res) => {
   res.send({ message: "hello" });
 });
-
 // router.get("/details/user/:userId", StocksController.getGeneralDetails);
 
 module.exports = router;

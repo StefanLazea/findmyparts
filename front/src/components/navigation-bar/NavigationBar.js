@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -22,6 +23,8 @@ const pages = [
 ];
 
 export const NavigationBar = () => {
+    const navigate = useNavigate();
+
     const [anchorElNav, setAnchorElNav] = useState(null);
 
     const handleOpenNavMenu = (event) => {
@@ -29,9 +32,11 @@ export const NavigationBar = () => {
     };
 
     const handleCloseNavMenu = () => {
-        // localStorage.removeItem('token')
-        // props.triggerLogOut();
+        localStorage.clear();
         setAnchorElNav(null);
+        navigate('/login', {
+            state: { auth: false }
+        });
     };
 
     return (

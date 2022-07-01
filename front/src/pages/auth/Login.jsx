@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { GoogleLogin } from 'react-google-login';
 import { GoogleLogout } from 'react-google-login';
+import { useLocation } from 'react-router';
+import { Navigate } from 'react-router-dom';
 
 import Container from '@mui/material/Container';
 import { addUserId, addUsersDetails, useGlobalContext } from 'global-context';
@@ -12,6 +14,9 @@ import _ from 'lodash';
 import './Login.scss';
 export const Login = () => {
     const { dispatch } = useGlobalContext();
+    const { state } = useLocation();
+    console.log(state);
+    const [isAuth, setIsAuth] = useState(false);
     const handleLogin = (response) => {
         axios
             .post(
@@ -28,7 +33,7 @@ export const Login = () => {
                     localStorage.setItem('token', res.data.token);
                     const userId = _.get(res, 'data.user.id', '');
                     const userDetails = _.get(res, 'data.user', '');
-
+                    setIsAuth(true);
                     //todo navigation
                     dispatch(addUserId(userId));
                     dispatch(addUsersDetails(userDetails));
@@ -55,6 +60,7 @@ export const Login = () => {
                     buttonText="Logout"
                     onLogoutSuccess={() => localStorage.clear()}
                     onFailure={() => {}}></GoogleLogout>
+                {isAuth && <Navigate to="/" />}
             </div>
         </Container>
     );

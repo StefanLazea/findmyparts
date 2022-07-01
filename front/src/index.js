@@ -6,6 +6,7 @@ import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
 import axios from 'axios';
 axios.defaults.baseURL = 'http://localhost:3005/api';
+axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
 
 ReactDOM.render(
     <React.StrictMode>

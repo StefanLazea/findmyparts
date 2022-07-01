@@ -28,6 +28,7 @@ const LABELS = {
     expired: 'A expirat pe ',
     expiredDocuments: 'Documente expirate',
     expirationDate: 'Data expirare',
+    forbiddenMessage: 'S-a produs o eroare. Autentificati-va inca o data.',
     home: 'Acasa',
     itp: 'ITP',
     manualData: 'Introducerea manuala a datelor ',

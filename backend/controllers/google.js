@@ -1,5 +1,7 @@
 const vision = require("@google-cloud/vision");
 const _ = require("lodash");
+const { OAuth2Client } = require("google-auth-library");
+const client = new OAuth2Client(process.env.CLIENT_ID);
 const GOOGLE_KEY_JSON =
   "/Users/stefan/Documents/projects/findmyparts/backend/gasestepiesa-924dba9c251f.json";
 const { CONSTANTS, BACKEND_CONSTANTS } = require("../resources/constants");
@@ -122,7 +124,26 @@ const detectImage = async (req, res) => {
     message: "I haven't found any details in your image. Please try again.",
   });
 };
-
+const verifyToken = async (req, res) => {
+  const token = req.headers.authorization;
+  console.log(token);
+  if (!token) {
+    return res.status(401).send({ message: "Not authorized" });
+  }
+  try {
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.CLIENT_ID,
+    });
+    console.log(ticket);
+    if (ticket) {
+      return res.status(200).send({ message: "Token is valid" });
+    }
+  } catch (err) {
+    return res.status(403).send({ message: "Forbidden", err: err });
+  }
+};
 module.exports = {
   detectImage,
+  verifyToken,
 };
