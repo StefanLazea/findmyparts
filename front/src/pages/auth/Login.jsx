@@ -60,7 +60,7 @@ export const Login = () => {
                     buttonText="Logout"
                     onLogoutSuccess={() => localStorage.clear()}
                     onFailure={() => {}}></GoogleLogout>
-                {isAuth && <Navigate to="/" />}
+                {/* {isAuth && <Navigate to="/" />} */}
             </div>
         </Container>
     );
