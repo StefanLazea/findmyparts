@@ -23,17 +23,23 @@ export const Home = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
+        let isApiSubscribed = true;
         Promise.all([
             axios.get(`/documents/user/${userId}`),
             axios.get(`/documents/expired/user/${userId}`)
         ])
             .then((res) => {
                 console.log(res);
-                setLineChartData(_.get(res, '[0].data', []));
-                setPieChartData(_.get(res, '[1].data.expiredCount', []));
-                setIsLoading(false);
+                if (isApiSubscribed) {
+                    setLineChartData(_.get(res, '[0].data', []));
+                    setPieChartData(_.get(res, '[1].data.expiredCount', []));
+                    setIsLoading(false);
+                }
             })
             .catch(() => setIsLoading(false));
+        return () => {
+            isApiSubscribed = false;
+        };
     }, []);
 
     return (

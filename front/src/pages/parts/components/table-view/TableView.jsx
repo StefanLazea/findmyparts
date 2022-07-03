@@ -52,13 +52,20 @@ export const TableView = ({ showAllParts }) => {
         const path = showAllParts
             ? `/parts/users/stock/details`
             : `/parts/users/${userId}/stock/details`;
+        let isApiSubscribed = true;
         axios
             .get(path)
             .then((response) => {
                 setIsLoading(false);
-                setDataList(response.data);
+                if (isApiSubscribed) {
+                    setDataList(response.data);
+                }
             })
             .catch(() => setIsLoading(false));
+
+        return () => {
+            isApiSubscribed = false;
+        };
     }, [showAllParts]);
 
     const deletePart = (part) => {

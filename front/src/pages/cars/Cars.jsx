@@ -5,7 +5,7 @@ import { useGlobalContext } from 'global-context';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-import { Grid, IconButton, Tooltip } from '@mui/material';
+import { Grid, IconButton, Tooltip, CircularProgress } from '@mui/material';
 import { Add } from '@mui/icons-material';
 
 import { CustomCard } from './components/custom-card/CustomCard';
@@ -23,11 +23,15 @@ export const Cars = () => {
     } = useGlobalContext();
     const [cars, setCars] = useState([]);
     const [isModalOpen, setModalOpen] = useState(false);
-
+    const [isLoading, setIsLoading] = useState(true);
     const getCars = () => {
-        axios.get(`/cars/users/${userId}`).then((response) => {
-            setCars(response.data);
-        });
+        axios
+            .get(`/cars/users/${userId}`)
+            .then((response) => {
+                setCars(response.data);
+                setIsLoading(false);
+            })
+            .catch(() => setIsLoading(false));
     };
     const deleteCar = (id) => {
         axios.delete(`/cars/${id}`).then(() => {
@@ -53,6 +57,7 @@ export const Cars = () => {
             setCars(_cars);
         };
         socket.on('carsListUpdate', handler);
+        return () => socket.off('carsListUpdate', handler);
     }, [socket]);
 
     return (
@@ -68,8 +73,15 @@ export const Cars = () => {
                     </IconButton>
                 </Tooltip>
             </div>
-            {cars.length === 0 && <NoData subtitle={LABELS.addANewCar} />}
-            {cars.length !== 0 && (
+            {isLoading && (
+                <div className={styles.centerLoading}>
+                    <CircularProgress />
+                </div>
+            )}
+            {cars.length === 0 && !isLoading && (
+                <NoData subtitle={LABELS.addANewCar} />
+            )}
+            {cars.length !== 0 && !isLoading && (
                 <Grid
                     container
                     className={styles.carsContainer}

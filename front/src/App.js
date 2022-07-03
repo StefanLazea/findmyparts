@@ -63,6 +63,8 @@ function App() {
     //move logic to nav bar as it is under global text provider
     useEffect(() => {
         const token = localStorage.getItem('token');
+        const CancelToken = axios.CancelToken;
+        const source = CancelToken.source();
         if (!token) {
             setIsAuth(false);
         } else {
@@ -70,7 +72,8 @@ function App() {
                 .get('/google/token/validation', {
                     headers: {
                         Authorization: token
-                    }
+                    },
+                    cancelToken: source.token
                 })
                 .then(() => {
                     setIsAuth(true);
@@ -88,6 +91,7 @@ function App() {
                     });
                 });
         }
+        return () => source.cancel();
     }, [localStorage]);
 
     return (

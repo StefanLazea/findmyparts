@@ -25,6 +25,7 @@ const LABELS = {
     edit: 'Actualizeaza',
     editDocumentTitle: 'Editeaza documentul ales',
     editDocumetDescription: 'Editeaza documentul tau. Ai ales documentul:',
+    editCarsDetails: 'Editeaza informatiile despre masina ta.',
     expired: 'A expirat pe ',
     expiredDocuments: 'Documente expirate',
     expirationDate: 'Data expirare',

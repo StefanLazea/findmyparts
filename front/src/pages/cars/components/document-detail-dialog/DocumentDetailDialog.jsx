@@ -22,6 +22,7 @@ export const DocumentDetailDialog = ({
     ...props
 }) => {
     const [details, setDetails] = useState([]);
+
     useEffect(() => {
         const fromDate =
             documentDetail.documentData.fromDate === ''
@@ -44,6 +45,7 @@ export const DocumentDetailDialog = ({
         ];
         setDetails(details);
     }, [documentDetail]);
+
     return (
         <Dialog open={open} onClose={() => setOpen((prev) => !prev)}>
             <DialogTitle>

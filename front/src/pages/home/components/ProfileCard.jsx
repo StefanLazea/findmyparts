@@ -19,10 +19,15 @@ export const ProfileCard = () => {
     } = useGlobalContext();
     console.log(userDetails);
     useEffect(() => {
+        let isApiSubscribed = true;
         axios.get(`/statistics/details/user/${userId}`).then((res) => {
-            setDetails(res.data);
-            console.log(res.data);
+            if (isApiSubscribed) {
+                setDetails(res.data);
+            }
         });
+        return () => {
+            isApiSubscribed = false;
+        };
     }, []);
     return (
         <Card classes={{ root: styles.profileCard }}>

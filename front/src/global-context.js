@@ -70,9 +70,11 @@ function storeReducer(state = initialState, action) {
 function GlobalContextProvide({ children }) {
     const [state, dispatch] = React.useReducer(storeReducer, initialState);
     React.useEffect(() => {
-        initialState.socket.on('connect', () => {
+        const handler = () => {
             console.log('Socket connected');
-        });
+        };
+        initialState.socket.on('connect', handler);
+        return () => initialState.socket.off('connect', handler);
     }, []);
 
     const value = { state, dispatch };

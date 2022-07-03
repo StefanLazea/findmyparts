@@ -7,6 +7,12 @@
     height: 5%;
 }
 
+.centerLoading {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
 .carsContainer {
     max-height: 95%;
     overflow-y: scroll;

@@ -99,15 +99,20 @@ export const CarProfile = () => {
     }, [socket]);
 
     useEffect(() => {
-        axios.get(`/documents/car/${selectedCar?.id}`).then((res) => {
-            setStepsInfo(getAllDocuments(res.data));
-            setIsLoading(false);
+        let isApiSubscribed = true;
+        Promise.all([
+            axios.get(`/documents/car/${selectedCar?.id}`),
+            axios.get(`/cars/${selectedCar?.id}`)
+        ]).then((res) => {
+            if (isApiSubscribed) {
+                setStepsInfo(getAllDocuments(res[0].data));
+                setSelectedCar(res[1].data);
+                setIsLoading(false);
+            }
         });
-        axios.get(`/cars/${selectedCar?.id}`).then((res) => {
-            console.log('here');
-            setSelectedCar(res.data);
-        });
-        return () => setStepsInfo(getAllDocuments([]));
+        return () => {
+            isApiSubscribed = false;
+        };
     }, [selectedCar.id]);
 
     const deleteDocument = () => {
@@ -136,9 +141,7 @@ export const CarProfile = () => {
                     Masina ta, {selectedCar?.numberPlate}
                 </span>
 
-                <Tooltip
-                    title={'Editeaza informatiile despre masina ta.'}
-                    enterTouchDelay={0}>
+                <Tooltip title={LABELS.editCarsDetails} enterTouchDelay={0}>
                     <IconButton
                         edge="start"
                         color="inherit"
@@ -176,7 +179,6 @@ export const CarProfile = () => {
                         <CustomStepper
                             steps={stepsInfo}
                             displayTooltip={true}
-                            tooltipHeader={'HELLLO'}
                             onStepDelete={(item) => {
                                 setConfirmDelete(true);
                                 setClickedDocument(item);

@@ -31,7 +31,6 @@ export const EditPartDialog = (props) => {
             const userStock = part.stocks.filter(
                 (item) => item.userId === userId
             );
-            console.log(userStock);
             setSelectedPart((prev) => {
                 return {
                     ...prev,
@@ -43,13 +42,6 @@ export const EditPartDialog = (props) => {
                         price: _.get(userStock, '[0].price', 0)
                     }
                 };
-            });
-            console.log({
-                name: part.name,
-                code: part.code,
-                id: part.id,
-                quantity: _.get(userStock, '[0].quantity', 0),
-                price: _.get(userStock, '[0].price', 0)
             });
         }
     }, [part]);
