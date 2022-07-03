@@ -9,6 +9,7 @@ const LABELS = {
     addPartDescription:
         'Avem nevoie de urmatoarele detalii pentru a retine piesa pe care o ai.',
     appTitle: 'gasestepiesa.online',
+    authFailed: 'Autentificare nereusita, incercati mai tarziu.',
     beginDate: 'Data inceput',
     carUpdated: 'Detaliile masinii au fost actualizate cu success.',
     cancel: 'Anulare',

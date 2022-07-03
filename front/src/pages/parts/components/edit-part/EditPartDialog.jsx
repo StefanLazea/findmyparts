@@ -27,7 +27,7 @@ export const EditPartDialog = (props) => {
     const [selectedPart, setSelectedPart] = useState({});
     useEffect(() => {
         if (!_.isEmpty(part)) {
-            const userStock = part.stocks.filter(
+            const userStock = part.stocks?.filter(
                 (item) => item.userId === userId
             );
             setSelectedPart((prev) => {

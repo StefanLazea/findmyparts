@@ -74,7 +74,7 @@ export const CarProfile = () => {
             };
         });
         const allSteps = stepsInfo.map((stepInfo) => {
-            const found = docsResponse.filter(
+            const found = docsResponse?.filter(
                 (item) => item.label === stepInfo.label
             );
             return found.length === 0 ? stepInfo : found[0];

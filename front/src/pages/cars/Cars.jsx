@@ -87,7 +87,7 @@ export const Cars = () => {
                     rowSpacing={12}
                     spacing={{ xs: 1, sm: 1, md: 3 }}
                     columns={{ xs: 1, sm: 8, md: 12 }}>
-                    {cars.map((car, index) => (
+                    {cars?.map((car, index) => (
                         <Grid
                             item
                             xs={1}

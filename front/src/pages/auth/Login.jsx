@@ -1,8 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { GoogleLogin } from 'react-google-login';
-import { GoogleLogout } from 'react-google-login';
-// import { useLocation } from 'react-router';
-// import { Navigate } from 'react-router-dom';
 
 import { addUserId, addUsersDetails, useGlobalContext } from 'global-context';
 import LogoIcon from 'assets/icons/LogoIcon';
@@ -12,11 +9,10 @@ import _ from 'lodash';
 
 import styles from './Login.module.scss';
 import { PageContainer } from 'components/page-container/PageContainer';
+import { LABELS } from 'constants/labels';
 
-export const Login = () => {
+export const Login = ({ onSuccess = () => {} }) => {
     const { dispatch } = useGlobalContext();
-    // const { state } = useLocation();
-    const [isAuth, setIsAuth] = useState(false);
 
     const handleLogin = (response) => {
         axios
@@ -34,14 +30,23 @@ export const Login = () => {
                     localStorage.setItem('token', res.data.token);
                     const userId = _.get(res, 'data.user.id', '');
                     const userDetails = _.get(res, 'data.user', '');
-                    setIsAuth(true);
-                    //todo navigation
                     dispatch(addUserId(userId));
                     dispatch(addUsersDetails(userDetails));
-
-                    // dispatch(addGapiInstance(gapi))
+                    console.log('aici');
+                    onSuccess();
                 }
                 toast(res.data.message);
+            })
+            .catch(() => {
+                toast.error(LABELS.authFailed, {
+                    position: 'top-right',
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined
+                });
             });
     };
     return (
@@ -61,12 +66,6 @@ export const Login = () => {
                         cookiePolicy={'single_host_origin'}
                         scopes={['calendar.events', 'calendar']}
                     />
-                    <GoogleLogout
-                        clientId={process.env.REACT_APP_GOOGLE_ID}
-                        buttonText="Logout"
-                        onLogoutSuccess={() => localStorage.clear()}
-                        onFailure={() => {}}></GoogleLogout>
-                    {/* {isAuth && <Navigate to="/" />} */}
                 </div>
             </div>
         </PageContainer>

@@ -111,38 +111,39 @@ export const TableView = ({ showAllParts }) => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {dataList.map((item) => {
-                        return (
-                            <TableRow key={_.uniqueId()}>
-                                <TableCell>{item.name}</TableCell>
-                                <TableCell
-                                    classes={{ root: styles.linkProfile }}
-                                    onClick={() => openPartProfile(item)}>
-                                    {item.code}
-                                </TableCell>
-                                <TableCell>{item.total}</TableCell>
-                                <TableCell>
-                                    <IconButton
-                                        color="primary"
-                                        onClick={() => deletePart(item)}>
-                                        <DeleteIcon />
-                                    </IconButton>
-                                </TableCell>
-                                {!showAllParts && (
+                    {dataList.length !== 0 &&
+                        dataList?.map((item) => {
+                            return (
+                                <TableRow key={_.uniqueId()}>
+                                    <TableCell>{item.name}</TableCell>
+                                    <TableCell
+                                        classes={{ root: styles.linkProfile }}
+                                        onClick={() => openPartProfile(item)}>
+                                        {item.code}
+                                    </TableCell>
+                                    <TableCell>{item.total}</TableCell>
                                     <TableCell>
                                         <IconButton
                                             color="primary"
-                                            onClick={() => {
-                                                setSelectedPart(item);
-                                                setOpenEditModal(true);
-                                            }}>
-                                            <EditIcon />
+                                            onClick={() => deletePart(item)}>
+                                            <DeleteIcon />
                                         </IconButton>
                                     </TableCell>
-                                )}
-                            </TableRow>
-                        );
-                    })}
+                                    {!showAllParts && (
+                                        <TableCell>
+                                            <IconButton
+                                                color="primary"
+                                                onClick={() => {
+                                                    setSelectedPart(item);
+                                                    setOpenEditModal(true);
+                                                }}>
+                                                <EditIcon />
+                                            </IconButton>
+                                        </TableCell>
+                                    )}
+                                </TableRow>
+                            );
+                        })}
                 </TableBody>
             </Table>
             {selectedPart && openEditModal && (

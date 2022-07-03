@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { toast } from 'react-toastify';
@@ -25,7 +26,9 @@ import ProtectedRoute from 'components/ProtectedRoute';
 toast.configure();
 
 function App() {
-    const [isAuth, setIsAuth] = useState(false);
+    const [isAuth, setIsAuth] = useState(true);
+    const navigate = useNavigate();
+
     const darkTheme = createTheme({
         typography: {
             fontFamily: 'Roboto'
@@ -53,12 +56,15 @@ function App() {
     });
     const triggerLogOut = () => {
         // localStorage.removeItem('token');
-        // setIsAuth(false);
-        // localStorage.clear();
-        // navigate('/login', {
-        //     state: { auth: false }
-        // });
+        setIsAuth(false);
+        localStorage.clear();
+        navigate('/login');
         console.log('logout');
+    };
+
+    const handleSuccessLogin = () => {
+        navigate('/cars');
+        console.log('bingo');
     };
 
     //move logic to nav bar as it is under global text provider
@@ -115,7 +121,12 @@ function App() {
                                     </ProtectedRoute>
                                 }
                             />
-                            <Route path="/login" element={<Login />} />
+                            <Route
+                                path="/login"
+                                element={
+                                    <Login onSuccess={handleSuccessLogin} />
+                                }
+                            />
                             <Route
                                 path="/cars"
                                 element={

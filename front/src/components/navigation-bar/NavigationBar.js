@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router';
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -22,9 +21,7 @@ const pages = [
     { name: 'Login', link: '/login' }
 ];
 
-export const NavigationBar = () => {
-    const navigate = useNavigate();
-
+export const NavigationBar = ({ triggerLogOut }) => {
     const [anchorElNav, setAnchorElNav] = useState(null);
 
     const handleOpenNavMenu = (event) => {
@@ -101,7 +98,7 @@ export const NavigationBar = () => {
                             flexGrow: 1,
                             display: { xs: 'flex', md: 'none' }
                         }}>
-                        cautapiesa.online
+                        gasestepiesa.online
                     </Typography>
                     <Box
                         sx={{
@@ -125,8 +122,8 @@ export const NavigationBar = () => {
                             </Button>
                         ))}
                         <Button
-                            onClick={handleCloseNavMenu}
-                            sx={{ my: 2, color: 'white', display: 'block' }}>
+                            sx={{ my: 2, color: 'white', display: 'block' }}
+                            onClick={() => triggerLogOut()}>
                             Logout
                         </Button>
                     </Box>
