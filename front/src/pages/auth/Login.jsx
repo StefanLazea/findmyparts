@@ -18,6 +18,7 @@ export const Login = () => {
     console.log(state);
     const [isAuth, setIsAuth] = useState(false);
     const handleLogin = (response) => {
+        console.log(response);
         axios
             .post(
                 `/auth/google`,
