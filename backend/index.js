@@ -11,8 +11,12 @@ const http = require("http");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(uploader());
-app.use(cors());
-
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  })
+);
 dotenv.config();
 
 const PORT = process.env.PORT;

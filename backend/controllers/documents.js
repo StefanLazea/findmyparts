@@ -192,7 +192,7 @@ const getExpiredDocsForUser = async (req, res) => {
     return res.status(404).send({ message: "Docs not found" });
   }
   const docsResponse = JSON.parse(JSON.stringify(docs));
-  const expiredDocs = docsResponse.filter((item) =>
+  const expiredDocs = docsResponse?.filter((item) =>
     DocumentsService.isDocExpired(item.expirationDate)
   );
 
