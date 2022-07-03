@@ -39,7 +39,6 @@ export const PartProfile = () => {
 
     useEffect(() => {
         const handler = (part) => {
-            console.log('client side am primit', part);
             getPartStocks();
         };
         socket.on('refreshProfilePage', handler);

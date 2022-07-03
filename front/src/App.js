@@ -20,6 +20,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import './App.scss';
 import axios from 'axios';
 import { LABELS } from 'constants/labels';
+import ProtectedRoute from 'components/ProtectedRoute';
 
 toast.configure();
 
@@ -105,17 +106,41 @@ function App() {
                         clientId={process.env.REACT_APP_GOOGLE_ID}>
                         <Routes>
                             {/* non private routes */}
-                            <Route path="/" exact element={<Home />} />
+                            <Route
+                                path="/"
+                                exact
+                                element={
+                                    <ProtectedRoute isAuth={isAuth}>
+                                        <Home />
+                                    </ProtectedRoute>
+                                }
+                            />
                             <Route path="/login" element={<Login />} />
-                            <Route path="/cars" element={<Cars />} />
+                            <Route
+                                path="/cars"
+                                element={
+                                    <ProtectedRoute isAuth={isAuth}>
+                                        <Cars />
+                                    </ProtectedRoute>
+                                }
+                            />
+
                             <Route
                                 path="/car-profile"
-                                element={<CarProfile />}
+                                element={
+                                    <ProtectedRoute isAuth={isAuth}>
+                                        <CarProfile />{' '}
+                                    </ProtectedRoute>
+                                }
                             />
                             <Route path="/parts" element={<Parts />} />
                             <Route
                                 path="/part-profile"
-                                element={<PartProfile />}
+                                element={
+                                    <ProtectedRoute isAuth={isAuth}>
+                                        <PartProfile />
+                                    </ProtectedRoute>
+                                }
                             />
                         </Routes>
                     </GoogleApiProvider>

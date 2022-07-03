@@ -25,7 +25,6 @@ export const EditPartDialog = (props) => {
     } = useGlobalContext();
     const formRef = useRef();
     const [selectedPart, setSelectedPart] = useState({});
-    console.log({ part });
     useEffect(() => {
         if (!_.isEmpty(part)) {
             const userStock = part.stocks.filter(

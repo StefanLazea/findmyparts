@@ -18,7 +18,6 @@ export const PartsDetailsView = ({ partId }) => {
         axios
             .get(`/stocks/details/user/${userId}/part/${partId}`)
             .then((res) => {
-                console.log(res.data);
                 const detailsData = [
                     {
                         value: _.get(res, 'data.mediumPrice', 0),
@@ -46,7 +45,6 @@ export const PartsDetailsView = ({ partId }) => {
 
     useEffect(() => {
         const handler = () => {
-            // console.log('client side am primit', parts)
             getPartsSummary();
         };
         socket.on('refreshProfilePage', handler);

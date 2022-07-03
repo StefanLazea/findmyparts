@@ -47,7 +47,6 @@ export const DetectionDataResult = (props) => {
             orderBy: 'startTime'
         };
         const resp = await gapi.client.calendar.events.list(request);
-        console.log(resp);
         const googleEvent = {
             summary: `gasestePiesa.online: ${car.numberPlate} Aveti de reinnoit ${type}`,
             start: {

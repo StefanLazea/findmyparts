@@ -24,7 +24,6 @@ export const FindPart = () => {
             if (!_.isEmpty(res.data)) {
                 console.log('here');
             }
-            console.log(res);
             setDetectResult(res.data);
         });
     };

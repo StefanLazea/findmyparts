@@ -1,0 +1,30 @@
+.loginContainer {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+    .logoContainer {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        padding: 20px;
+
+        @media only screen and (max-width: 600px) {
+            flex-direction: column;
+        }
+
+        .title {
+            font-size: 30px;
+        }
+    }
+
+    .buttonsContainer {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 20px;
+    }
+}

@@ -53,7 +53,6 @@ export const Cars = () => {
 
     useEffect(() => {
         const handler = (_cars) => {
-            console.log('client side am primit', _cars);
             setCars(_cars);
         };
         socket.on('carsListUpdate', handler);

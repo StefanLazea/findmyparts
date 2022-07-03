@@ -64,7 +64,7 @@ const CustomStepper = ({
             </div>
         );
     };
-    console.log('aici', steps);
+
     return (
         <Stepper
             sx={{ width: stepperWidth }}

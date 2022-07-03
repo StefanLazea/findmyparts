@@ -70,7 +70,6 @@ export const TableView = ({ showAllParts }) => {
 
     const deletePart = (part) => {
         axios.delete(`/parts/${part.id}`).then((response) => {
-            console.log(response);
             socket.emit('deletePart', part.id);
         });
     };

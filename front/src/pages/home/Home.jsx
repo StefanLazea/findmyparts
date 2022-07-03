@@ -29,7 +29,6 @@ export const Home = () => {
             axios.get(`/documents/expired/user/${userId}`)
         ])
             .then((res) => {
-                console.log(res);
                 if (isApiSubscribed) {
                     setLineChartData(_.get(res, '[0].data', []));
                     setPieChartData(_.get(res, '[1].data.expiredCount', []));

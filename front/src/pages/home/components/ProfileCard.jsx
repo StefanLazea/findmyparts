@@ -17,7 +17,6 @@ export const ProfileCard = () => {
     const {
         state: { userId, userDetails }
     } = useGlobalContext();
-    console.log(userDetails);
     useEffect(() => {
         let isApiSubscribed = true;
         axios.get(`/statistics/details/user/${userId}`).then((res) => {
