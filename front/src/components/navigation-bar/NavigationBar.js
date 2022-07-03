@@ -32,11 +32,7 @@ export const NavigationBar = () => {
     };
 
     const handleCloseNavMenu = () => {
-        localStorage.clear();
         setAnchorElNav(null);
-        navigate('/login', {
-            state: { auth: false }
-        });
     };
 
     return (

@@ -8,15 +8,15 @@ const stocksRouter = require("./stocks");
 const statisticsRouter = require("./statistics");
 const { authorizeGoogle } = require("../services/authorize");
 
-router.use("/parts", partsRouter);
-router.use("/cars", carsRouter);
+router.use("/parts", authorizeGoogle, partsRouter);
+router.use("/cars", authorizeGoogle, carsRouter);
 
 router.use("/auth", usersRouter);
 router.use("/google", googleRouter);
-router.use("/documents", documentsRouter);
+router.use("/documents", authorizeGoogle, documentsRouter);
 
-router.use("/stocks", stocksRouter);
-router.use("/statistics", statisticsRouter);
+router.use("/stocks", authorizeGoogle, stocksRouter);
+router.use("/statistics", authorizeGoogle, statisticsRouter);
 
 router.get("/test", authorizeGoogle, (req, res) => {
   res.send({ message: "hello" });

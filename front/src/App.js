@@ -51,8 +51,13 @@ function App() {
         }
     });
     const triggerLogOut = () => {
-        localStorage.removeItem('token');
-        setIsAuth(false);
+        // localStorage.removeItem('token');
+        // setIsAuth(false);
+        // localStorage.clear();
+        // navigate('/login', {
+        //     state: { auth: false }
+        // });
+        console.log('logout');
     };
 
     //move logic to nav bar as it is under global text provider
@@ -108,7 +113,6 @@ function App() {
                                 path="/part-profile"
                                 element={<PartProfile />}
                             />
-                            {/* TODO: private routes */}
                         </Routes>
                     </GoogleApiProvider>
                 </div>
