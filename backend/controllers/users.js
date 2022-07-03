@@ -15,7 +15,6 @@ const getAllUsers = (req, res) => {
 
 const googleAuth = async (req, res) => {
   const { token } = req.body;
-  console.log({ token });
   if (!token || _.isEmpty(token)) {
     return res
       .status(400)
@@ -39,7 +38,7 @@ const googleAuth = async (req, res) => {
     authType: true,
     updatedAt: Date.now(),
   });
-  console.log({ userUpsert });
+
   let userId = JSON.parse(
     JSON.stringify(await UserServices.findUserByEmail(email))
   ).id;

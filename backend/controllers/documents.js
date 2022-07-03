@@ -209,7 +209,6 @@ const getExpiredDocsForUser = async (req, res) => {
       expiredCount[item.name] = 0;
     }
   });
-  console.log(expResp);
 
   return res.status(200).send({
     expiredCount: getExpiredCountObject(expiredCount),

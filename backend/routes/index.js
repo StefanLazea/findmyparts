@@ -13,6 +13,7 @@ router.use("/cars", authorizeGoogle, carsRouter);
 
 router.use("/auth", usersRouter);
 router.use("/google", googleRouter);
+
 router.use("/documents", authorizeGoogle, documentsRouter);
 
 router.use("/stocks", authorizeGoogle, stocksRouter);

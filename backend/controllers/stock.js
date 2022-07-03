@@ -7,7 +7,6 @@ const getAllStocks = async (req, res) => {
   const found = await Stocks.findAll({
     include: { model: Parts, attributes: ["code", "name"] },
   });
-  console.log(JSON.parse(JSON.stringify(found)));
   if (_.isEmpty(found)) {
     return res
       .status(404)

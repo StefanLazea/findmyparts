@@ -45,7 +45,6 @@ const getFormattedResponseRCA = (text) => {
 
   const fromDate = description.substring(fromDateBeginIndex, fromDateEndIndex);
   const endDate = description.substring(endDateBeginIndex, endDateEndIndex);
-  console.log({ fromDate, endDate });
 
   const uniqueDetectedPrice = [...new Set(description.match(REGEX_PRICE_LEI))];
   const price = uniqueDetectedPrice[0].toLowerCase().split(" ")[0];
@@ -62,18 +61,12 @@ const getFormattedResponseITP = (text) => {
   const visionTotalResult = text[0]?.description;
   const description = visionTotalResult.split("\n").join(" ");
 
-  console.log(description.split("\n").join(" "));
   const tehnicalWorkIndex =
     description.indexOf("inspecții tehnice") + "inspecții tehnice".length;
   const endWorkIndex = tehnicalWorkIndex + CONSTANTS.DATE_FORMAT_LENGTH;
 
-  console.log("Bingo", description[tehnicalWorkIndex]);
   const expDateStr = description.substring(tehnicalWorkIndex, endWorkIndex);
   const expirationDate = transformDateToTimestamp(expDateStr.trim());
-  console.log(expirationDate);
-
-  // const expirationData = description.split()
-
   return {
     fromDate: "",
     expirationDate: expirationDate,
@@ -124,9 +117,9 @@ const detectImage = async (req, res) => {
     message: "I haven't found any details in your image. Please try again.",
   });
 };
+
 const verifyToken = async (req, res) => {
   const token = req.headers.authorization;
-  console.log(token);
   if (!token) {
     return res.status(401).send({ message: "Not authorized" });
   }
@@ -135,7 +128,6 @@ const verifyToken = async (req, res) => {
       idToken: token,
       audience: process.env.CLIENT_ID,
     });
-    console.log(ticket);
     if (ticket) {
       return res.status(200).send({ message: "Token is valid" });
     }
