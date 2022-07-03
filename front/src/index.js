@@ -5,7 +5,7 @@ import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { BrowserRouter } from 'react-router-dom';
 import axios from 'axios';
-axios.defaults.baseURL = 'http://localhost:3005/api';
+axios.defaults.baseURL = `${process.env.REACT_APP_BACK_END_URL}/api`;
 axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
 
 ReactDOM.render(
