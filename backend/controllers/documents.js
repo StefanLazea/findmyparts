@@ -197,7 +197,6 @@ const getExpiredDocsForUser = async (req, res) => {
   );
 
   const expiredCount = {};
-  const expResp = [];
   docsResponse.forEach((item) => {
     if (DocumentsService.isDocExpired(item.expirationDate)) {
       if (expiredCount[item.name]) {
@@ -205,8 +204,6 @@ const getExpiredDocsForUser = async (req, res) => {
       } else {
         expiredCount[item.name] = 1;
       }
-    } else {
-      expiredCount[item.name] = 0;
     }
   });
 
