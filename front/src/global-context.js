@@ -3,10 +3,10 @@ import io from 'socket.io-client';
 
 const GlobalContext = React.createContext();
 const BACKEND_ENDPOINT = process.env.REACT_APP_BACK_END_URL;
-
+// TODO: save as cookie not as this
 const initialState = {
     count: 0,
-    userId: localStorage.getItem('userId') || 0, // TODO: save as cookie not as this
+    userId: localStorage.getItem('userId') || 0, 
     socket: io(BACKEND_ENDPOINT),
     //not the best approach
     userDetails: JSON.parse(localStorage.getItem('userDetails')) || {},
